@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33801.468
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrailVenturesSystem.Web", "TrailVenturesSystem.Web\TrailVenturesSystem.Web.csproj", "{64047BF3-747E-4008-B3BF-D14BF041EC02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrailVenturesSystem.Common", "TrailVenturesSystem.Common\TrailVenturesSystem.Common.csproj", "{196B6A63-998E-4A45-BD63-AB87D1B5DFD2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C4DC1081-7C99-47C3-AF6D-FAE6F112F30B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{76C6F690-B54B-448A-9441-9DED7A848DFD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrailVenturesSystem.Data", "TrailVenturesSystem.Data\TrailVenturesSystem.Data.csproj", "{5FD1D13B-F896-48A3-A9FB-A86F38D9B2BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrailVenturesSystem.Data.Models", "TrailVenturesSystem.Data.Models\TrailVenturesSystem.Data.Models.csproj", "{AADB8E47-E389-4484-85FB-4E08C3DBD854}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrailVenturesSystem.Web.ViewModels", "TrailVenturesSystem.Web.ViewModels\TrailVenturesSystem.Web.ViewModels.csproj", "{D94A5E46-554D-4572-866B-FBECE871113C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64047BF3-747E-4008-B3BF-D14BF041EC02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64047BF3-747E-4008-B3BF-D14BF041EC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64047BF3-747E-4008-B3BF-D14BF041EC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64047BF3-747E-4008-B3BF-D14BF041EC02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{196B6A63-998E-4A45-BD63-AB87D1B5DFD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{196B6A63-998E-4A45-BD63-AB87D1B5DFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{196B6A63-998E-4A45-BD63-AB87D1B5DFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{196B6A63-998E-4A45-BD63-AB87D1B5DFD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FD1D13B-F896-48A3-A9FB-A86F38D9B2BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FD1D13B-F896-48A3-A9FB-A86F38D9B2BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FD1D13B-F896-48A3-A9FB-A86F38D9B2BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FD1D13B-F896-48A3-A9FB-A86F38D9B2BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AADB8E47-E389-4484-85FB-4E08C3DBD854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADB8E47-E389-4484-85FB-4E08C3DBD854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADB8E47-E389-4484-85FB-4E08C3DBD854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADB8E47-E389-4484-85FB-4E08C3DBD854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94A5E46-554D-4572-866B-FBECE871113C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94A5E46-554D-4572-866B-FBECE871113C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94A5E46-554D-4572-866B-FBECE871113C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94A5E46-554D-4572-866B-FBECE871113C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{64047BF3-747E-4008-B3BF-D14BF041EC02} = {C4DC1081-7C99-47C3-AF6D-FAE6F112F30B}
+		{5FD1D13B-F896-48A3-A9FB-A86F38D9B2BF} = {76C6F690-B54B-448A-9441-9DED7A848DFD}
+		{AADB8E47-E389-4484-85FB-4E08C3DBD854} = {76C6F690-B54B-448A-9441-9DED7A848DFD}
+		{D94A5E46-554D-4572-866B-FBECE871113C} = {C4DC1081-7C99-47C3-AF6D-FAE6F112F30B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32229440-A661-45EA-A32A-B6E2239B54B7}
+	EndGlobalSection
+EndGlobal
