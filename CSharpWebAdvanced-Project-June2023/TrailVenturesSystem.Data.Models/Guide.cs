@@ -6,6 +6,7 @@
     {
         public Guide()
         {
+            this.Id = Guid.NewGuid();
             this.CreatedTrips = new HashSet<Trip>();
         }
 

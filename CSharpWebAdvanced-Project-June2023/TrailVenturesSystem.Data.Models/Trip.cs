@@ -6,6 +6,7 @@
     {
         public Trip()
         {
+            this.Id = Guid.NewGuid();
             Hikers = new HashSet<ApplicationUser>();
         }
         [Key]

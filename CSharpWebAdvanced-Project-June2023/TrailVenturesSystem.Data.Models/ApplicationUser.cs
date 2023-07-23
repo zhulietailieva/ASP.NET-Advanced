@@ -10,6 +10,7 @@
     {
         public ApplicationUser()
         {
+            this.Id = Guid.NewGuid();
             this.EnrolledTrips = new HashSet<Trip>();
         }
         //Navigation property
