@@ -15,4 +15,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TrailVenturesSystem.Common\TrailVenturesSystem.Common.csproj" />
+    <ProjectReference Include="..\TrailVenturesSystem.Data.Models\TrailVenturesSystem.Data.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

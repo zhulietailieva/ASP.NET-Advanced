@@ -4,6 +4,7 @@ namespace TrailVenturesSystem.Web
     using Microsoft.EntityFrameworkCore;
 
     using TrailVenturesSystem.Data;
+    using TrailVenturesSystem.Data.Models;
 
     public class Program
     {
@@ -15,15 +16,25 @@ namespace TrailVenturesSystem.Web
             string  connectionString = 
                 builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            builder.Services.AddDbContext<TrailVenturesDbContext>(options =>
                 options.UseSqlServer(connectionString));
             
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                options.SignIn.RequireConfirmedAccount = 
+                            builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+                options.Password.RequireLowercase =
+                            builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+                options.Password.RequireUppercase =
+                            builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+                options.Password.RequireNonAlphanumeric=
+                            builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+                options.Password.RequiredLength =
+                            builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
+            })
+                .AddEntityFrameworkStores<TrailVenturesDbContext>();
+
             builder.Services.AddControllersWithViews();
 
             WebApplication app = builder.Build();

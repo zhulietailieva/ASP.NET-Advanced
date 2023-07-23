@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings.Production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.Production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
@@ -17,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrailVenturesSystem.Common\TrailVenturesSystem.Common.csproj" />
+    <ProjectReference Include="..\TrailVenturesSystem.Data.Models\TrailVenturesSystem.Data.Models.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Data\TrailVenturesSystem.Data.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Web.ViewModels\TrailVenturesSystem.Web.ViewModels.csproj" />
   </ItemGroup>

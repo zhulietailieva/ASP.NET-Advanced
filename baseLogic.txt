@@ -1,0 +1,61 @@
+Trail Ventures System Basic configurations
+
+When a guide creates a trip (Trip table configuration):
+	-> mountain - Stara Planina, Pirin, Rila, Rodopi, Vitosha, Strandja, Sakar
+	-> does the trip include a sleepover at a lodge -> sleepover tents?
+		--> if sleepover checked -> new fields
+			::
+			lodge (another table of the database)-> chekckbox ->if checked 
+						-> lodge for staying
+						-> price per night
+			tents -> inform the user where the sleepover will be
+	-> sign up for a bus? ->price for ticket otherwise travel by car
+	-> start point
+	-> guide sets initial price of trip and price should up if lodge or bus is included
+	-> description
+	-> additional info - not mandatory - what is needed for the trip??
+	-> max size of the group to be created
+
+	----When a user signs up for a trip system should check if he is not already signed for one of those dates
+	----Wjen a guide creates a trip system should check for overlaping dates with other of his created trips (if any)
+
+When a user registers (User table):
+	-> email
+	-> password
+	-> mobile phone? -add later
+	-> personal info
+
+When a user applies to be a guide (only registered users) (Guide table):
+	-> mobile phone - MANDATORY
+	-> years of experience
+	-> evidence of experience?? -should be approved by admin?
+
+--------------------------------------------------------------------------
+Initial database configurations:
+
+--Trip--
+	Id - Guid, Primary Key
+	Title - a string  with length between 10 and 100 symbols (required)
+	Mointain - a string with length between 5 and 30 symbols (required)
+	StartDate - DateTime (required)
+	ReturnDate - DateTime (required)
+	Description - a string with length between 50 and 3000 symbols (required)
+	PricePerPerson - a decimal with min value 0 and max value 100 (required)
+	GuideId - Guid (required)
+	Guide
+	Hikers - an ICollection<String> / List<string>
+
+--Guide--
+	Id - Guid, Primary Key
+	PhoneNumber - a string with length between 7 and 15 (required)
+	YearsOfExperience - an integer between 1 and 100 (required)
+	UserId - Guid (required)
+	User - an IdentityUser object
+
+
+
+
+
+	
+	
+	
