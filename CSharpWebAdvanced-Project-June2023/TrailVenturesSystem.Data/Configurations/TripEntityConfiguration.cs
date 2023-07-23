@@ -13,6 +13,10 @@
         public void Configure(EntityTypeBuilder<Trip> builder)
         {
             builder
+                .Property(t => t.CreatedOn)
+                .HasDefaultValue(DateTime.UtcNow);
+
+            builder
                 .HasOne(t => t.Guide)
                 .WithMany(g => g.CreatedTrips)
                 .HasForeignKey(t => t.GuideId)

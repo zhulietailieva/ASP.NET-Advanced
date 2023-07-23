@@ -1,8 +1,36 @@
-﻿@{
+﻿@model IEnumerable<IndexViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
+
+    var trips = Model.ToList();
+}
+<h1>Welcome to Trips</h1>
+@if (!trips.Any())
+{   
+    //no trips yet
+    <div>
+        <p>No trips found.</p>
+        <p>Please plan your next adventure!</p>
+    </div> 
+    <p class="lead">
+        @if(User.Identity?.IsAuthenticated ?? false)
+        {
+            <a asp-controller="Trip" asp-action="Add" class="btn btn-primary btn-lg"
+            role="button">Add Trip</a>
+        }
+    </p>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<ul>
+    @foreach (var trip in trips)
+    {
+        <li>
+            <strong>@trip.Title</strong><br />
+            Mountain: @trip.Mountain<br />
+            Start Date: @trip.StartDate.ToString();
+            <a class="btn btn-primary" asp-controller="Trip" asp-net-action="Details"
+            asp-route-id="@trip.Id">Details @trip.Id</a>
+        </li>
+    }
+</ul>

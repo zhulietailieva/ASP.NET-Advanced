@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrailVenturesSystem.Common\TrailVenturesSystem.Common.csproj" />
+    <ProjectReference Include="..\TrailVenturesSystem.Data.Models\TrailVenturesSystem.Data.Models.csproj" />
+    <ProjectReference Include="..\TrailVenturesSystem.Data\TrailVenturesSystem.Data.csproj" />
+    <ProjectReference Include="..\TrailVenturesSystem.Web.ViewModels\TrailVenturesSystem.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

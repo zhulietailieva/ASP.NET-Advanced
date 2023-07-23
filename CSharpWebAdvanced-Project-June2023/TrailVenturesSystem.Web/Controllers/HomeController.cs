@@ -2,19 +2,24 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
+    using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.ViewModels.Home;
 
     public class HomeController : Controller
     {
-        
-        public HomeController()
+        private readonly ITripService tripService;
+
+        public HomeController(ITripService tripService)
         {
-            
+            this.tripService = tripService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<IndexViewModel> viewModel =
+                await this.tripService.LastFiveTripsAsync();
+
+            return View(viewModel);
         }
 
 

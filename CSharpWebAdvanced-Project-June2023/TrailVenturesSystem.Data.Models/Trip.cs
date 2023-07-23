@@ -32,6 +32,8 @@
 
         public decimal PricePerPerson { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public Guid GuideId { get; set; }
 
         public virtual Guide Guide { get; set; } = null!;
