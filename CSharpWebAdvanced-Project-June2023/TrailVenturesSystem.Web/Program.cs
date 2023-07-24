@@ -2,9 +2,10 @@ namespace TrailVenturesSystem.Web
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-
+    using TrailVenturesSys.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
+    using TrailVenturesSystem.Services.Data.Interfaces;
 
     public class Program
     {
@@ -34,6 +35,8 @@ namespace TrailVenturesSystem.Web
                             builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
                 .AddEntityFrameworkStores<TrailVenturesDbContext>();
+
+            builder.Services.AddApplicationServices(typeof(ITripService));
 
             builder.Services.AddControllersWithViews();
 
