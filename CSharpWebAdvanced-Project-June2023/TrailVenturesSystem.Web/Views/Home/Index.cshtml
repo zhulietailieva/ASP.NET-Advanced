@@ -28,9 +28,9 @@
         <li>
             <strong>@trip.Title</strong><br />
             Mountain: @trip.Mountain<br />
-            Start Date: @trip.StartDate.ToString();
+            Start Date: @trip.StartDate.ToString().Split(' ')[0];
             <a class="btn btn-primary" asp-controller="Trip" asp-net-action="Details"
-            asp-route-id="@trip.Id">Details @trip.Id</a>
+            asp-route-id="@trip.Id">Details @trip.Title</a>
         </li>
     }
 </ul>
