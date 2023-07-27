@@ -2,11 +2,11 @@ namespace TrailVenturesSystem.Web
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data;
     using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Web.Infrastructure.Extensions;
 
     public class Program
     {
@@ -37,9 +37,16 @@ namespace TrailVenturesSystem.Web
             })
                 .AddEntityFrameworkStores<TrailVenturesDbContext>();
 
+            //how we would normally register our service
+            //builder.Services.AddScoped<ITripService,TripService>();
+
+
+            //builder.Services.AddApplicationServices(typeof(ITripService));
+
             builder.Services.AddApplicationServices(typeof(ITripService));
-            
+
             builder.Services.AddControllersWithViews();
+
 
             WebApplication app = builder.Build();
 

@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Services.Data.Interfaces;
 
     [Authorize]
