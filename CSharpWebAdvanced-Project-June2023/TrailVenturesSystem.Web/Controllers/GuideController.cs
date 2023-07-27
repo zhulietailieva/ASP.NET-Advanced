@@ -5,6 +5,8 @@
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
 
+    using static Common.NotificationMessagesConstants;
+
     [Authorize]
     public class GuideController : Controller
     {
@@ -24,7 +26,9 @@
 
             if (isGuide)
             {
-                return this.BadRequest();
+                TempData[ErrorMessage] = "You are already a guide!";
+
+                return this.RedirectToAction("Index", "Home");
             }
 
             return this.View();
