@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Web.Infrastructure.Extensions;
 
     [Authorize]
     public class GuideController : Controller
@@ -14,10 +15,10 @@
             this.guideService = guideService;
         }
 
-       /* [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> Become()
         {
-            
+
             string? userId = this.User.GetId();
             bool isGuide =await this.guideService.GuideExistsByUserIdAsync(userId);
 
@@ -26,7 +27,7 @@
                 return this.BadRequest();
             }
 
-            return View();
-        }*/
+            return this.View();
+        }
     }
 }

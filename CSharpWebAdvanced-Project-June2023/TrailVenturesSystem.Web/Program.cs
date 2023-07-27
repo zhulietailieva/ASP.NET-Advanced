@@ -41,8 +41,7 @@ namespace TrailVenturesSystem.Web
             //builder.Services.AddScoped<ITripService,TripService>();
 
 
-            //builder.Services.AddApplicationServices(typeof(ITripService));
-
+            //with this method all added services are registered automatically
             builder.Services.AddApplicationServices(typeof(ITripService));
 
             builder.Services.AddControllersWithViews();
