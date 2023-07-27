@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TrailVenturesSys.Web.Infrastructure\TrailVenturesSys.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Common\TrailVenturesSystem.Common.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Data.Models\TrailVenturesSystem.Data.Models.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Data\TrailVenturesSystem.Data.csproj" />
