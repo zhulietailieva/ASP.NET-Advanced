@@ -19,6 +19,8 @@
 
         public DbSet<Guide> Guides { get; set; } = null!;
 
+        public DbSet<Mountain> Mountains { get; set; } = null!;
+
         //no DbSet for ApplicationUser because IdentityDbContext injects it automatically
 
         protected override void OnModelCreating(ModelBuilder builder)

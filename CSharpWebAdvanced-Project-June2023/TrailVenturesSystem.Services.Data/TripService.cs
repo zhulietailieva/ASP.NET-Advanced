@@ -28,7 +28,7 @@
                 {
                     Id = t.Id.ToString(),
                     Title = t.Title,
-                    Mountain = t.Mountain,
+                    //Mountain = t.Mountain,
                     StartDate = t.StartDate.ToString()
                 })
                 .ToArrayAsync();    //always async when we retrieve from the database

@@ -16,9 +16,10 @@
         [MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        [Required]
+        /*[Required]
         [MaxLength(MountainMaxLength)]
         public string Mountain { get; set; } = null!;
+        */
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -33,6 +34,10 @@
         public decimal PricePerPerson { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public int MountainId { get; set; }
+
+        public virtual Mountain Mountain { get; set; } = null!;
 
         public Guid GuideId { get; set; }
 
