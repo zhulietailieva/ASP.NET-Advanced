@@ -47,9 +47,9 @@
             tripsQuery = queryModel.TripSorting switch
             {
                 TripSorting.Newest => tripsQuery
-                    .OrderBy(t => t.CreatedOn),
-                TripSorting.Oldest => tripsQuery
                     .OrderByDescending(t => t.CreatedOn),
+                TripSorting.Oldest => tripsQuery
+                    .OrderBy(t => t.CreatedOn),
                 TripSorting.SoonestStartDate => tripsQuery
                     .OrderByDescending(t=>t.StartDate),
                 TripSorting.PriceAscending => tripsQuery
