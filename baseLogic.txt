@@ -60,6 +60,9 @@ REGISTERED USERS:
 peshoGuide@guides.com - password:123456 - Guide
 goshoHiker@hikers.com - password:123456 - Hiker (ApplicationUser)
 
+//TODO:
+Add size groups propertu to trips and update database
+
 
 
 

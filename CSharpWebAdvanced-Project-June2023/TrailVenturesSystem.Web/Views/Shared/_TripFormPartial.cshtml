@@ -1,0 +1,52 @@
+﻿@model TripFormModel
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control" placeholder="Title...">
+                <span asp-validation-for="Title" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MountainId"></label>
+                <select asp-for="MountainId" class="form-control">
+                    @foreach (var mountain in Model.Mountains)
+                    {
+                        <option value="@mountain.Id">@mountain.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="MountainId" class="small textdanger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate"></label>
+                <input asp-for="StartDate" class="form-control"
+                       placeholder="Start date">
+                <span asp-validation-for="StartDate" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReturnDate"></label>
+                <input asp-for="ReturnDate" class="form-control"
+                       placeholder="Return date">
+                <span asp-validation-for="ReturnDate" class="small text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" rows="4" class="form-control"
+                          placeholder="Describe meeting point, trip duration, what to pack and other important info..."></textarea>
+                <span asp-validation-for="Description" class="small textdanger"></span>
+            </div>
+            
+           
+            <div class="form-group">
+                <label asp-for="PricePerPerson"></label>
+                <input asp-for="PricePerPerson" class="form-control">
+                <span asp-validation-for="PricePerPerson" class="small textdanger"></span>
+            </div>
+           
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

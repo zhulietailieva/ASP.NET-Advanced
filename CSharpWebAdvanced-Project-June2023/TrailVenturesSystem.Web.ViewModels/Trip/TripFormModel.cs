@@ -25,15 +25,16 @@
         public DateTime ReturnDate { get; set; }
 
         [Required]
-        [StringLength(DescriptionMinLength,MinimumLength =DescriptionMaxLength)]
+        [StringLength(DescriptionMaxLength,MinimumLength =DescriptionMinLength)]
         public string Description { get; set; } = null!;
 
 
         [Display(Name = "Price Per Person")]
         [Range(typeof(decimal),PricePerPersonMinValue,PricePerPersonMaxValue)]
         public decimal PricePerPerson { get; set; }
-         
+
         //selected mountain by user
+        [Display(Name ="Mountain")]
         public int MountainId { get; set; }
         public IEnumerable<TripSelectMountainFormModel> Mountains { get; set; }
     }
