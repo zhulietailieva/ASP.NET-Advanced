@@ -12,6 +12,17 @@
         {
             this.dbContext = dbContext;
         }
+
+        public async Task<IEnumerable<string>> AllMountainNamesAsync()
+        {
+            IEnumerable<string> allNames = await this.dbContext
+                .Mountains
+                .Select(m => m.Name)
+                .ToArrayAsync();
+
+            return allNames;
+        }
+
         public async Task<IEnumerable<TripSelectMountainFormModel>> AllMountainsAsync()
         {
             IEnumerable<TripSelectMountainFormModel> allMountains =await this.dbContext

@@ -6,8 +6,10 @@
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Services.Data.Models.Trip;
     using TrailVenturesSystem.Web.ViewModels.Home;
     using TrailVenturesSystem.Web.ViewModels.Trip;
+    using TrailVenturesSystem.Web.ViewModels.Trip.Enums;
 
     public class TripService : ITripService
     {
@@ -18,6 +20,68 @@
         public TripService(TrailVenturesDbContext dbContext)
         {
             this.dbContext = dbContext; 
+        }
+
+        public async Task<AllTripsFilteredAndPagedServiceModel> AllAsync(AllTripsQueryModel queryModel)
+        {
+            IQueryable<Trip> tripsQuery = this.dbContext
+                .Trips
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryModel.Mountain))
+            {
+                tripsQuery = tripsQuery
+                    .Where(t => t.Mountain.Name == queryModel.Mountain);
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchString))
+            {
+                string wildCard = $"%{queryModel.SearchString.ToLower()}%";
+
+                tripsQuery = tripsQuery
+                    .Where(t => EF.Functions.Like(t.Title, wildCard) ||
+                                EF.Functions.Like(t.Description, wildCard));
+            }
+
+            //sorting
+            tripsQuery = queryModel.TripSorting switch
+            {
+                TripSorting.Newest => tripsQuery
+                    .OrderBy(t => t.CreatedOn),
+                TripSorting.Oldest => tripsQuery
+                    .OrderByDescending(t => t.CreatedOn),
+                TripSorting.SoonestStartDate => tripsQuery
+                    .OrderByDescending(t=>t.StartDate),
+                TripSorting.PriceAscending => tripsQuery
+                    .OrderBy(t => t.PricePerPerson),
+                TripSorting.PriceDescending => tripsQuery
+                    .OrderByDescending(t => t.PricePerPerson),
+                //default query
+                _ => tripsQuery
+                    .OrderBy(t => t.Hikers.Count < t.GroupMaxSize)
+                    .ThenByDescending(t => t.CreatedOn)
+            };
+
+            //pagination
+            IEnumerable<TripAllViewModel> allTrips =await tripsQuery
+                .Skip((queryModel.CurrentPage - 1) * queryModel.TripsPerPage)
+                .Take(queryModel.TripsPerPage)
+                .Select(t => new TripAllViewModel()
+                {
+                    Id = t.Id.ToString(),
+                    Title = t.Title,
+                    StartDate = t.StartDate,
+                    PricePerPerson = t.PricePerPerson,
+                    NotFull = t.Hikers.Count < t.GroupMaxSize
+                }).ToArrayAsync(); //this is where the query is materialized
+
+            int totalTrips = tripsQuery.Count();
+
+            return new AllTripsFilteredAndPagedServiceModel()
+            {
+                TotalTripsCount = totalTrips,
+                Trips = allTrips
+            };
         }
 
         public async Task CreateAsync(TripFormModel formModel,string guideId)

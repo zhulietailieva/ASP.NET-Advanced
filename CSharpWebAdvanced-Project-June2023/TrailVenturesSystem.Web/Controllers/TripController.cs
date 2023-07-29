@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Services.Data.Models.Trip;
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Web.ViewModels.Trip;
 
@@ -22,11 +23,20 @@
             this.tripService = tripService;
 
         }
+
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllTripsQueryModel queryModel)
         {
-            //TODO: Implement View
-            return this.Ok();
+            AllTripsFilteredAndPagedServiceModel serviceModel =
+                await this.tripService.AllAsync(queryModel);
+
+            queryModel.Trips = serviceModel.Trips;
+            queryModel.TotalTrips = serviceModel.TotalTripsCount;
+            queryModel.Mountains = await this.mountainService.AllMountainNamesAsync();
+
+
+            return this.View(queryModel);
         }
 
         [HttpGet]
