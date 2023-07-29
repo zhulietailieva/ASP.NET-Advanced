@@ -11,5 +11,9 @@
         Task CreateAsync(TripFormModel formModel,string guideId);
 
         Task<AllTripsFilteredAndPagedServiceModel> AllAsync(AllTripsQueryModel queryModel);
+
+        Task<IEnumerable<TripAllViewModel>> AllByGuideIdAsync(string guideId);
+
+        Task<IEnumerable<TripAllViewModel>> AllByUserIdAsync(string userId);
     }
 }

@@ -103,5 +103,33 @@
             }
             return this.RedirectToAction("All", "Trip");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            List<TripAllViewModel> myTrips =
+                new List<TripAllViewModel>();
+
+            string userId = this.User.GetId()!;
+            bool isGuide = await this.guideService
+                .GuideExistsByUserIdAsync(userId);
+
+            if (isGuide)
+            {
+                //if user is guide => show all of their created trips
+                string? guideId =
+                    await this.guideService.GetGuideIdByUserIdAsync(userId);
+
+                myTrips.AddRange(await this.tripService.AllByGuideIdAsync(guideId!));
+            }
+            else
+            {
+                //if user is not a guide => show al of their enrolled trips
+                myTrips.AddRange(await this.tripService.AllByUserIdAsync(userId));
+            }
+
+            return this.View(myTrips);
+
+        }
     }
 }

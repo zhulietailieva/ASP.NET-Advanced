@@ -1,0 +1,21 @@
+﻿@model List<TripAllViewModel>
+@{
+    ViewData["Title"] = "My Trips";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if(!Model.Any())
+{
+    <h2 class="text-center">You do not have any planned trips yet!</h2>
+}
+else
+{
+    <div class="row">
+        @foreach(TripAllViewModel trip in Model)
+        {
+            <partial name="_TripPartial" model="trip"/>
+        }
+    </div>
+}

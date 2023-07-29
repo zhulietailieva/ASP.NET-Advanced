@@ -85,10 +85,43 @@
             };
         }
 
+        public async Task<IEnumerable<TripAllViewModel>> AllByGuideIdAsync(string guideId)
+        {
+            IEnumerable<TripAllViewModel> allGuideTrips = await this.dbContext
+                .Trips
+                .Where(t =>t.IsActive && t.GuideId.ToString() == guideId)
+                .Select(t => new TripAllViewModel()
+                {
+                    Id = t.Id.ToString(),
+                    Title = t.Title,
+                    StartDate = t.StartDate,
+                    PricePerPerson = t.PricePerPerson,
+                    NotFull = t.Hikers.Count < t.GroupMaxSize
+                }).ToArrayAsync();
+
+            return allGuideTrips;
+        }
+
+        public async Task<IEnumerable<TripAllViewModel>> AllByUserIdAsync(string userId)
+        {
+            IEnumerable<TripAllViewModel> allUserTrips = await this.dbContext
+                .Trips
+                .Where(t =>t.IsActive && t.Hikers.Count>0 && t.Hikers.Any(h=>h.Id.ToString()==userId))
+                .Select(t => new TripAllViewModel()
+                {
+                    Id = t.Id.ToString(),
+                    Title = t.Title,
+                    StartDate = t.StartDate,
+                    PricePerPerson = t.PricePerPerson,
+                    NotFull = t.Hikers.Count < t.GroupMaxSize
+                }).ToArrayAsync();
+
+            return allUserTrips;
+        }
+
         public async Task CreateAsync(TripFormModel formModel,string guideId)
         {
             //no need for validation here
-
             Trip newTrip = new Trip
             {
                 Title = formModel.Title,
