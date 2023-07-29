@@ -31,7 +31,11 @@
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
+        [Required]
         public decimal PricePerPerson { get; set; }
+
+        [Required]
+        public int GroupMaxSize { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

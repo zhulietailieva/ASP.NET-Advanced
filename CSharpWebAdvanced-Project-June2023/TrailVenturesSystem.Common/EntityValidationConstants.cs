@@ -15,6 +15,9 @@
 
             public const string PricePerPersonMinValue = "0";
             public const string PricePerPersonMaxValue = "100";
+
+            public const int GroupMinSizePeople = 2;
+            public const int GroupsMaxSizePeople = 50;
         }
 
         public static class Guide

@@ -28,10 +28,15 @@
         [StringLength(DescriptionMaxLength,MinimumLength =DescriptionMinLength)]
         public string Description { get; set; } = null!;
 
-
+        [Required]
         [Display(Name = "Price Per Person")]
         [Range(typeof(decimal),PricePerPersonMinValue,PricePerPersonMaxValue)]
         public decimal PricePerPerson { get; set; }
+
+        [Required]
+        [Display(Name ="Max size of the group")]
+        [Range(GroupMinSizePeople,GroupsMaxSizePeople)]
+        public int GroupMaxSize { get; set; }
 
         //selected mountain by user
         [Display(Name ="Mountain")]

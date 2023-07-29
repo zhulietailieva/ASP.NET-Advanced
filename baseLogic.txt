@@ -41,6 +41,7 @@ Initial database configurations:
 	ReturnDate - DateTime (required)
 	Description - a string with length between 50 and 3000 symbols (required)
 	PricePerPerson - a decimal with min value 0 and max value 100 (required)
+	GroupMaxSize - an integer between 2 and 50
 	GuideId - Guid (required)
 	Guide
 	Hikers - an ICollection<String> / List<string>
@@ -61,7 +62,7 @@ peshoGuide@guides.com - password:123456 - Guide
 goshoHiker@hikers.com - password:123456 - Hiker (ApplicationUser)
 
 //TODO:
-Add size groups propertu to trips and update database
+
 
 
 
