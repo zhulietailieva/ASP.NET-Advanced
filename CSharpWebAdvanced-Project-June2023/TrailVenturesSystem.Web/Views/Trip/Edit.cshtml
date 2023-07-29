@@ -1,0 +1,15 @@
+﻿@model TripFormModel
+@{
+    ViewData["Title"] = "Edit Trip";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr/>
+
+<partial name="_TripFormPartial" model="@Model" />
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+

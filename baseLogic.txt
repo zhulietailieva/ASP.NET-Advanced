@@ -62,12 +62,7 @@ peshoGuide@guides.com - password:123456 - Guide
 goshoHiker@hikers.com - password:123456 - Hiker (ApplicationUser)
 
 //TODO:
-
-
-//ERRORS FOUND
-
-1. On all trips when turning to next pege, the added filters are not saved!
-
+Try-Catch blocks on TripController methods
 
 
 

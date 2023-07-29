@@ -21,5 +21,9 @@
         Task<TripFormModel> GetTripForEditByIdAsync(string tripId);
 
         Task<TripDetailsViewModel> GetDetailsByIdAsync(string tripId);
+
+        Task<bool> IsGuideWithIdCreatorOfTripWithIdAsync(string tripId, string guideId);
+
+        Task EditTripByIdAndFormModel(string tripId, TripFormModel formModel);
     }
 }

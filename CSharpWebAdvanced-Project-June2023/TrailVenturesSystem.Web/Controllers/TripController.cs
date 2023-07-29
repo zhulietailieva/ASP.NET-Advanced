@@ -52,13 +52,23 @@
                 return this.RedirectToAction("Become", "Guide");
             }
 
-            TripFormModel formModel = new TripFormModel()
+            try
             {
-                Mountains =await this.mountainService.AllMountainsAsync()
-            };
+                TripFormModel formModel = new TripFormModel()
+                {
+                    Mountains =await this.mountainService.AllMountainsAsync()
+                };
 
-            return View(formModel);
+                return View(formModel);
+
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+            
         }
+
         [HttpPost]
         public async Task<IActionResult> Add(TripFormModel model)
         {
@@ -93,9 +103,8 @@
                 string? guideId =await this.guideService.GetGuideIdByUserIdAsync(this.User.GetId()!);
                 await this.tripService.CreateAsync(model, guideId!);
             }
-            catch (Exception _)
+            catch (Exception )
             {
-
                 this.ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to add your new trip! Please try again later or contact administrator.");
                 
                 model.Mountains = await this.mountainService.AllMountainsAsync();
@@ -117,15 +126,139 @@
                 return this.RedirectToAction("Trip", "All");
             }
 
-            TripDetailsViewModel viewModel = await this.tripService
-                .GetDetailsByIdAsync(id);
+            try
+            {
+                TripDetailsViewModel viewModel = await this.tripService
+                    .GetDetailsByIdAsync(id);
 
-            return View(viewModel);
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+           
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+            bool tripExists = await this.tripService
+               .ExistsByIdAsync(id);
+            if (!tripExists)
+            {
+                this.TempData[ErrorMessage] = "Trip with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Trip");
+            }
+
+            //should also check if user is guide
+            
+
+            bool isUserGuide =await this.guideService
+                .GuideExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isUserGuide)
+            {
+                this.TempData[ErrorMessage] = "You must become a guide in order to edit trip info!";
+
+                return this.RedirectToAction("Become", "Guide");
+            }
+
+            //guide should only be able to edit their own trips
+
+            string? guideId = await this.guideService
+                .GetGuideIdByUserIdAsync(this.User.GetId()!);
+
+            bool isGuideCreator = await this.tripService
+                .IsGuideWithIdCreatorOfTripWithIdAsync(id, guideId!);
+
+            if (!isGuideCreator)
+            {
+                this.TempData[ErrorMessage] = "You must be the creator in order to edit this trip!";
+
+                return this.RedirectToAction("Mine", "Trip");
+            }
+            try
+            {
+                TripFormModel formModel = await this.tripService
+                    .GetTripForEditByIdAsync(id);
+
+                formModel.Mountains = await this.mountainService.AllMountainsAsync();
+
+                return this.View(formModel);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administator.";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id,TripFormModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.Mountains = await this.mountainService.AllMountainsAsync();
+                return this.View(model);
+            }
+
+            bool tripExists = await this.tripService
+               .ExistsByIdAsync(id);
+            if (!tripExists)
+            {
+                this.TempData[ErrorMessage] = "Trip with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Trip");
+            }
+
+            //should also check if user is guide
+
+
+            bool isUserGuide = await this.guideService
+                .GuideExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isUserGuide)
+            {
+                this.TempData[ErrorMessage] = "You must become a guide in order to edit trip info!";
+
+                return this.RedirectToAction("Become", "Guide");
+            }
+
+            //guide should only be able to edit their own trips
+
+            string? guideId = await this.guideService
+                .GetGuideIdByUserIdAsync(this.User.GetId()!);
+
+            bool isGuideCreator = await this.tripService
+                .IsGuideWithIdCreatorOfTripWithIdAsync(id, guideId!);
+
+            if (!isGuideCreator)
+            {
+                this.TempData[ErrorMessage] = "You must be the creator in order to edit this trip!";
+
+                return this.RedirectToAction("Mine", "Trip");
+            }
+
+            try
+            {
+                await this.tripService.EditTripByIdAndFormModel(id, model);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to update the trip! Please try again later or contact administrator.");
+
+                model.Mountains = await this.mountainService.AllMountainsAsync();
+
+                return this.View(model);
+            }
+
+            return this.RedirectToAction("Details", "Trip", new { id });
 
         }
 
@@ -138,23 +271,37 @@
             string userId = this.User.GetId()!;
             bool isGuide = await this.guideService
                 .GuideExistsByUserIdAsync(userId);
-
-            if (isGuide)
+            try
             {
-                //if user is guide => show all of their created trips
-                string? guideId =
-                    await this.guideService.GetGuideIdByUserIdAsync(userId);
+                if (isGuide)
+                {
+                    //if user is guide => show all of their created trips
+                    string? guideId =
+                        await this.guideService.GetGuideIdByUserIdAsync(userId);
 
-                myTrips.AddRange(await this.tripService.AllByGuideIdAsync(guideId!));
+                    myTrips.AddRange(await this.tripService.AllByGuideIdAsync(guideId!));
+                }
+                else
+                {
+                    //if user is not a guide => show al of their enrolled trips
+                    myTrips.AddRange(await this.tripService.AllByUserIdAsync(userId));
+                }
+
+                return this.View(myTrips);
             }
-            else
+            catch (Exception)
             {
-                //if user is not a guide => show al of their enrolled trips
-                myTrips.AddRange(await this.tripService.AllByUserIdAsync(userId));
+                return this.GeneralError();
             }
+            
 
-            return this.View(myTrips);
+        }
 
+        private IActionResult GeneralError()
+        {
+            this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administator.";
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

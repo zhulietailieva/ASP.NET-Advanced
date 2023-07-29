@@ -138,6 +138,25 @@
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task EditTripByIdAndFormModel(string tripId, TripFormModel formModel)
+        {
+            Trip trip = await this.dbContext
+                 .Trips
+                 .Where(t => t.IsActive)
+                 .FirstAsync(t => t.Id.ToString() == tripId);
+
+            trip.Title = formModel.Title;
+            trip.StartDate = formModel.StartDate;
+            trip.ReturnDate = formModel.ReturnDate;
+            trip.Description = formModel.Description;
+            trip.PricePerPerson = formModel.PricePerPerson;
+            trip.GroupMaxSize = formModel.GroupMaxSize;
+            trip.MountainId = formModel.MountainId;
+
+            await this.dbContext.SaveChangesAsync();
+
+        }
+
         public async Task<bool> ExistsByIdAsync(string tripId)
         {
             bool result =await this.dbContext
@@ -195,6 +214,16 @@
                 GroupMaxSize = trip.GroupMaxSize,
                 MountainId = trip.MountainId
             };
+        }
+
+        public async Task<bool> IsGuideWithIdCreatorOfTripWithIdAsync(string tripId, string guideId)
+        {
+            Trip trip = await this.dbContext
+                .Trips
+                .Where(t => t.IsActive)
+                .FirstAsync(t => t.Id.ToString() == tripId);
+
+            return trip.GuideId.ToString() == guideId;
         }
 
         public async Task<IEnumerable<IndexViewModel>> LastFiveTripsAsync()
