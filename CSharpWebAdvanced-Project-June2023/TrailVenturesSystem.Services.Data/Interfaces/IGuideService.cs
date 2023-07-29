@@ -11,5 +11,7 @@
         Task<bool> HasTripsByUserIdAsync(string userId);
 
         Task Create(string userId, BecomeGuideFormModel model);
+
+        Task<string?> GetGuideIdByUserIdAsync(string userId);
     }
 }

@@ -26,5 +26,14 @@
 
             return allMountains;
         }
+
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            bool result =await this.dbContext
+                .Mountains
+                .AnyAsync(m => m.Id == id);
+
+            return result;
+        }
     }
 }

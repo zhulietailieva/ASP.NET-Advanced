@@ -13,15 +13,20 @@
     {
         private readonly IMountainService mountainService;
         private readonly IGuideService guideService;
-        public TripController(IMountainService mountainService, IGuideService guideService)
+        private readonly ITripService tripService;
+        public TripController(IMountainService mountainService, IGuideService guideService,
+            ITripService tripService)
         {
             this.mountainService = mountainService;
             this.guideService = guideService;
+            this.tripService = tripService;
+
         }
         [AllowAnonymous]
         public async Task<IActionResult> All()
         {
-            return View();
+            //TODO: Implement View
+            return this.Ok();
         }
 
         [HttpGet]
@@ -34,7 +39,6 @@
             if (!isGuide)
             {
                 this.TempData[ErrorMessage] = "You must become a guide in order to create a trip!";
-
                 return this.RedirectToAction("Become", "Guide");
             }
 
@@ -44,6 +48,50 @@
             };
 
             return View(formModel);
-        } 
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(TripFormModel model)
+        {
+            bool isGuide = await this.guideService.GuideExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isGuide)
+            {
+                this.TempData[ErrorMessage] = "You must become a guide in order to create a trip!";
+                return this.RedirectToAction("Become", "Guide");
+            }
+
+            //user can change the category through inspector and submit faulty data
+            bool mountainExists = await this.mountainService.ExistsByIdAsync(model.MountainId);
+
+            if (!mountainExists)
+            {
+                //Adding model error to ModelState automatically makes ModelState invalid
+                this.ModelState.AddModelError(nameof(model.MountainId), "You selected a mountain that does not exist!");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                model.Mountains = await this.mountainService.AllMountainsAsync();
+
+                //Will visualize all errors with correct mountains
+                return this.View(model);
+            }
+            //it is preferable that all operations including inserting in database are in try-catch blocks
+            try
+            {
+                //! after the GetId() method means result cannot be null
+                string? guideId =await this.guideService.GetGuideIdByUserIdAsync(this.User.GetId()!);
+                await this.tripService.CreateAsync(model, guideId!);
+            }
+            catch (Exception _)
+            {
+
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to add your new trip! Please try again later or contact administrator.");
+                
+                model.Mountains = await this.mountainService.AllMountainsAsync();
+                return this.View(model);
+            }
+            return this.RedirectToAction("All", "Trip");
+        }
     }
 }
