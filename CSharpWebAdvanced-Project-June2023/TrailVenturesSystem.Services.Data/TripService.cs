@@ -138,20 +138,26 @@
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task<TripDetailsViewModel?> GetDetailsByIdAsync(string houseId)
+        public async Task<bool> ExistsByIdAsync(string tripId)
         {
-            Trip? trip = await this.dbContext
+            bool result =await this.dbContext
+                .Trips
+                .Where(t => t.IsActive)
+                .AnyAsync(t => t.Id.ToString() == tripId);
+
+            return result;
+        }
+
+        public async Task<TripDetailsViewModel> GetDetailsByIdAsync(string tripId)
+        {
+            Trip trip = await this.dbContext
                 .Trips
                 .Include(t=>t.Mountain)
                 .Include(t=>t.Guide)
                 .ThenInclude(g=>g.User)
                 .Where(t => t.IsActive)
-                .FirstOrDefaultAsync(t => t.Id.ToString() == houseId);
+                .FirstAsync(t => t.Id.ToString() == tripId);
 
-            if (trip == null)
-            {
-                return null;
-            }
 
             return new TripDetailsViewModel
             {
@@ -168,6 +174,26 @@
                     Email = trip.Guide.User.Email,
                     PhoneNumber = trip.Guide.PhoneNumber
                 }
+            };
+        }
+
+        public async Task<TripFormModel> GetTripForEditByIdAsync(string tripId)
+        {
+            Trip trip = await this.dbContext
+               .Trips
+               .Include(t => t.Mountain)
+               .Where(t => t.IsActive)
+               .FirstAsync(t => t.Id.ToString() == tripId);
+
+            return new TripFormModel
+            {
+                Title = trip.Title,
+                StartDate = trip.StartDate,
+                ReturnDate = trip.ReturnDate,
+                Description = trip.Description,
+                PricePerPerson = trip.PricePerPerson,
+                GroupMaxSize = trip.GroupMaxSize,
+                MountainId = trip.MountainId
             };
         }
 

@@ -108,17 +108,25 @@
         [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
         {
-            TripDetailsViewModel? viewModel = await this.tripService
-                .GetDetailsByIdAsync(id);
-
-            if (viewModel == null)
+            bool tripExists = await this.tripService
+                .ExistsByIdAsync(id);
+            if (!tripExists)
             {
                 this.TempData[ErrorMessage] = "Trip with the provided id does not exist!";
 
                 return this.RedirectToAction("Trip", "All");
             }
 
+            TripDetailsViewModel viewModel = await this.tripService
+                .GetDetailsByIdAsync(id);
+
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+
         }
 
         [HttpGet]

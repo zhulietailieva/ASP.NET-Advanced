@@ -16,6 +16,10 @@
 
         Task<IEnumerable<TripAllViewModel>> AllByUserIdAsync(string userId);
 
-        Task<TripDetailsViewModel?> GetDetailsByIdAsync(string houseId);
+        Task<bool> ExistsByIdAsync(string tripId);
+
+        Task<TripFormModel> GetTripForEditByIdAsync(string tripId);
+
+        Task<TripDetailsViewModel> GetDetailsByIdAsync(string tripId);
     }
 }
