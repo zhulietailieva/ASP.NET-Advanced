@@ -100,8 +100,13 @@
             try
             {
                 //! after the GetId() method means result cannot be null
-                string? guideId =await this.guideService.GetGuideIdByUserIdAsync(this.User.GetId()!);
-                await this.tripService.CreateAsync(model, guideId!);
+                string? guideId =await this.guideService
+                    .GetGuideIdByUserIdAsync(this.User.GetId()!);
+
+                string tripId=await this.tripService
+                    .CreateAndReturnIdAsync(model, guideId!);
+
+                return this.RedirectToAction("Details", "Trip", new {id=tripId});
             }
             catch (Exception )
             {
@@ -110,7 +115,6 @@
                 model.Mountains = await this.mountainService.AllMountainsAsync();
                 return this.View(model);
             }
-            return this.RedirectToAction("All", "Trip");
         }
 
         [HttpGet]

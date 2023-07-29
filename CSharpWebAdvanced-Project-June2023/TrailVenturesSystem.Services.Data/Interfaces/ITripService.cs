@@ -8,7 +8,7 @@
     {
         Task<IEnumerable<IndexViewModel>> LastFiveTripsAsync();
 
-        Task CreateAsync(TripFormModel formModel,string guideId);
+        Task<string> CreateAndReturnIdAsync(TripFormModel formModel,string guideId);
 
         Task<AllTripsFilteredAndPagedServiceModel> AllAsync(AllTripsQueryModel queryModel);
 

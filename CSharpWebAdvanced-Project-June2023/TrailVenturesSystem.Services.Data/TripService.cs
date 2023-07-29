@@ -120,7 +120,7 @@
             return allUserTrips;
         }
 
-        public async Task CreateAsync(TripFormModel formModel,string guideId)
+        public async Task<string> CreateAndReturnIdAsync(TripFormModel formModel,string guideId)
         {
             //no need for validation here
             Trip newTrip = new Trip
@@ -136,6 +136,8 @@
             };
             await this.dbContext.Trips.AddAsync(newTrip);
             await this.dbContext.SaveChangesAsync();
+
+            return newTrip.Id.ToString();
         }
 
         public async Task EditTripByIdAndFormModel(string tripId, TripFormModel formModel)
