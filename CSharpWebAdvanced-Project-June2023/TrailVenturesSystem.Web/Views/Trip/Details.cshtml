@@ -1,0 +1,61 @@
+﻿@model TripDetailsViewModel
+@{
+    ViewBag.Title = "Trip Details";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="container" style="display:inline">
+    <div class="row">
+
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="https://scontent.fsof11-1.fna.fbcdn.net/v/t39.30808-6/363332952_677306864436624_280215369841674862_n.jpg?stp=cp6_dst-jpg&_nc_cat=110&ccb=1-7&_nc_sid=730e14&_nc_ohc=QRWNvpLs1-AAX8rkXHU&_nc_ht=scontent.fsof11-1.fna&oh=00_AfCvEPHBSK-td4-FHYJ_41av85B4DPYFPXi2ki40RSngXA&oe=64C97735" 
+                 alt="Mountain Image">
+        </div>
+        
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Title</u></p>
+            <p>
+                Price per person:
+                <b>@($"{Model.PricePerPerson:f2}") BGN</b>
+            </p>
+            <p>@Model.Description</p>
+            <p>Mountain: <b>@Model.Mountain</b></p>
+            <p><i>(@(Model.NotFull ? "Places Available" : "Places not available"))</i></p>
+            <div class="form-inline">
+                @if (this.User.Identity?.IsAuthenticated ?? false)
+                {
+                    <a class="btn btn-warning" asp-controller="Trip" aspaction="Edit"
+                       asp-route-id="@Model.Id">Edit</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="Trip" aspaction="Delete"
+                       asp-route-id="@Model.Id">Delete</a>
+                    @if (Model.NotFull)
+                    {
+                        <form class="ml-2" asp-controller="Trip"
+                              asp-action="Join" asp-route-id="@Model.Id"
+                              method="post">
+                            <input class="btn btn-primary" type="submit"
+                                   value="Join" />
+                        </form>
+                    }
+                    else
+                    {
+                        <form class="ml-2" asp-controller="Trip" asp-action="Leave"
+                              asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit"
+                                   value="Leave" />
+                        </form>
+                    }
+                }
+            </div>
+            <p></p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Guide Info</h5>
+                    <p class="card-text">Email: @Model.Guide.Email</p>
+                    <p class="card-text">Phone Number: @Model.Guide.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

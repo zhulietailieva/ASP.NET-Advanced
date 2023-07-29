@@ -15,5 +15,7 @@
         Task<IEnumerable<TripAllViewModel>> AllByGuideIdAsync(string guideId);
 
         Task<IEnumerable<TripAllViewModel>> AllByUserIdAsync(string userId);
+
+        Task<TripDetailsViewModel?> GetDetailsByIdAsync(string houseId);
     }
 }

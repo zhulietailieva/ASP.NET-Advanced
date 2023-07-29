@@ -7,6 +7,7 @@
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Services.Data.Models.Trip;
+    using TrailVenturesSystem.Web.ViewModels.Guide;
     using TrailVenturesSystem.Web.ViewModels.Home;
     using TrailVenturesSystem.Web.ViewModels.Trip;
     using TrailVenturesSystem.Web.ViewModels.Trip.Enums;
@@ -135,6 +136,39 @@
             };
             await this.dbContext.Trips.AddAsync(newTrip);
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task<TripDetailsViewModel?> GetDetailsByIdAsync(string houseId)
+        {
+            Trip? trip = await this.dbContext
+                .Trips
+                .Include(t=>t.Mountain)
+                .Include(t=>t.Guide)
+                .ThenInclude(g=>g.User)
+                .Where(t => t.IsActive)
+                .FirstOrDefaultAsync(t => t.Id.ToString() == houseId);
+
+            if (trip == null)
+            {
+                return null;
+            }
+
+            return new TripDetailsViewModel
+            {
+                Id = trip.Id.ToString(),
+                Title = trip.Title,
+                StartDate = trip.StartDate,
+                PricePerPerson = trip.PricePerPerson,
+                NotFull = trip.Hikers.Count < trip.GroupMaxSize,
+                Mountain = trip.Mountain.Name,
+                Description = trip.Description,
+                ReturnDate = trip.ReturnDate,
+                Guide = new GuideInfoOnTripViewModel()
+                {
+                    Email = trip.Guide.User.Email,
+                    PhoneNumber = trip.Guide.PhoneNumber
+                }
+            };
         }
 
         public async Task<IEnumerable<IndexViewModel>> LastFiveTripsAsync()

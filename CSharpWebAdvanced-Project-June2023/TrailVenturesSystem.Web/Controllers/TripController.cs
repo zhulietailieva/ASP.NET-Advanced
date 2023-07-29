@@ -105,6 +105,23 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(string id)
+        {
+            TripDetailsViewModel? viewModel = await this.tripService
+                .GetDetailsByIdAsync(id);
+
+            if (viewModel == null)
+            {
+                this.TempData[ErrorMessage] = "Trip with the provided id does not exist!";
+
+                return this.RedirectToAction("Trip", "All");
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Mine()
         {
             List<TripAllViewModel> myTrips =
