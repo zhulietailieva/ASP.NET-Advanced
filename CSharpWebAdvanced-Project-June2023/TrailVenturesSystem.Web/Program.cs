@@ -7,6 +7,7 @@ namespace TrailVenturesSystem.Web
     using TrailVenturesSystem.Services.Data;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
+    using TrailVenturesSystem.Web.Infrastructure.ModelBinders;
 
     public class Program
     {
@@ -44,7 +45,13 @@ namespace TrailVenturesSystem.Web
             //with this method all added services are registered automatically
             builder.Services.AddApplicationServices(typeof(ITripService));
 
-            builder.Services.AddControllersWithViews();
+            //instert my custom model binder provider before the one that comes out of the box
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
 
             WebApplication app = builder.Build();
