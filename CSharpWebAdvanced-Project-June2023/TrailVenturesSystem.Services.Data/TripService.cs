@@ -64,6 +64,7 @@
 
             //pagination
             IEnumerable<TripAllViewModel> allTrips =await tripsQuery
+                .Where(t=>t.IsActive)
                 .Skip((queryModel.CurrentPage - 1) * queryModel.TripsPerPage)
                 .Take(queryModel.TripsPerPage)
                 .Select(t => new TripAllViewModel()
@@ -108,6 +109,7 @@
             //display the 5 latest PLANNED trips
             IEnumerable<IndexViewModel> lastfiveTrips = await this.dbContext
                 .Trips
+                .Where(t=>t.IsActive)
                 .OrderByDescending(t => t.StartDate)
                 .Take(5)
                 .Select(t => new IndexViewModel()

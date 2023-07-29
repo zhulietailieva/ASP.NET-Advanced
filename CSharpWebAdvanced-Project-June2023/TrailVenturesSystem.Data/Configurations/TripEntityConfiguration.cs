@@ -17,6 +17,10 @@
                 .HasDefaultValueSql("GETDATE()");
 
             builder
+                .Property(t => t.IsActive)
+                .HasDefaultValue(true);
+
+            builder
                 .HasOne(t => t.Guide)
                 .WithMany(g => g.CreatedTrips)
                 .HasForeignKey(t => t.GuideId)

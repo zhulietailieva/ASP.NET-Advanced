@@ -39,6 +39,8 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public bool IsActive { get; set; }
+
         public int MountainId { get; set; }
 
         public virtual Mountain Mountain { get; set; } = null!;
