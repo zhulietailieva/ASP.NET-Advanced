@@ -106,6 +106,7 @@
                 string tripId=await this.tripService
                     .CreateAndReturnIdAsync(model, guideId!);
 
+                this.TempData[SuccessMessage] = "Trip was created successfully!";
                 return this.RedirectToAction("Details", "Trip", new {id=tripId});
             }
             catch (Exception )
@@ -262,6 +263,7 @@
                 return this.View(model);
             }
 
+            this.TempData[SuccessMessage] = "Trip was edited successfully!";
             return this.RedirectToAction("Details", "Trip", new { id });
 
         }
