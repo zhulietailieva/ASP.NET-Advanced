@@ -65,6 +65,7 @@ Add size groups propertu to trips and update database
 
 --upload photos with MongoDb?
 --error pages
+--html sanitizer?
 
 
 
