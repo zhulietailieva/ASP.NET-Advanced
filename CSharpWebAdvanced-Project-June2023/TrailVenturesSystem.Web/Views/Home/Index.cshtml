@@ -1,9 +1,15 @@
-﻿@model IEnumerable<IndexViewModel>
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;
+@using TrailVenturesSystem.Web.Infrastructure.Extensions;
+
+@model IEnumerable<IndexViewModel>
+
+@inject IGuideService GuideService
 
 @{
     ViewData["Title"] = "Home Page";
 
     var trips = Model.ToList();
+    bool isUserGuide = await GuideService.GuideExistsByUserIdAsync(this.User.GetId()!);
 }
 <h1>Welcome to Trips</h1>
 @if (!trips.Any())
@@ -16,8 +22,12 @@
     <p class="lead">
         @if(User.Identity?.IsAuthenticated ?? false)
         {
-            <a asp-controller="Trip" asp-action="Add" class="btn btn-primary btn-lg"
-            role="button">Add Trip</a>
+            @if (isUserGuide)
+            {
+               <a asp-controller="Trip" asp-action="Add" class="btn btn-primary btn-lg"
+                role="button">Add Trip</a> 
+            }
+            
         }
     </p>
 }

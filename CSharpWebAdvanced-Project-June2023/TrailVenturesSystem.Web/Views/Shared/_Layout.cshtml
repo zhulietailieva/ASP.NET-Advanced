@@ -1,4 +1,12 @@
-﻿@using static TrailVenturesSystem.Common.GeneralApplicationConstants;
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;
+@using TrailVenturesSystem.Web.Infrastructure.Extensions;
+@using static TrailVenturesSystem.Common.GeneralApplicationConstants;
+
+@inject IGuideService GuideService;
+@{
+    bool isUserGuide =await GuideService.GuideExistsByUserIdAsync(this.User.GetId());
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,9 +41,13 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Trip" asp-action="Mine">My Trips</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Trip" asp-action="Add">Add Trip</a>
-                            </li>
+                            @if (isUserGuide)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Trip" asp-action="Add">Add Trip</a>
+                                </li>
+                            }
+                            
                         }
                     </ul>
                     <partial name="_LoginPartial" />

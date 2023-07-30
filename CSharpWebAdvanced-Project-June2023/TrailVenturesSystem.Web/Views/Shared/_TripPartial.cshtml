@@ -1,5 +1,15 @@
-﻿@model TripAllViewModel
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;
+@using TrailVenturesSystem.Web.Infrastructure.Extensions;
+@model TripAllViewModel
 
+@inject IGuideService GuideService
+@inject ITripService TripService
+@{
+    bool isUserGuide = await GuideService.GuideExistsByUserIdAsync(this.User.GetId()!);
+    bool isGuideCreatorOfTheTrip = await GuideService.HasTripWithIdAsync(this.User.GetId(), Model.Id);
+
+    bool isUserPartOfTrip = await TripService.IsUserWithIdPartOfTripByIdAsync(Model.Id, this.User.GetId()!);
+}
 <div class="col-md-4">
     <div class="card mb-3">
         <div class="card-body text-center">
@@ -17,26 +27,35 @@
 
             @if (this.User.Identity?.IsAuthenticated ?? false)
             {
-                <a asp-controller="Trip" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-warning">Edit</a>
-                <a asp-controller="Trip" asp-action="Delete" asp-route-id="@Model.Id"
-                   class="btn btn-danger">Delete</a>
+                @if (isUserGuide && isGuideCreatorOfTheTrip)
+                {
+                    <a asp-controller="Trip" asp-action="Edit" asp-route-id="@Model.Id"
+                    class="btn btn-warning">Edit</a>
+                    <a asp-controller="Trip" asp-action="Delete" asp-route-id="@Model.Id"
+                    class="btn btn-danger">Delete</a>                   
+                }
                 <p></p>
 
                 //if trip is not full -> add functionality to request becoming part of the hike group
-                @if (Model.NotFull)
+                @if (!isUserGuide)
                 {
-                    <form class="input-group-sm" asp-controller="Trip"
-                          asp-action="Join" asp-route-id="@Model.Id" method="post">
-                        <input class="btn btn-primary" type="submit" value="Join" />
-                    </form>
+                    @if (Model.NotFull && !isUserPartOfTrip)
+                    {
+                        <form class="input-group-sm" asp-controller="Trip"
+                            asp-action="Join" asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit" value="Join" />
+                        </form>
+                    }
+                    else if (isUserPartOfTrip)
+                    {
+                        <form asp-controller="Trip" asp-action="Leave"
+                            asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit" value="Leave" />
+                         </form>
+                    }
+
                 }
-                
-                    <form asp-controller="Trip" asp-action="Leave"
-                          asp-route-id="@Model.Id" method="post">
-                        <input class="btn btn-primary" type="submit" value="Leave" />
-                    </form>
-                
+                                
             }
         </div>
     </div>

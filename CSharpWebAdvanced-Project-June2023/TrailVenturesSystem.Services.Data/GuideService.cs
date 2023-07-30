@@ -75,5 +75,24 @@
             }
             return user.EnrolledTrips.Any();
         }
+
+        public async Task<bool> HasTripWithIdAsync(string? userId, string tripId)
+        {
+            Guide? guide =await this.dbContext
+                .Guides
+                .Include(g=>g.CreatedTrips)
+                .FirstOrDefaultAsync(g => g.UserId.ToString() == userId);
+
+            if (guide == null)
+            {
+                return false;
+            }
+
+            //check again if we populate Created trips somewhere?
+
+            tripId = tripId.ToLower();
+            return guide.CreatedTrips.Any(t => t.Id.ToString() == tripId);
+
+        }
     }
 }

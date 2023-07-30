@@ -1,4 +1,16 @@
-﻿@model TripDetailsViewModel
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;
+@using TrailVenturesSystem.Web.Infrastructure.Extensions;
+
+@model TripDetailsViewModel
+
+@inject IGuideService GuideService
+@inject ITripService TripService
+@{
+    bool isUserGuide = await GuideService.GuideExistsByUserIdAsync(this.User.GetId()!);
+    bool isGuideCreatorOfTheTrip = await GuideService.HasTripWithIdAsync(this.User.GetId(), Model.Id);
+
+    bool isUserPartOfTrip = await TripService.IsUserWithIdPartOfTripByIdAsync(Model.Id, this.User.GetId()!);
+}
 @{
     ViewBag.Title = "Trip Details";
 }
@@ -25,27 +37,34 @@
             <div class="form-inline">
                 @if (this.User.Identity?.IsAuthenticated ?? false)
                 {
-                    <a class="btn btn-warning" asp-controller="Trip" asp-action="Edit"
-                       asp-route-id="@Model.Id">Edit</a>
-                    <a class="ml-2 btn btn-danger" asp-controller="Trip" asp-action="Delete"
-                       asp-route-id="@Model.Id">Delete</a>
-                    @if (Model.NotFull)
+                    @if (isUserGuide && isGuideCreatorOfTheTrip)
                     {
-                        <form class="ml-2" asp-controller="Trip"
+                        <a class="btn btn-warning" asp-controller="Trip" asp-action="Edit"
+                            asp-route-id="@Model.Id">Edit</a>
+                        <a class="ml-2 btn btn-danger" asp-controller="Trip" asp-action="Delete"
+                            asp-route-id="@Model.Id">Delete</a>
+                    }
+
+                    @if (!isUserGuide)
+                    {
+                        @if (Model.NotFull && !isUserPartOfTrip)
+                        {
+                            <form class="ml-2" asp-controller="Trip"
                               asp-action="Join" asp-route-id="@Model.Id"
-                              method="post">
-                            <input class="btn btn-primary" type="submit"
+                                method="post">
+                                <input class="btn btn-primary" type="submit"
                                    value="Join" />
-                        </form>
-                    }
-                    else
-                    {
-                        <form class="ml-2" asp-controller="Trip" asp-action="Leave"
+                            </form>
+                        }
+                        else if (isUserPartOfTrip)
+                        {
+                            <form class="ml-2" asp-controller="Trip" asp-action="Leave"
                               asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit"
+                                <input class="btn btn-primary" type="submit"
                                    value="Leave" />
-                        </form>
-                    }
+                            </form>
+                        }
+                    }                      
                 }
             </div>
             <p></p>
