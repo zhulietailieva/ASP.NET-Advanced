@@ -5,6 +5,8 @@
     public interface IMountainService
     {
         Task<IEnumerable<TripSelectMountainFormModel>> AllMountainsAsync();
+
+        Task<IEnumerable<AllMountainsViewModel>> AllMountainsForListAsync();
         
         Task<bool> ExistsByIdAsync(int id);
 

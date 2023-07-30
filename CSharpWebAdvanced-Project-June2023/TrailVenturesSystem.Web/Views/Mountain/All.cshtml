@@ -1,0 +1,14 @@
+﻿@model IEnumerable<AllMountainsViewModel>
+@{
+    ViewData["Title"] = "All Mountains";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr/>
+
+<div class="list-group">
+    @foreach(AllMountainsViewModel mountain in Model)
+    {
+        <a class="list-group-item list-group-item-action" asp-controller="Mountain" asp-action="Details" asp-route-id="@mountain.Id">@mountain.Name</a>
+    }
+</div>

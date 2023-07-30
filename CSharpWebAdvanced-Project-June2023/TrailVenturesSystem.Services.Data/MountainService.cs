@@ -38,6 +38,21 @@
             return allMountains;
         }
 
+        public async Task<IEnumerable<AllMountainsViewModel>> AllMountainsForListAsync()
+        {
+            IEnumerable<AllMountainsViewModel> allMountains = await this.dbContext
+                .Mountains
+                .AsNoTracking()
+                .Select(m => new AllMountainsViewModel()
+                {
+                    Id = m.Id,
+                    Name = m.Name
+                })
+                .ToArrayAsync();
+
+            return allMountains;  
+        }
+
         public async Task<bool> ExistsByIdAsync(int id)
         {
             bool result =await this.dbContext
