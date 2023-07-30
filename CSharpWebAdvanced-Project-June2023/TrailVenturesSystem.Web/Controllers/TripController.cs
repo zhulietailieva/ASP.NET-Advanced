@@ -411,6 +411,54 @@
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Join(string id)
+        {
+            //does this trup exist?
+
+            bool tripExists = await this.tripService.ExistsByIdAsync(id);
+
+            if (!tripExists)
+            {
+                this.TempData[ErrorMessage] = "Trip with provided id does not exist!";
+
+                return this.RedirectToAction("All", "Trip");
+            }
+
+            bool isTripFull = await this.tripService.IsFullByIdAsync(id);
+
+            if (isTripFull)
+            {
+                this.TempData[ErrorMessage] = "This trip does not have available places! Please select another trip.";
+
+                return this.RedirectToAction("All", "Trip");
+            }
+
+            bool isUserGuide = await this.guideService.GuideExistsByUserIdAsync(this.User.GetId()!);
+
+            if (isUserGuide)
+            {
+                //guide cannot join other trips (maybe change functionality later?)
+
+                this.TempData[ErrorMessage] = "Guides cannot join trips! Please register as a user.";
+
+                return this.RedirectToAction("Index","Home");
+            }
+
+            try
+            {
+                await this.tripService.JoinTripAsync(id, this.User.GetId()!);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
+            this.TempData[SuccessMessage] = "You successfuly joined this trip!"; 
+
+            return this.RedirectToAction("Mine", "Trip");
+        }
+        
         private IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administator.";

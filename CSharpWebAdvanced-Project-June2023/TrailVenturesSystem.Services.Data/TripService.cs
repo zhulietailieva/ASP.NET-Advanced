@@ -247,6 +247,15 @@
             };
         }
 
+        public async Task<bool> IsFullByIdAsync(string tripId)
+        {
+            Trip trip =await this.dbContext
+                .Trips
+                .FirstAsync(t => t.Id.ToString() == tripId);
+
+            return trip.Hikers.Count >= trip.GroupMaxSize;
+        }
+
         public async Task<bool> IsGuideWithIdCreatorOfTripWithIdAsync(string tripId, string guideId)
         {
             Trip trip = await this.dbContext
@@ -255,6 +264,29 @@
                 .FirstAsync(t => t.Id.ToString() == tripId);
 
             return trip.GuideId.ToString() == guideId;
+        }
+
+        public async Task JoinTripAsync(string tripId, string userId)
+        {
+            //Services rely on the fact that controllers check if trip, user, guide etc with given ids exist!
+
+            ApplicationUser userToJoin = await this.dbContext
+                .Users
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            Trip trip = await this.dbContext
+                .Trips
+                .FirstAsync(t => t.Id.ToString() == tripId);
+
+            //add the current user to the lists of hikers for the current trip
+                
+
+            trip.Hikers.Add(userToJoin);
+
+            //should i add to the User ApplicationUserTripTable???
+
+            await this.dbContext.SaveChangesAsync();           
+
         }
 
         public async Task<IEnumerable<IndexViewModel>> LastFiveTripsAsync()

@@ -29,5 +29,9 @@
         Task<TripPreDeleteDetailsViewModel> GetTripForDeleteByIdAsync(string tripId);
 
         Task DeleteTripByIdAsync(string tripId);
+
+        Task<bool> IsFullByIdAsync(string tripId);
+
+        Task JoinTripAsync(string tripId, string userId);
     }
 }

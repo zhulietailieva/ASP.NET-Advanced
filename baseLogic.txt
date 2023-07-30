@@ -64,6 +64,7 @@ goshoHiker@hikers.com - password:123456 - Hiker (ApplicationUser)
 Add size groups propertu to trips and update database
 
 --upload photos with MongoDb?
+--error pages
 
 
 
