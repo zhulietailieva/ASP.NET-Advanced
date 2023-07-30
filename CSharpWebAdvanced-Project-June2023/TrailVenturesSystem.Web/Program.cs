@@ -1,6 +1,7 @@
 namespace TrailVenturesSystem.Web
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
@@ -51,6 +52,7 @@ namespace TrailVenturesSystem.Web
                 .AddMvcOptions(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
 
 
