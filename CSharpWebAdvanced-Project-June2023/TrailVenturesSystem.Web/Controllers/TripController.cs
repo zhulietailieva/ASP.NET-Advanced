@@ -458,7 +458,50 @@
 
             return this.RedirectToAction("Mine", "Trip");
         }
-        
+
+        [HttpPost]
+
+        public async Task<IActionResult> Leave(string id)
+        {
+            //does this trip exist?
+
+            bool tripExists = await this.tripService.ExistsByIdAsync(id);
+
+            if (!tripExists)
+            {
+                this.TempData[ErrorMessage] = "Trip with provided id does not exist!";
+
+                return this.RedirectToAction("All", "Trip");
+            }
+
+            //might not work
+
+            bool hasCurrentUserJoinedTrip = 
+                await this.tripService.IsUserWithIdPartOfTripByIdAsync(id, this.User.GetId()!);
+           
+
+            if (!hasCurrentUserJoinedTrip)
+            {
+                
+                this.TempData[ErrorMessage] = "You are not in this trips's participants!";
+
+                return this.RedirectToAction("Mine", "Trip");
+            }
+
+            try
+            {
+                await this.tripService.LeaveTripAsync(id, this.User.GetId()!);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
+            this.TempData[SuccessMessage] = "You successfuly left this trip!";
+
+            return this.RedirectToAction("Mine", "Trip");
+            
+        }
         private IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administator.";

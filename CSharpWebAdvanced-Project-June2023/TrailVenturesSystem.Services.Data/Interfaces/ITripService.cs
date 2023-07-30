@@ -33,5 +33,9 @@
         Task<bool> IsFullByIdAsync(string tripId);
 
         Task JoinTripAsync(string tripId, string userId);
+
+        Task<bool> IsUserWithIdPartOfTripByIdAsync(string tripId, string userId);
+
+        Task LeaveTripAsync(string tripId, string userId);
     }
 }

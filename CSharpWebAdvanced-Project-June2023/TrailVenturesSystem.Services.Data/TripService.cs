@@ -273,6 +273,17 @@
             return trip.GuideId.ToString() == guideId;
         }
 
+        public async Task<bool> IsUserWithIdPartOfTripByIdAsync(string tripId, string userId)
+        {
+            Trip trip = await this.dbContext
+                .Trips
+                .Include(t=>t.Hikers)
+                .FirstAsync(t => t.Id.ToString() == tripId);
+
+            return trip.Hikers.Count>0 &&
+                trip.Hikers.Any(h => h.Id.ToString() == userId);
+        }
+
         public async Task JoinTripAsync(string tripId, string userId)
         {
             //Services rely on the fact that controllers check if trip, user, guide etc with given ids exist!
@@ -314,6 +325,29 @@
                 .ToArrayAsync();    //always async when we retrieve from the database
 
             return lastfiveTrips;
+        }
+
+        public async Task LeaveTripAsync(string tripId,string userId)
+        {
+
+            ApplicationUser userToLeave = await this.dbContext
+                .Users
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            Trip trip = await this.dbContext
+                .Trips
+                .FirstAsync(t => t.Id.ToString() == tripId);
+
+            trip.Hikers.Remove(userToLeave);
+
+            userToLeave.EnrolledTrips.Remove(trip);
+
+            //should i remove from ApplicationUserTripTable???
+
+            
+
+            await this.dbContext.SaveChangesAsync();
+
         }
     }
 }

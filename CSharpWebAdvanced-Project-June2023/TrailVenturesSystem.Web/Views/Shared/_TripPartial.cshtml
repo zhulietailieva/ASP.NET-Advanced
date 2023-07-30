@@ -31,13 +31,12 @@
                         <input class="btn btn-primary" type="submit" value="Join" />
                     </form>
                 }
-                else
-                {
+                
                     <form asp-controller="Trip" asp-action="Leave"
                           asp-route-id="@Model.Id" method="post">
                         <input class="btn btn-primary" type="submit" value="Leave" />
                     </form>
-                }
+                
             }
         </div>
     </div>
