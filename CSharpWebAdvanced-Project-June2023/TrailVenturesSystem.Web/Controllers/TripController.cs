@@ -252,7 +252,7 @@
 
             try
             {
-                await this.tripService.EditTripByIdAndFormModel(id, model);
+                await this.tripService.EditTripByIdAndFormModelAsync(id, model);
             }
             catch (Exception)
             {
@@ -265,6 +265,62 @@
 
             this.TempData[SuccessMessage] = "Trip was edited successfully!";
             return this.RedirectToAction("Details", "Trip", new { id });
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool tripExists = await tripService
+               .ExistsByIdAsync(id);
+            if (!tripExists)
+            {
+                //Logic stops working here -> We are in this statement when we should not be
+                //given id as parameter is null or ""?
+                this.TempData[ErrorMessage] = "Trip with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Trip");
+            }
+
+            //should also check if user is guide
+
+
+            bool isUserGuide = await this.guideService
+                .GuideExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isUserGuide)
+            {
+                this.TempData[ErrorMessage] = "You must become a guide in order to edit trip info!";
+
+                return this.RedirectToAction("Become", "Guide");
+            }
+
+            //guide should only be able to edit their own trips
+
+            string? guideId = await this.guideService
+                .GetGuideIdByUserIdAsync(this.User.GetId()!);
+
+            bool isGuideCreator = await this.tripService
+                .IsGuideWithIdCreatorOfTripWithIdAsync(id, guideId!);
+
+            if (!isGuideCreator)
+            {
+                this.TempData[ErrorMessage] = "You must be the creator in order to edit this trip!";
+
+                return this.RedirectToAction("Mine", "Trip");
+            }
+
+            try
+            {
+                TripPreDeleteDetailsViewModel viewModel =
+                    await this.tripService.GetTripForDeleteByIdAsync(id);
+
+                return this.View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
 
         }
 

@@ -140,7 +140,7 @@
             return newTrip.Id.ToString();
         }
 
-        public async Task EditTripByIdAndFormModel(string tripId, TripFormModel formModel)
+        public async Task EditTripByIdAndFormModelAsync(string tripId, TripFormModel formModel)
         {
             Trip trip = await this.dbContext
                  .Trips
@@ -161,7 +161,7 @@
 
         public async Task<bool> ExistsByIdAsync(string tripId)
         {
-            bool result =await this.dbContext
+            bool result =await dbContext
                 .Trips
                 .Where(t => t.IsActive)
                 .AnyAsync(t => t.Id.ToString() == tripId);
@@ -195,6 +195,21 @@
                     Email = trip.Guide.User.Email,
                     PhoneNumber = trip.Guide.PhoneNumber
                 }
+            };
+        }
+
+        public async Task<TripPreDeleteDetailsViewModel> GetTripForDeleteByIdAsync(string tripId)
+        {
+            Trip trip = await dbContext
+                .Trips
+                .Where(t => t.IsActive)
+                .FirstAsync(t => t.Id.ToString() == tripId);
+
+            return new TripPreDeleteDetailsViewModel
+            {
+                Title = trip.Title,
+                StartDate = trip.StartDate,
+                ReturnDate = trip.ReturnDate
             };
         }
 

@@ -1,0 +1,31 @@
+﻿@model TripPreDeleteDetailsViewModel
+@{
+    ViewBag.Title = "Delete Trip";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<form method="post" asp-action="Delete">
+    <div class="row">
+        <div class="col-md-4">
+            <img class="card-img-top" src="https://scontent.fsof11-1.fna.fbcdn.net/v/t39.30808-6/363399553_677306337770010_2818221563309128892_n.jpg?stp=cp6_dst-jpg&_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=ZC6EHzfbOQoAX_YJwEK&_nc_ht=scontent.fsof11-1.fna&oh=00_AfDqF4blnJeGRM65qky7OlDofd8kuxnBbTZaM5CgyYm01w&oe=64C9E077"
+                 alt="Trip Image">
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ReturnDate" class="control-label"></label>
+                <input asp-for="ReturnDate" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>

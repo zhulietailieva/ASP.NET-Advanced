@@ -24,6 +24,8 @@
 
         Task<bool> IsGuideWithIdCreatorOfTripWithIdAsync(string tripId, string guideId);
 
-        Task EditTripByIdAndFormModel(string tripId, TripFormModel formModel);
+        Task EditTripByIdAndFormModelAsync(string tripId, TripFormModel formModel);
+
+        Task<TripPreDeleteDetailsViewModel> GetTripForDeleteByIdAsync(string tripId);
     }
 }
