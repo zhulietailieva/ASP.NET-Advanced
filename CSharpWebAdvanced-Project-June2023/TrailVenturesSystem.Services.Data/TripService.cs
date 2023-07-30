@@ -74,7 +74,9 @@
                     Title = t.Title,
                     StartDate = t.StartDate,
                     PricePerPerson = t.PricePerPerson,
-                    NotFull = t.Hikers.Count < t.GroupMaxSize
+                    NotFull = t.Hikers.Count < t.GroupMaxSize,
+                    CurrentGroupSize=t.Hikers.Count,
+                    MaxGroupSize=t.GroupMaxSize
                 }).ToArrayAsync(); //this is where the query is materialized
 
             int totalTrips = tripsQuery.Count();
@@ -97,7 +99,9 @@
                     Title = t.Title,
                     StartDate = t.StartDate,
                     PricePerPerson = t.PricePerPerson,
-                    NotFull = t.Hikers.Count < t.GroupMaxSize
+                    NotFull = t.Hikers.Count < t.GroupMaxSize,
+                    CurrentGroupSize=t.Hikers.Count,
+                    MaxGroupSize=t.GroupMaxSize
                 }).ToArrayAsync();
 
             return allGuideTrips;
@@ -114,7 +118,10 @@
                     Title = t.Title,
                     StartDate = t.StartDate,
                     PricePerPerson = t.PricePerPerson,
-                    NotFull = t.Hikers.Count < t.GroupMaxSize
+                    NotFull = t.Hikers.Count < t.GroupMaxSize,
+                    CurrentGroupSize=t.Hikers.Count,
+                    MaxGroupSize=t.GroupMaxSize
+                    
                 }).ToArrayAsync();
 
             return allUserTrips;

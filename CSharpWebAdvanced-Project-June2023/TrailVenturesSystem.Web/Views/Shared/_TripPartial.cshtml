@@ -10,6 +10,7 @@
                 <b>@($"{Model.PricePerPerson:f2}") BGN</b>
             </h6>
             <h6>(@(Model.NotFull ? "Available places" : "Not Available places"))</h6>
+            <h5>@(Model.CurrentGroupSize)/@(Model.MaxGroupSize)</h5>
             <br />
             <a asp-controller="Trip" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>

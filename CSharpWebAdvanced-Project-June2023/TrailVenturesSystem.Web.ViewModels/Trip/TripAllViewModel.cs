@@ -17,5 +17,11 @@
         [Display(Name = "Available places")]
         public bool NotFull { get; set; }
 
+        [Display(Name ="Current group size")]
+        public int CurrentGroupSize { get; set; }
+
+        [Display(Name = "Max group size")]
+        public int MaxGroupSize { get; set; }
+
     }
 }
