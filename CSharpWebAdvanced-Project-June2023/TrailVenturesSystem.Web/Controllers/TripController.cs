@@ -275,8 +275,6 @@
                .ExistsByIdAsync(id);
             if (!tripExists)
             {
-                //Logic stops working here -> We are in this statement when we should not be
-                //given id as parameter is null or ""?
                 this.TempData[ErrorMessage] = "Trip with the provided id does not exist!";
 
                 return this.RedirectToAction("All", "Trip");
@@ -322,6 +320,60 @@
                 return this.GeneralError();
             }
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id,TripPreDeleteDetailsViewModel model)
+        {
+            bool tripExists = await tripService
+               .ExistsByIdAsync(id);
+            if (!tripExists)
+            {
+                this.TempData[ErrorMessage] = "Trip with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Trip");
+            }
+
+            //should also check if user is guide
+
+
+            bool isUserGuide = await this.guideService
+                .GuideExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isUserGuide)
+            {
+                this.TempData[ErrorMessage] = "You must become a guide in order to edit trip info!";
+
+                return this.RedirectToAction("Become", "Guide");
+            }
+
+            //guide should only be able to edit their own trips
+
+            string? guideId = await this.guideService
+                .GetGuideIdByUserIdAsync(this.User.GetId()!);
+
+            bool isGuideCreator = await this.tripService
+                .IsGuideWithIdCreatorOfTripWithIdAsync(id, guideId!);
+
+            if (!isGuideCreator)
+            {
+                this.TempData[ErrorMessage] = "You must be the creator in order to edit this trip!";
+
+                return this.RedirectToAction("Mine", "Trip");
+            }
+
+            try
+            {
+                await this.tripService.DeleteTripByIdAsync(id);
+
+                this.TempData[SuccessMessage] = "Your trip was successfully deleted!";
+
+                return this.RedirectToAction("Mine", "Trip");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
         }
 
         [HttpGet]

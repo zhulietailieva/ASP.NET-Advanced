@@ -140,6 +140,20 @@
             return newTrip.Id.ToString();
         }
 
+        public async Task DeleteTripByIdAsync(string tripId)
+        {
+            Trip tripToDelete =await this.dbContext
+                .Trips
+                .Where(t => t.IsActive)
+                .FirstAsync(t => t.Id.ToString() == tripId);
+
+            //soft delete
+
+            tripToDelete.IsActive = false;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task EditTripByIdAndFormModelAsync(string tripId, TripFormModel formModel)
         {
             Trip trip = await this.dbContext

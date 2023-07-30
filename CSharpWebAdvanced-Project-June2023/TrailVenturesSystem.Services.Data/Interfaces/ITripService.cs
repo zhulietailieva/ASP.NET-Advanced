@@ -27,5 +27,7 @@
         Task EditTripByIdAndFormModelAsync(string tripId, TripFormModel formModel);
 
         Task<TripPreDeleteDetailsViewModel> GetTripForDeleteByIdAsync(string tripId);
+
+        Task DeleteTripByIdAsync(string tripId);
     }
 }
