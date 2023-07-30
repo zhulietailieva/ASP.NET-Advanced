@@ -6,6 +6,7 @@
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Services.Data.Models.Statistics;
     using TrailVenturesSystem.Services.Data.Models.Trip;
     using TrailVenturesSystem.Web.ViewModels.Guide;
     using TrailVenturesSystem.Web.ViewModels.Home;
@@ -216,6 +217,17 @@
                     Email = trip.Guide.User.Email,
                     PhoneNumber = trip.Guide.PhoneNumber
                 }
+            };
+        }
+
+        public async Task<StatisticsServiceModel> GetStatisticsAsync()
+        {
+            return new StatisticsServiceModel()
+            {
+                TotalTrips =
+                    await this.dbContext.Trips.CountAsync(),
+                TotalTripsAvailableToJoin =
+                    await this.dbContext.Trips.Where(t => t.Hikers.Count < t.GroupMaxSize).CountAsync()
             };
         }
 

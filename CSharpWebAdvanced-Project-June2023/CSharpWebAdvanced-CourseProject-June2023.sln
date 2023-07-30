@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrailVenturesSystem.Web.Inf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrailVenturesSystem.Services.Data.Models", "TrailVenturesSystem.Services.Data.Models\TrailVenturesSystem.Services.Data.Models.csproj", "{CF4C5345-2B84-44CC-AF84-A9E67E3DB13D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrailVenturesSystem.WebApi", "TrailVenturesSystem.WebApi\TrailVenturesSystem.WebApi.csproj", "{D5D37BA2-C1BA-475D-99C2-23DC4A2FFA9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{CF4C5345-2B84-44CC-AF84-A9E67E3DB13D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF4C5345-2B84-44CC-AF84-A9E67E3DB13D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF4C5345-2B84-44CC-AF84-A9E67E3DB13D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5D37BA2-C1BA-475D-99C2-23DC4A2FFA9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D37BA2-C1BA-475D-99C2-23DC4A2FFA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D37BA2-C1BA-475D-99C2-23DC4A2FFA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D37BA2-C1BA-475D-99C2-23DC4A2FFA9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{8510DDCF-D727-4E8A-A7D4-4B2212BA1DAB} = {033C779D-C0A9-423C-88EF-888357BE5ED9}
 		{BDBFEE51-01F3-4B00-9359-16E4478D6A02} = {C4DC1081-7C99-47C3-AF6D-FAE6F112F30B}
 		{CF4C5345-2B84-44CC-AF84-A9E67E3DB13D} = {033C779D-C0A9-423C-88EF-888357BE5ED9}
+		{D5D37BA2-C1BA-475D-99C2-23DC4A2FFA9F} = {C4DC1081-7C99-47C3-AF6D-FAE6F112F30B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32229440-A661-45EA-A32A-B6E2239B54B7}

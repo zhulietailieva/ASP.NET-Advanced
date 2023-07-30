@@ -1,5 +1,6 @@
 ﻿namespace TrailVenturesSystem.Services.Data.Interfaces
 {
+    using TrailVenturesSystem.Services.Data.Models.Statistics;
     using TrailVenturesSystem.Services.Data.Models.Trip;
     using TrailVenturesSystem.Web.ViewModels.Home;
     using TrailVenturesSystem.Web.ViewModels.Trip;
@@ -37,5 +38,7 @@
         Task<bool> IsUserWithIdPartOfTripByIdAsync(string tripId, string userId);
 
         Task LeaveTripAsync(string tripId, string userId);
+
+        Task<StatisticsServiceModel> GetStatisticsAsync();
     }
 }
