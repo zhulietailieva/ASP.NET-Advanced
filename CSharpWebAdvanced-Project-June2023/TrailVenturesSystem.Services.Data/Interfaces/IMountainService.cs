@@ -11,5 +11,7 @@
         Task<bool> ExistsByIdAsync(int id);
 
         Task<IEnumerable<string>> AllMountainNamesAsync();
+
+        Task<MountainDetailsViewModel> GetDetailsByIdAsync(int id);
     }
 }

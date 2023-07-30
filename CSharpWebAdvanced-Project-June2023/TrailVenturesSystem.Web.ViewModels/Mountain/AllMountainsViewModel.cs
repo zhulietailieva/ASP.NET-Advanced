@@ -1,6 +1,8 @@
 ﻿namespace TrailVenturesSystem.Web.ViewModels.Mountain
 {
-    public class AllMountainsViewModel : TripSelectMountainFormModel
+    using TrailVenturesSystem.Web.ViewModels.Mountain.Interfaces;
+
+    public class AllMountainsViewModel : TripSelectMountainFormModel,IMountainDetailsModel
     {
     }
 }

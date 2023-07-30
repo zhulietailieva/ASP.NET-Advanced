@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using TrailVenturesSystem.Data;
+    using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.ViewModels.Mountain;
 
@@ -60,6 +61,21 @@
                 .AnyAsync(m => m.Id == id);
 
             return result;
+        }
+
+        public async Task<MountainDetailsViewModel> GetDetailsByIdAsync(int id)
+        {
+            Mountain mountain = await dbContext
+                .Mountains
+                .FirstAsync(m => m.Id == id);
+
+            MountainDetailsViewModel viewModel = new MountainDetailsViewModel()
+            {
+                Id=mountain.Id,
+                Name=mountain.Name
+            };
+
+            return viewModel;
         }
     }
 }

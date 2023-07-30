@@ -1,4 +1,6 @@
-﻿@model IEnumerable<AllMountainsViewModel>
+﻿@using TrailVenturesSystem.Web.Infrastructure.Extensions
+
+@model IEnumerable<AllMountainsViewModel>
 @{
     ViewData["Title"] = "All Mountains";
 }
@@ -9,6 +11,6 @@
 <div class="list-group">
     @foreach(AllMountainsViewModel mountain in Model)
     {
-        <a class="list-group-item list-group-item-action" asp-controller="Mountain" asp-action="Details" asp-route-id="@mountain.Id">@mountain.Name</a>
+        <a class="list-group-item list-group-item-action" asp-controller="Mountain" asp-action="Details" asp-route-id="@mountain.Id" asp-route-information="@mountain.GetUrlInformation()">@mountain.Name</a>
     }
 </div>
