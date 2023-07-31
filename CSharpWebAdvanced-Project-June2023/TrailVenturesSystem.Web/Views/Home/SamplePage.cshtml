@@ -1,0 +1,40 @@
+﻿@model TrailVenturesSystem.Web.Views.Home.SamplePageModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mountain Trips</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-5">
+        <h1 class="display-4">Explore the Mountains</h1>
+        <p class="lead">Find your next adventure in the breathtaking mountains.</p>
+        <a asp-page="/Trips" class="btn btn-light btn-lg">View All Trips</a>
+    </header>
+
+    <section class="container mt-5">
+        <div class="row">
+            @for(var i=0;i<5;i++)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <img src="" class="card-img-top" alt="NAME">
+                        <div class="card-body">
+                            <h2 class="card-title">TITLE</h2>
+                            <p class="card-text">DESCRIPTION</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- Add more sections, testimonials, or any other content as needed -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    
+</body>
+</html>

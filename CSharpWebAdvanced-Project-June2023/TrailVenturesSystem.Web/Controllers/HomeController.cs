@@ -22,6 +22,11 @@
             return View(viewModel);
         }
 
+        public IActionResult Sample()
+        {
+            return View("SamplePage");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
