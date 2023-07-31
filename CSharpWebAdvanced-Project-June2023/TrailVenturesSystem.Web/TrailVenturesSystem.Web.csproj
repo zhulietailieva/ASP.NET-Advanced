@@ -37,4 +37,8 @@
     <ProjectReference Include="..\TrailVenturesSystem.Web.ViewModels\TrailVenturesSystem.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\Account\" />
+  </ItemGroup>
+
 </Project>

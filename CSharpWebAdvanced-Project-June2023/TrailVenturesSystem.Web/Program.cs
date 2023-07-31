@@ -49,6 +49,12 @@ namespace TrailVenturesSystem.Web
             //with this method all added services are registered automatically
             builder.Services.AddApplicationServices(typeof(ITripService));
 
+            //redirect to custom implemented login page
+            builder.Services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.LoginPath = "/User/Login";
+            });
+
             //instert my custom model binder provider before the one that comes out of the box
             builder.Services
                 .AddControllersWithViews()
