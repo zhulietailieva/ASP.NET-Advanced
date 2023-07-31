@@ -27,6 +27,6 @@
         //Navigation property
         public virtual ICollection<Trip> EnrolledTrips { get; set; }
         
-        //TODO: Add more properties for a user
+        
     }
 }

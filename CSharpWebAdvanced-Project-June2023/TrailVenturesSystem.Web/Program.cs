@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using TrailVenturesSystem.Data;
 namespace TrailVenturesSystem.Web
 {
     using Microsoft.AspNetCore.Identity;
