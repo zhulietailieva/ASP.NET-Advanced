@@ -23,6 +23,8 @@
         }
 
         [HttpGet]
+
+        //IActionResult (no Task) because there are no async operations
         public IActionResult Register()
         {
             return View();
@@ -79,6 +81,8 @@
 
         [HttpPost]
 
+
+        //we use async Task<> where there are async operations
         public async Task<IActionResult> Login(LoginFormModel model)
         {
             if (!ModelState.IsValid)

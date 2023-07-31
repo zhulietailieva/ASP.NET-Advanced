@@ -15,12 +15,14 @@
         private readonly IMountainService mountainService;
         private readonly IGuideService guideService;
         private readonly ITripService tripService;
+        private readonly IUserService userService;
         public TripController(IMountainService mountainService, IGuideService guideService,
-            ITripService tripService)
+            ITripService tripService, IUserService userService)
         {
             this.mountainService = mountainService;
             this.guideService = guideService;
             this.tripService = tripService;
+            this.userService = userService;
 
         }
 
@@ -135,6 +137,10 @@
             {
                 TripDetailsViewModel viewModel = await this.tripService
                     .GetDetailsByIdAsync(id);
+
+                viewModel.Guide.FullName =
+                    await this.userService.GetFullNameByEmailAsync(this.User.Identity?.Name!);
+
 
                 return View(viewModel);
             }

@@ -4,6 +4,9 @@
 
     public class GuideInfoOnTripViewModel
     {
+
+        public string FullName { get; set; } = null!;
+
         public string Email { get; set; }
 
         [Display(Name ="Phone number")]
