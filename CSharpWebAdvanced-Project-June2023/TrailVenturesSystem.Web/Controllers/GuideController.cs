@@ -76,10 +76,10 @@
             {
                 this.TempData[ErrorMessage] = "Unexpected error occured while registering you as a guide! Please try agent later or contact an administrator.";
 
-                return this.RedirectToPage("Index", "Home");
+                return this.RedirectToAction("Index", "Home");
 
             }
-            return this.RedirectToPage("All", "Trip");
+            return this.RedirectToAction("All", "Trip");
             
         }
 

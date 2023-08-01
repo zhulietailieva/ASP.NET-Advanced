@@ -1,8 +1,14 @@
 ﻿namespace TrailVenturesSystem.Web.Infrastructure.Extensions
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using System.Reflection;
+    using TrailVenturesSystem.Data.Models;
 
+    using static Common.GeneralApplicationConstants;
+
+    //not all extension methods are void
     public static class WebApplicationBuilderExtensions
     {
         /// <summary>
@@ -38,7 +44,42 @@
                 services.AddScoped(interfaceType, implementationType);
 
             }
+        }
+        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app,string email)
+        {
+            //executes synchronously
+            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+
+            //this action is similar to when we require service trough a ctor
+            UserManager<ApplicationUser> userManager =
+                serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            RoleManager<IdentityRole<Guid>> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+            //async method
+            Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync(AdminRoleName))
+                {
+                    //admin role already exists, no need for seeding
+                    return;
+                }
+
+                IdentityRole<Guid> role = new IdentityRole<Guid>(AdminRoleName);
+
+                await roleManager.CreateAsync(role);
+
+                ApplicationUser adminUser =await userManager.FindByEmailAsync(email);
+
+                await userManager.AddToRoleAsync(adminUser, AdminRoleName);
+            })  //those methods ensure that the asynchronous task method is finished executing
+                .GetAwaiter()
+                .GetResult();
+
+            return app;
         }
     }
 }

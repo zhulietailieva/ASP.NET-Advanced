@@ -8,10 +8,11 @@ namespace TrailVenturesSystem.Web
     using Microsoft.EntityFrameworkCore;
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
-    using TrailVenturesSystem.Services.Data;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Web.Infrastructure.ModelBinders;
+
+    using static Common.GeneralApplicationConstants;
 
     public class Program
     {
@@ -39,7 +40,8 @@ namespace TrailVenturesSystem.Web
                             builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
                 options.Password.RequiredLength =
                             builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
-            })
+            })  
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<TrailVenturesDbContext>();
 
             //how we would normally register our service
@@ -88,6 +90,9 @@ namespace TrailVenturesSystem.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            //seed admin
+            app.SeedAdministrator(DevelopmentAdminEmail);
 
             //Endopoints order: from at least catching routes to most catching routes
             app.UseEndpoints(config =>
