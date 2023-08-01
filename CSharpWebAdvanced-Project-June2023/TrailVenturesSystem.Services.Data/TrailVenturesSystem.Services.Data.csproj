@@ -11,6 +11,7 @@
     <ProjectReference Include="..\TrailVenturesSystem.Data.Models\TrailVenturesSystem.Data.Models.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Data\TrailVenturesSystem.Data.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Services.Data.Models\TrailVenturesSystem.Services.Data.Models.csproj" />
+    <ProjectReference Include="..\TrailVenturesSystem.Services.Mapping\TrailVenturesSystem.Services.Mapping.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Web.ViewModels\TrailVenturesSystem.Web.ViewModels.csproj" />
   </ItemGroup>
 

@@ -6,12 +6,14 @@ namespace TrailVenturesSystem.Web
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using System.Reflection;
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Services.Mapping;
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Web.Infrastructure.ModelBinders;
-
+    using TrailVenturesSystem.Web.ViewModels.Home;
     using static Common.GeneralApplicationConstants;
 
     public class Program
@@ -69,7 +71,9 @@ namespace TrailVenturesSystem.Web
 
             WebApplication app = builder.Build();
 
-           
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
