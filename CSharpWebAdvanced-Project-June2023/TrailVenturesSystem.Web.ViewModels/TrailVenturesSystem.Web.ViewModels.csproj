@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrailVenturesSystem.Common\TrailVenturesSystem.Common.csproj" />
+    <ProjectReference Include="..\TrailVenturesSystem.Data\TrailVenturesSystem.Data.csproj" />
     <ProjectReference Include="..\TrailVenturesSystem.Services.Mapping\TrailVenturesSystem.Services.Mapping.csproj" />
   </ItemGroup>
 

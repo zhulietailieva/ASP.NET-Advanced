@@ -1,11 +1,14 @@
 ﻿namespace TrailVenturesSystem.Web.ViewModels.Trip
 {
+    using AutoMapper;
     using System.ComponentModel.DataAnnotations;
+    using TrailVenturesSystem.Data.Models;
+    using TrailVenturesSystem.Services.Mapping;
     using TrailVenturesSystem.Web.ViewModels.Mountain;
 
     using static Common.EntityValidationConstants.Trip;
 
-    public class TripFormModel
+    public class TripFormModel :IMapTo<Trip>,IHaveCustomMappings
     {
         public TripFormModel()
         {
@@ -42,5 +45,12 @@
         [Display(Name ="Mountain")]
         public int MountainId { get; set; }
         public IEnumerable<TripSelectMountainFormModel> Mountains { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            //custom configuration for mapper to ignore GuideId
+            configuration.CreateMap<TripFormModel, Trip>()
+                .ForMember(d => d.GuideId, opt => opt.Ignore());
+        }
     }
 }

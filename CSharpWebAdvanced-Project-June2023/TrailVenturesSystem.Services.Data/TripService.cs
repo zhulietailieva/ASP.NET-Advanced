@@ -1,5 +1,6 @@
 ﻿namespace TrailVenturesSystem.Services.Data
 {
+    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -8,6 +9,7 @@
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Services.Data.Models.Statistics;
     using TrailVenturesSystem.Services.Data.Models.Trip;
+    using TrailVenturesSystem.Services.Mapping;
     using TrailVenturesSystem.Web.ViewModels.Guide;
     using TrailVenturesSystem.Web.ViewModels.Home;
     using TrailVenturesSystem.Web.ViewModels.Trip;
@@ -19,9 +21,11 @@
         //Services communicate with the database
 
         private readonly TrailVenturesDbContext dbContext;
+
         public TripService(TrailVenturesDbContext dbContext)
         {
-            this.dbContext = dbContext; 
+            this.dbContext = dbContext;
+            
         }
 
         public async Task<AllTripsFilteredAndPagedServiceModel> AllAsync(AllTripsQueryModel queryModel)
@@ -131,6 +135,7 @@
         public async Task<string> CreateAndReturnIdAsync(TripFormModel formModel,string guideId)
         {
             //no need for validation here
+            /*
             Trip newTrip = new Trip
             {
                 Title = formModel.Title,
@@ -142,6 +147,13 @@
                 MountainId = formModel.MountainId,
                 GuideId = Guid.Parse(guideId)
             };
+            */
+
+            //using AutoMapper instead of the above shown method of creating a trip
+
+            Trip newTrip = AutoMapperConfig.MapperInstance.Map<Trip>(formModel);
+            newTrip.GuideId = Guid.Parse(guideId);
+
             await this.dbContext.Trips.AddAsync(newTrip);
             await this.dbContext.SaveChangesAsync();
 
