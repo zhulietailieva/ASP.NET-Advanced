@@ -91,9 +91,12 @@ namespace TrailVenturesSystem.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //seed admin
-            app.SeedAdministrator(DevelopmentAdminEmail);
-
+            if (app.Environment.IsDevelopment())
+            {
+                //seed admin
+                app.SeedAdministrator(DevelopmentAdminEmail);
+            }
+          
             //Endopoints order: from at least catching routes to most catching routes
             app.UseEndpoints(config =>
             {

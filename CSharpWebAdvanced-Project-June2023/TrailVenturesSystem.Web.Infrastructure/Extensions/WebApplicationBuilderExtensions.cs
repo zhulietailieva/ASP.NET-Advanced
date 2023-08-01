@@ -45,6 +45,13 @@
 
             }
         }
+        /// <summary>
+        /// This method seeds admin role if it does not exist yet
+        /// Passed email shoul be a valid email of existing user in the app.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app,string email)
         {
             //executes synchronously
