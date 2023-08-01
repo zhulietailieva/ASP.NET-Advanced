@@ -27,7 +27,7 @@
 
             @if (this.User.Identity?.IsAuthenticated ?? false)
             {
-                @if (isUserGuide && isGuideCreatorOfTheTrip)
+                @if ((isUserGuide && isGuideCreatorOfTheTrip)||this.User.IsAdmin())
                 {
                     <a asp-controller="Trip" asp-action="Edit" asp-route-id="@Model.Id"
                     class="btn btn-warning">Edit</a>
@@ -37,7 +37,7 @@
                 <p></p>
 
                 //if trip is not full -> add functionality to request becoming part of the hike group
-                @if (!isUserGuide)
+                @if (!isUserGuide||this.User.IsAdmin())
                 {
                     @if (Model.NotFull && !isUserPartOfTrip)
                     {

@@ -169,7 +169,7 @@
             bool isUserGuide =await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
 
-            if (!isUserGuide)
+            if (!isUserGuide && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become a guide in order to edit trip info!";
 
@@ -184,7 +184,7 @@
             bool isGuideCreator = await this.tripService
                 .IsGuideWithIdCreatorOfTripWithIdAsync(id, guideId!);
 
-            if (!isGuideCreator)
+            if (!isGuideCreator && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must be the creator in order to edit this trip!";
 
@@ -234,7 +234,7 @@
             bool isUserGuide = await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
 
-            if (!isUserGuide)
+            if (!isUserGuide && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become a guide in order to edit trip info!";
 
@@ -249,7 +249,7 @@
             bool isGuideCreator = await this.tripService
                 .IsGuideWithIdCreatorOfTripWithIdAsync(id, guideId!);
 
-            if (!isGuideCreator)
+            if (!isGuideCreator && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must be the creator in order to edit this trip!";
 
@@ -292,7 +292,7 @@
             bool isUserGuide = await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
 
-            if (!isUserGuide)
+            if (!isUserGuide && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become a guide in order to edit trip info!";
 
@@ -307,7 +307,7 @@
             bool isGuideCreator = await this.tripService
                 .IsGuideWithIdCreatorOfTripWithIdAsync(id, guideId!);
 
-            if (!isGuideCreator)
+            if (!isGuideCreator && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must be the creator in order to edit this trip!";
 
@@ -346,7 +346,7 @@
             bool isUserGuide = await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
 
-            if (!isUserGuide)
+            if (!isUserGuide && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become a guide in order to edit trip info!";
 
@@ -361,7 +361,7 @@
             bool isGuideCreator = await this.tripService
                 .IsGuideWithIdCreatorOfTripWithIdAsync(id, guideId!);
 
-            if (!isGuideCreator)
+            if (!isGuideCreator && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must be the creator in order to edit this trip!";
 
@@ -393,7 +393,20 @@
                 .GuideExistsByUserIdAsync(userId);
             try
             {
-                if (isGuide)
+                if (this.User.IsAdmin())
+                {
+                    string? guideId =
+                        await this.guideService.GetGuideIdByUserIdAsync(userId);
+                    //added houses as a guide
+                    myTrips.AddRange(await this.tripService.AllByGuideIdAsync(guideId!));
+
+                    //rented houses as a user
+                    myTrips.AddRange(await this.tripService.AllByUserIdAsync(userId));
+
+                    myTrips = myTrips.DistinctBy(t => t.Id).ToList();
+
+                }
+                else if (isGuide)
                 {
                     //if user is guide => show all of their created trips
                     string? guideId =
@@ -442,7 +455,7 @@
 
             bool isUserGuide = await this.guideService.GuideExistsByUserIdAsync(this.User.GetId()!);
 
-            if (isUserGuide)
+            if (isUserGuide && !this.User.IsAdmin())
             {
                 //guide cannot join other trips (maybe change functionality later?)
 

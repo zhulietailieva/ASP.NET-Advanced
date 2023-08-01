@@ -37,7 +37,7 @@
             <div class="form-inline">
                 @if (this.User.Identity?.IsAuthenticated ?? false)
                 {
-                    @if (isUserGuide && isGuideCreatorOfTheTrip)
+                    @if ((isUserGuide && isGuideCreatorOfTheTrip) || this.User.IsAdmin())
                     {
                         <a class="btn btn-warning" asp-controller="Trip" asp-action="Edit"
                             asp-route-id="@Model.Id">Edit</a>
@@ -45,7 +45,7 @@
                             asp-route-id="@Model.Id">Delete</a>
                     }
 
-                    @if (!isUserGuide)
+                    @if (!isUserGuide||this.User.IsAdmin())
                     {
                         @if (Model.NotFull && !isUserPartOfTrip)
                         {
