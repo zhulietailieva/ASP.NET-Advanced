@@ -25,6 +25,9 @@
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
         //Navigation property
+
+        [MaxLength(PersonalInfoMaxLength)]
+        public string? PersonalInfo { get; set; }
         public virtual ICollection<Trip> EnrolledTrips { get; set; }
         
         

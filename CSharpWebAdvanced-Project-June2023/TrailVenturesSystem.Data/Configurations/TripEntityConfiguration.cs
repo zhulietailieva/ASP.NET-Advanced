@@ -36,6 +36,12 @@
                 .HasForeignKey(t => t.MountainId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .HasOne(t => t.Hut)
+                .WithMany(h => h.Trips)
+                .HasForeignKey(t => t.HutId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasData(GenerateTrips());
         }
         //seed some trips

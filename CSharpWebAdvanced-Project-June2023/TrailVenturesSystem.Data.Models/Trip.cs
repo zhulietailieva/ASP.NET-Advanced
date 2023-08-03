@@ -51,5 +51,9 @@
 
         public virtual ICollection<ApplicationUser> Hikers { get; set; }
 
+        public int? HutId { get; set; }
+
+        public virtual Hut? Hut { get; set; }
+
     }
 }

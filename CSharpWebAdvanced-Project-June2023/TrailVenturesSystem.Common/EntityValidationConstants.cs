@@ -45,6 +45,17 @@
 
             public const int LastNameMinLength = 1;
             public const int LastNameMaxLength = 20;
+
+            public const int PersonalInfoMaxLength = 1500;
+        }
+
+        public static class Hut
+        {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 100;
+
+            public const int PhoneNumberMinLength = 7;
+            public const int PhoneNumberMaxLength = 15;
         }
     }
 }
