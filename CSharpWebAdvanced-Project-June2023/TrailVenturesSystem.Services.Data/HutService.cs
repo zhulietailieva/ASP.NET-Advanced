@@ -20,12 +20,30 @@
         {
             IEnumerable<TripSelectHutFormModel> allHuts = await this.dbContext
                 .Huts
-                //.Where(h=>h.IsActive)
+                .Where(h=>h.IsActive)
                 .AsNoTracking()
                 .Select(h => new TripSelectHutFormModel
                 {
                     Id = h.Id,
-                    Name = h.Name
+                    Name = h.Name,
+                    MountainId=h.MountainId
+
+                }).ToArrayAsync();
+
+            return allHuts;
+        }
+
+        public async Task<IEnumerable<TripSelectHutFormModel>> AllHutsByMountainIdAsync(string mountainId)
+        {
+            IEnumerable<TripSelectHutFormModel> allHuts = await this.dbContext
+                .Huts
+                .Where(h => h.IsActive && h.MountainId.ToString()== mountainId)
+                .AsNoTracking()
+                .Select(h => new TripSelectHutFormModel
+                {
+                    Id = h.Id,
+                    Name = h.Name,
+                    MountainId=h.MountainId
                 }).ToArrayAsync();
 
             return allHuts;

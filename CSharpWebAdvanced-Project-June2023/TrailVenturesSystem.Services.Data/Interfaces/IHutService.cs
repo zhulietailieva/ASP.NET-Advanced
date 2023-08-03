@@ -7,6 +7,8 @@
     {
         Task<IEnumerable<TripSelectHutFormModel>> AllHutsAync();
 
+        Task<IEnumerable<TripSelectHutFormModel>> AllHutsByMountainIdAsync(string mountainId);
+
         Task<IEnumerable<string>> AllHutsNamesAsync();
     }
 }

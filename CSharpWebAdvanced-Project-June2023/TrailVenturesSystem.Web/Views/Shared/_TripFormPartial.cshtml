@@ -11,27 +11,26 @@
             </div>
             <div class="form-group">
                 <label asp-for="MountainId"></label>
-                <select asp-for="MountainId" class="form-control">
+                <select asp-for="MountainId" class="form-control" id="mountains_select">
                     @foreach (var mountain in Model.Mountains)
                     {
                         <option value="@mountain.Id">@mountain.Name</option>
                     }
                 </select>
                 <span asp-validation-for="MountainId" class="small text-danger"></span>
-
             </div>
+           <!-- <script>
+                $('#mountains_select').on('change', function (e) {
+                    //console.log($('#mountains_select').val());
+                    var selectedMountainId = $('#mountains_select').val();
+                  
+                })               
+            </script>-->
             <div class="form-group">
                 <label asp-for="StartDate"></label>
                 <input asp-for="StartDate" class="form-control">
                 <span asp-validation-for="StartDate" class="small text-danger"></span>
             </div>
-
-            <!--Test property DateOnly
-            <div class="form-group">
-                <label asp-for="TestDate"></label>
-                <input asp-for="TestDate" class="form-control"
-                       placeholder="Test date">
-            </div>-->
             
             <div class="form-group">
                 <label asp-for="Description"></label>
@@ -64,7 +63,7 @@
 
             <!--Additional fields-->
 
-            <div class="text-center" id="additonal-info">
+            <div id="additonal-info">
                 <div class="form-group">
                     <label asp-for="ReturnDate"></label>
                     <input asp-for="ReturnDate" class="form-control" id="additional_info">
@@ -74,23 +73,51 @@
                 <!--HUT-->
                 <div class="form-group">
                     <label asp-for="HutId"></label>
-                    <select asp-for="HutId" class="form-control">
+                    <select asp-for="HutId" class="form-control" id="huts_select">
                         @foreach (var hut in Model.Huts)
-                        {
-                            <option value="@hut.Id">@hut.Name</option>
+                        {                           
+                           <option value="@hut.Id" mountValue="@hut.MountainId">@hut.Name</option>                                                      
                         }
                     </select>
                     <span asp-validation-for="HutId" class="small text-danger"></span>
                 </div>
+                <!--The following script contains the logic for displaying huts based on the chosen mountain select option.-->
+                <script>                                        
+                    var selectedMountainId = $('#mountains_select').val();
+                    //remove all the other huts except for the ones that are for the default selection (Rila)
+                    $('#huts_select option').each(function () {
+                        if ($(this).attr("mountValue") != selectedMountainId) {
+                            $(this).hide();
+                        }
+                    });
+                    //set select to the first option that is visible
+                    $('#huts_select').val('');
+                    
+                    $('#mountains_select').on('change', function (e) {   
+                        //when the value is changed we should add all the options and remove only the ones which mountainId doesn't match
+                        selectedMountainId = $('#mountains_select').val();
+                            $('#huts_select option').each(function () {                              
+                                $(this).show();
+                                
+                            });
 
+                            $('#huts_select option').each(function () {                                                     
+                                if ($(this).attr("mountValue") != selectedMountainId) {
+                                    $(this).hide();
+                                }
+                            });
+                        $('#huts_select').val('');
+                    })                                      
+                </script>
             </div>
-
-
+            <!--The following script contains the logic for showing additional fields when a guide selects to create a trip that will last more than 1 day.-->
             <script>
                 $('#additonal-info').addClass('d-none');
                 $('#more_than_one_day').on('change', function (e) { 
+                    
                    // console.log($('#more_than_one_day').is(':checked')); --->true or false
                     if (($('#more_than_one_day').is(':checked'))==true){
+
                         //field is checked so we should display additional fields
                         $('#additonal-info').removeClass('d-none');
                     }else{

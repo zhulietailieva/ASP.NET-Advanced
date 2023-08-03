@@ -63,8 +63,8 @@
                 {
                     Mountains = await this.mountainService.AllMountainsAsync(),
                     //error here
-                    Huts = await this.hutService.AllHutsAync()
-
+                     Huts = await this.hutService.AllHutsAync()
+                    
                 };
 
                 return View(formModel);
