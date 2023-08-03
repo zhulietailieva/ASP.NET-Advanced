@@ -5,6 +5,7 @@
     using TrailVenturesSystem.Common;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Mapping;
+    using TrailVenturesSystem.Web.ViewModels.Hut;
     using TrailVenturesSystem.Web.ViewModels.Mountain;
 
     using static Common.EntityValidationConstants.Trip;
@@ -15,6 +16,7 @@
         public TripFormModel()
         {
             this.Mountains = new HashSet<TripSelectMountainFormModel>();
+            this.Huts = new HashSet<TripSelectHutFormModel>();
         }
 
         [Required]
@@ -48,16 +50,24 @@
         [Display(Name ="Max size of the group")]
         [Range(GroupMinSizePeople,GroupsMaxSizePeople)]
         public int GroupMaxSize { get; set; }
-
+        
         //selected mountain by user
-        [Display(Name ="Mountain")]
+        [Display(Name = "Mountain")]
         public int MountainId { get; set; }
 
-        //multiple days
-        [Display(Name ="Is your trip more than one day long?")]
-        public bool IsMoreThanOneDay { get; set; } = false;
         public IEnumerable<TripSelectMountainFormModel> Mountains { get; set; }
 
+        //hut info
+        [Display(Name = "Hut")]
+        public int HutId { get; set; }
+        public IEnumerable<TripSelectHutFormModel> Huts { get; set; }
+
+        //multiple days
+
+        [Display(Name = "Is your trip more than one day long?")]
+        public bool IsMoreThanOneDay { get; set; } = false;
+
+  
         public void CreateMappings(IProfileExpression configuration)
         {
             //custom configuration for mapper to ignore GuideId

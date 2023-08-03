@@ -12,9 +12,13 @@
             this.CurrentPage = DefaultPage;
             this.TripsPerPage = EntitiesPerPage;
             this.Mountains = new HashSet<string>();
+            this.Huts = new HashSet<string>();
             this.Trips = new HashSet<TripAllViewModel>();
+            
         }
         public string? Mountain { get; set; }
+
+        public string? Hut { get; set; }
 
         [Display(Name ="Search by word")]
         public string? SearchString { get; set; }
@@ -29,6 +33,8 @@
         
         public int TotalTrips { get; set; }
         public IEnumerable<string> Mountains { get; set; } = null!;
+
+        public IEnumerable<string> Huts { get; set; }
 
         public IEnumerable<TripAllViewModel> Trips { get; set; }
 

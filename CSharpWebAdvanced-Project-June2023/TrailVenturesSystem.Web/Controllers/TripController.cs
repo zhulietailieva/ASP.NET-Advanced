@@ -16,13 +16,16 @@
         private readonly IGuideService guideService;
         private readonly ITripService tripService;
         private readonly IUserService userService;
+        private readonly IHutService hutService;
         public TripController(IMountainService mountainService, IGuideService guideService,
-            ITripService tripService, IUserService userService)
+            ITripService tripService, IUserService userService
+            ,IHutService hutService)
         {
             this.mountainService = mountainService;
             this.guideService = guideService;
             this.tripService = tripService;
             this.userService = userService;
+            this.hutService = hutService;
         }
 
         [HttpGet]
@@ -35,6 +38,7 @@
             queryModel.Trips = serviceModel.Trips;
             queryModel.TotalTrips = serviceModel.TotalTripsCount;
             queryModel.Mountains = await this.mountainService.AllMountainNamesAsync();
+            //queryModel.Huts = await this.hutService.AllHutsNamesAsync();
 
 
             return this.View(queryModel);
@@ -57,7 +61,10 @@
             {
                 TripFormModel formModel = new TripFormModel()
                 {
-                    Mountains =await this.mountainService.AllMountainsAsync()
+                    Mountains = await this.mountainService.AllMountainsAsync(),
+                    //error here
+                    Huts = await this.hutService.AllHutsAync()
+
                 };
 
                 return View(formModel);
@@ -102,6 +109,7 @@
             if (!this.ModelState.IsValid)
             {
                 model.Mountains = await this.mountainService.AllMountainsAsync();
+                model.Huts = await this.hutService.AllHutsAync();
 
                 //Will visualize all errors with correct mountains
                 return this.View(model);
