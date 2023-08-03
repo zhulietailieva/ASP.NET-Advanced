@@ -26,3 +26,26 @@
        
     })
 }
+
+/*function displayAdditionalFields() {  
+    console.log('in script');
+    $('#test_btn').on('click',function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if ($('additional_info').hasClass('d-none')) {
+            //display section
+            console.log('here2');
+            $('additional_info').removeClass('d-none');
+        } else {
+            //hide section
+            console.log('here3');
+            $('additional_info').addClass('d-none');
+        }
+        console.log('here1');
+
+        //$('#test_div').addClass('d-none');
+        //$('#test_btn').text = "fuck";
+        
+    })
+}*/

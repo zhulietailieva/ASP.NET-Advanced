@@ -52,6 +52,10 @@
         //selected mountain by user
         [Display(Name ="Mountain")]
         public int MountainId { get; set; }
+
+        //multiple days
+        [Display(Name ="Is your trip more than one day long?")]
+        public bool IsMoreThanOneDay { get; set; } = false;
         public IEnumerable<TripSelectMountainFormModel> Mountains { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

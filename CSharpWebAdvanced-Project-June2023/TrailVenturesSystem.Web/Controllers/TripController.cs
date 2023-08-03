@@ -116,6 +116,12 @@
                 string tripId=await this.tripService
                     .CreateAndReturnIdAsync(model, guideId!);
 
+                if (model.IsMoreThanOneDay)
+                {
+                    //return another action that is extending some additional info
+                    return this.RedirectToAction("Trip","AdditionalInfo");
+
+                }
                 this.TempData[SuccessMessage] = "Trip was created successfully!";
                 return this.RedirectToAction("Details", "Trip", new {id=tripId});
             }
