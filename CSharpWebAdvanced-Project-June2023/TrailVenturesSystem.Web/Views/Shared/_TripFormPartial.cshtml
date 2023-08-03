@@ -4,7 +4,7 @@
         <form method="post">
             <div class="form-group">
                 <label asp-for="Title"></label>
-                <input asp-for="Title" class="form-control" placeholder="Title...">
+                <input asp-for="Title" class="form-control" placeholder="Interesting name for your trip">
                 <span asp-validation-for="Title" class="small text-danger"></span>
             </div>
             <div class="form-group">
@@ -19,16 +19,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="StartDate"></label>
-                <input asp-for="StartDate" class="form-control"
-                       placeholder="Start date">
+                <input asp-for="StartDate" class="form-control">
                 <span asp-validation-for="StartDate" class="small text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReturnDate"></label>
-                <input asp-for="ReturnDate" class="form-control"
-                       placeholder="Return date">
+                <input asp-for="ReturnDate" class="form-control">
                 <span asp-validation-for="ReturnDate" class="small text-danger"></span>
             </div>
+
+            <!--Test property DateOnly
+            <div class="form-group">
+                <label asp-for="TestDate"></label>
+                <input asp-for="TestDate" class="form-control"
+                       placeholder="Test date">
+            </div>-->
             
             <div class="form-group">
                 <label asp-for="Description"></label>

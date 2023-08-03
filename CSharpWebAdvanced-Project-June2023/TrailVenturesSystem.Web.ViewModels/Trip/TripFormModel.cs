@@ -2,11 +2,13 @@
 {
     using AutoMapper;
     using System.ComponentModel.DataAnnotations;
+    using TrailVenturesSystem.Common;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Mapping;
     using TrailVenturesSystem.Web.ViewModels.Mountain;
 
     using static Common.EntityValidationConstants.Trip;
+   
 
     public class TripFormModel :IMapTo<Trip>,IHaveCustomMappings
     {
@@ -20,19 +22,25 @@
         public string Title { get; set; } = null!;
 
         [Required]
-        [Display(Name ="Start Date")]
-        public DateTime StartDate { get; set; }
+        [DataType(DataType.Date)]
+        [ValidateBeforeToday(ErrorMessage ="Start date must be after today!")]
+        [Display(Name = "Start Date")]
+        public DateTime StartDate { get; set; } = DateTime.UtcNow.Date;
 
         [Required]
+        [DataType(DataType.Date)]
+        [ValidateBeforeToday(ErrorMessage = "Return date must be after today!")]
         [Display(Name = "Return Date")]
-        public DateTime ReturnDate { get; set; }
+        public DateTime ReturnDate { get; set; } = DateTime.UtcNow.Date;
+
+        //public DateOnly TestDate { get; set; }
 
         [Required]
         [StringLength(DescriptionMaxLength,MinimumLength =DescriptionMinLength)]
         public string Description { get; set; } = null!;
 
         [Required]
-        [Display(Name = "Price Per Person")]
+        [Display(Name = "Price per person")]
         [Range(typeof(decimal),PricePerPersonMinValue,PricePerPersonMaxValue)]
         public decimal PricePerPerson { get; set; }
 

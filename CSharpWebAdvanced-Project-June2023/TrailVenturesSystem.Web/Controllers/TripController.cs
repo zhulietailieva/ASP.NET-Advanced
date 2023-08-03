@@ -23,7 +23,6 @@
             this.guideService = guideService;
             this.tripService = tripService;
             this.userService = userService;
-
         }
 
         [HttpGet]
@@ -89,6 +88,15 @@
             {
                 //Adding model error to ModelState automatically makes ModelState invalid
                 this.ModelState.AddModelError(nameof(model.MountainId), "You selected a mountain that does not exist!");
+            }
+
+
+            //validate that start date and return date are not in the past -- done through a custom Validation attribute
+
+            //validate if end date is after start date
+            if (model.StartDate > model.ReturnDate && model.ReturnDate > DateTime.Today)
+            {
+                this.ModelState.AddModelError(nameof(model.ReturnDate), "Return date cannot be before or the same as start date");
             }
 
             if (!this.ModelState.IsValid)
