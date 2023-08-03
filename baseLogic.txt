@@ -67,6 +67,7 @@ Add size groups propertu to trips and update database
 --error pages
 --html sanitizer?
 --migration so the user can have an admin or include ot in the readme file?
+--recaptcha? IMPLEMENT
 
 
 

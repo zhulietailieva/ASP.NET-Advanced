@@ -12,6 +12,7 @@
         public string PhoneNumber { get; set; } = null!;
 
         [Required]
+        [Range(YearsOfExperienceMinValue,YearsOfExperienceMaxValue)]
         [Display(Name="Years of experience")]
         public int YearsOfExperience { get; set; }
     }

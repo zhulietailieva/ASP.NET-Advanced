@@ -26,7 +26,7 @@
             public const int PhoneNumberMaxLength = 15;
 
             public const int YearsOfExperienceMinValue = 1;
-            public const int YearsOfExperienceMaxValue = 100;
+            public const int YearsOfExperienceMaxValue = 80;
         }
 
         public static class Mountain
