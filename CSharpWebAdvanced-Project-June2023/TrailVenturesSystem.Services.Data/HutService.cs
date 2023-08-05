@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using TrailVenturesSystem.Data;
+    using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.ViewModels.Hut;
     using TrailVenturesSystem.Web.ViewModels.Mountain;
@@ -59,6 +60,23 @@
 
             return allNames;
 
+        }
+
+        public async Task<bool> ExistsByIdAsync(int hutId)
+        {
+            bool result =await this.dbContext
+                .Huts
+                .AnyAsync(h => h.Id == hutId);
+
+            return result;
+        }
+
+        public async Task<Hut> GetHutByIdAsync(int hutId)
+        {
+            Hut result = await this.dbContext
+                .Huts.FirstAsync(h => h.Id == hutId);
+
+            return result;
         }
     }
 }

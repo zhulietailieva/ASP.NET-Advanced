@@ -21,11 +21,11 @@
         //Services communicate with the database
 
         private readonly TrailVenturesDbContext dbContext;
+        
 
         public TripService(TrailVenturesDbContext dbContext)
         {
             this.dbContext = dbContext;
-            
         }
 
         public async Task<AllTripsFilteredAndPagedServiceModel> AllAsync(AllTripsQueryModel queryModel)
@@ -134,25 +134,53 @@
 
         public async Task<string> CreateAndReturnIdAsync(TripFormModel formModel,string guideId)
         {
-            //no need for validation here
-            /*
+            //no need for validation in the service
+            
             Trip newTrip = new Trip
             {
                 Title = formModel.Title,
                 StartDate = formModel.StartDate,
-                ReturnDate = formModel.ReturnDate,
+                //ReturnDate = formModel.ReturnDate,
                 Description = formModel.Description,
-                PricePerPerson = formModel.PricePerPerson,
+                //PricePerPerson = formModel.PricePerPerson,
                 GroupMaxSize = formModel.GroupMaxSize,
                 MountainId = formModel.MountainId,
                 GuideId = Guid.Parse(guideId)
             };
-            */
+
+            if (formModel.IsMoreThanOneDay)
+            {
+                newTrip.ReturnDate = formModel.ReturnDate;
+                newTrip.HutId = formModel.HutId;
+                //TODO: Set the price of the trip with the stay count multiplied by the price per night for the hut for a person
+                //+ selected price by the guide
+
+                int nightsStay = (int)(formModel.ReturnDate - formModel.StartDate).TotalDays;
+
+                Hut selectedHut = await this.dbContext
+                    .Huts.FirstAsync(h => h.Id == formModel.HutId);
+
+
+                newTrip.PricePerPerson = formModel.PricePerPerson + (nightsStay * selectedHut.PricePerNight);
+            }
+            else
+            {
+                //trip is only one day so start and return date are the same
+                newTrip.ReturnDate = formModel.StartDate;
+                newTrip.PricePerPerson = formModel.PricePerPerson;
+            }
+            
 
             //using AutoMapper instead of the above shown method of creating a trip
-
+            //need to fix so automapper points to the start date when setting a return date if field more than one day is not checked
+            //comment it out -->fix later
+            /*
             Trip newTrip = AutoMapperConfig.MapperInstance.Map<Trip>(formModel);
             newTrip.GuideId = Guid.Parse(guideId);
+
+            */
+            //if the form model has property more than one day checked -> add a hut it to the trip and a return date,
+            //otherwise the return date is the same as thr start date
 
             await this.dbContext.Trips.AddAsync(newTrip);
             await this.dbContext.SaveChangesAsync();
@@ -365,8 +393,6 @@
             trip.Hikers.Remove(userToLeave);
 
             userToLeave.EnrolledTrips.Remove(trip);
-
-            //should i remove from ApplicationUserTripTable???
 
             
 

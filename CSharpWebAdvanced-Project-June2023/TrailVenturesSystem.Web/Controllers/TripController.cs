@@ -91,12 +91,22 @@
             //user can change the category through inspector and submit faulty data
             bool mountainExists = await this.mountainService.ExistsByIdAsync(model.MountainId);
 
-            if (!mountainExists)
+            if (!mountainExists) 
             {
                 //Adding model error to ModelState automatically makes ModelState invalid
                 this.ModelState.AddModelError(nameof(model.MountainId), "You selected a mountain that does not exist!");
             }
 
+            //user can change the category through inspector and submit faulty data for hut
+            if (model.IsMoreThanOneDay)
+            {
+                bool hutExists = await this.hutService.ExistsByIdAsync(model.HutId);
+                if (!hutExists)
+                {
+                    this.ModelState.AddModelError(nameof(model.HutId), "You selected a hut that doest not exist!");
+                }
+            }
+            
 
             //validate that start date and return date are not in the past -- done through a custom Validation attribute
 
@@ -124,12 +134,6 @@
                 string tripId=await this.tripService
                     .CreateAndReturnIdAsync(model, guideId!);
 
-                if (model.IsMoreThanOneDay)
-                {
-                    //return another action that is extending some additional info
-                    return this.RedirectToAction("Trip","AdditionalInfo");
-
-                }
                 this.TempData[SuccessMessage] = "Trip was created successfully!";
                 return this.RedirectToAction("Details", "Trip", new {id=tripId});
             }
