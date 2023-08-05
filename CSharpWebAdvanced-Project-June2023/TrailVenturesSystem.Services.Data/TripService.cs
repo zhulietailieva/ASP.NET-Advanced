@@ -11,6 +11,7 @@
     using TrailVenturesSystem.Services.Data.Models.Trip;
     using TrailVenturesSystem.Services.Mapping;
     using TrailVenturesSystem.Web.ViewModels.Guide;
+    using Web.ViewModels.Hut;
     using TrailVenturesSystem.Web.ViewModels.Home;
     using TrailVenturesSystem.Web.ViewModels.Trip;
     using TrailVenturesSystem.Web.ViewModels.Trip.Enums;
@@ -78,6 +79,7 @@
                     Id = t.Id.ToString(),
                     Title = t.Title,
                     StartDate = t.StartDate,
+                    ReturnDate=t.ReturnDate,
                     PricePerPerson = t.PricePerPerson,
                     NotFull = t.Hikers.Count < t.GroupMaxSize,
                     CurrentGroupSize=t.Hikers.Count,
@@ -233,16 +235,17 @@
 
         public async Task<TripDetailsViewModel> GetDetailsByIdAsync(string tripId)
         {
+            //hut could be null?
             Trip trip = await this.dbContext
                 .Trips
                 .Include(t=>t.Mountain)
+                .Include(t=>t.Hut)
                 .Include(t=>t.Guide)
-                .ThenInclude(g=>g.User)
+                .ThenInclude(g=>g.User)               
                 .Where(t => t.IsActive)
                 .FirstAsync(t => t.Id.ToString() == tripId);
 
-
-            return new TripDetailsViewModel
+            var viewModel= new TripDetailsViewModel
             {
                 Id = trip.Id.ToString(),
                 Title = trip.Title,
@@ -256,8 +259,21 @@
                 {
                     Email = trip.Guide.User.Email,
                     PhoneNumber = trip.Guide.PhoneNumber
-                }
+                }                            
             };
+
+            if (trip.Hut != null)
+            {
+                viewModel.Hut = new HutInfoOnTripViewModel()
+                {
+                    Name = trip.Hut.Name,
+                    HostPhoneNumber = trip.Hut.HostPhoneNumber,
+                    Altitude = trip.Hut.Altitude,
+                    PricePerNight = trip.Hut.PricePerNight
+                };
+            }
+
+            return viewModel;
         }
 
         public async Task<StatisticsServiceModel> GetStatisticsAsync()

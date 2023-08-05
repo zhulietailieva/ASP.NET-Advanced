@@ -10,6 +10,8 @@
     bool isGuideCreatorOfTheTrip = await GuideService.HasTripWithIdAsync(this.User.GetId(), Model.Id);
 
     bool isUserPartOfTrip = await TripService.IsUserWithIdPartOfTripByIdAsync(Model.Id, this.User.GetId()!);
+
+    bool isTripMoreThanOneDay = Model.Hut != null;
 }
 @{
     ViewBag.Title = "Trip Details";
@@ -31,7 +33,18 @@
                 Price per person:
                 <b>@($"{Model.PricePerPerson:f2}") BGN</b>
             </p>
-            <p>@Model.Description</p>
+            <p style="font-size:25px;">Start date: <b>@Model.StartDate.DayOfWeek,
+                    @Model.StartDate.Date.ToString().Replace(" 0:00:00","")
+                </b>
+            </p>
+            @if (isTripMoreThanOneDay)
+            {
+                <p style="font-size:25px;">Return date: <b>@Model.ReturnDate.DayOfWeek,
+                        @Model.ReturnDate.Date.ToString().Replace(" 0:00:00","")
+                    </b>
+                </p>
+            }
+            <p style="text-align: justify;">@Model.Description</p>
             <p>Mountain: <b>@Model.Mountain</b></p>
             <p><i>(@(Model.NotFull ? "Places Available" : "Places not available"))</i></p>
             <div class="form-inline">
@@ -68,14 +81,30 @@
                 }
             </div>
             <p></p>
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Guide Info</h5>
-                    <p class="card-text">Full Name: @Model.Guide.FullName</p>
-                    <p class="card-text">Email: @Model.Guide.Email</p>
-                    <p class="card-text">Phone Number: @Model.Guide.PhoneNumber</p>
+            <div style="display:flex; justify-content: space-evenly;">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Guide Info</h5>
+                        <p class="card-text">Full Name: @Model.Guide.FullName</p>
+                        <p class="card-text">Email: @Model.Guide.Email</p>
+                        <p class="card-text">Phone Number: @Model.Guide.PhoneNumber</p>
+                    </div>
                 </div>
+                @if (isTripMoreThanOneDay)
+                {
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Hut Info</h5>
+                            <p class="card-text">Hut Name: @Model.Hut.Name</p>
+                            <p class="card-text">Host number: @Model.Hut.HostPhoneNumber</p>
+                            <p class="card-text">Altitude: @Model.Hut.Altitude</p>
+                            <p class="card-text">Price per night: @($"{Model.Hut.PricePerNight:f2}") BGN</p>
+
+                        </div>
+                    </div>
+                }
             </div>
+           
         </div>
     </div>
 </div>

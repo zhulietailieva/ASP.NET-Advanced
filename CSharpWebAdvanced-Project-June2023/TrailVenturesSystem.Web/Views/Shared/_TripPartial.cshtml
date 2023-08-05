@@ -9,14 +9,19 @@
     bool isGuideCreatorOfTheTrip = await GuideService.HasTripWithIdAsync(this.User.GetId(), Model.Id);
 
     bool isUserPartOfTrip = await TripService.IsUserWithIdPartOfTripByIdAsync(Model.Id, this.User.GetId()!);
+   // bool isTripMoreThanOneDay = Model.Hut != null;
 }
 <div class="col-md-4">
     <div class="card mb-3">
         <div class="card-body text-center">
             <h4>@Model.Title</h4>
-            <h6>Start Date: <b>@Model.StartDate.Date</b></h6>
+            <h6>Start Date: <b>@Model.StartDate.Date.ToString().Replace(" 0:00:00","")</b></h6>
+            @if (Model.ReturnDate != Model.StartDate)
+            {
+                <h6>Return Date: <b>@Model.ReturnDate.Date.ToString().Replace(" 0:00:00","")</b></h6>
+            }
             <h6>
-                Price Per Month:
+                Price per person:
                 <b>@($"{Model.PricePerPerson:f2}") BGN</b>
             </h6>
             <h6>(@(Model.NotFull ? "Available places" : "Not Available places"))</h6>

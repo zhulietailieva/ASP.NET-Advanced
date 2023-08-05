@@ -11,6 +11,10 @@
         [Display(Name ="Start date")]
         public DateTime StartDate { get; set; }
 
+        //added later
+        [Display(Name = "Return date")]
+        public DateTime ReturnDate { get; set; }
+
         [Display(Name = "Price per person")]
         public decimal PricePerPerson { get; set; }
 
