@@ -1,0 +1,59 @@
+﻿.hero {
+    background-image: url('/images/homepage/background-image-blured.jpg'); /* Replace with your hero image URL */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 150px 0;
+}
+
+.btn-primary {
+    border: none;
+    background-color:#009092;
+}
+
+.card{
+    background-color: #f9f9f9;
+}
+
+.about {
+    background-color: #f9f9f9;
+    color: #003e3f;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.about-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+    .contact-form h2 {
+        margin-bottom: 20px;
+    }
+
+    .contact-form form input,
+    .contact-form form textarea,
+    .contact-form form button {
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .contact-form form textarea {
+        resize: vertical;
+    }
+

@@ -69,6 +69,7 @@ Add size groups propertu to trips and update database
 --migration so the user can have an admin or include ot in the readme file?
 --recaptcha? IMPLEMENT
 
+--color scheme: https://i.pinimg.com/originals/dd/0f/06/dd0f0682d8946f29b95a3e80673378cb.png
 
 
 

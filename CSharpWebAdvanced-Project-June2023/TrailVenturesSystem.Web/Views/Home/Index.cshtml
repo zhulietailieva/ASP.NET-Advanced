@@ -11,15 +11,29 @@
     var trips = Model.ToList();
     bool isUserGuide = await GuideService.GuideExistsByUserIdAsync(this.User.GetId()!);
 }
-<h1>Welcome to Trips</h1>
+<head>    
+    <link rel="stylesheet" href="~/css/HomepageStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trail Ventures</title>
+</head>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Discover Your Dream Destinations</h1>
+        <p>Plan your next adventure with <b>Trail Ventures</b> and explore Bulgaria's most amazing places.</p>
+        <a asp-controller="Trip" asp-action="Add" class="btn btn-primary btn-lg"
+           role="button">Add Trip</a>
+    </div>
+</section>
+
 @if (!trips.Any())
 {   
     //no trips yet
-    <div>
-        <p>No trips found.</p>
-        <p>Please plan your next adventure!</p>
+    <div class="text-center mt-5 mb-5">
+        <h1 >No trips found.</h1>
+        <p>Plan your next adventure now!</p>
     </div> 
-    <p class="lead">
+    <p class="lead text-center">
         @if(User.Identity?.IsAuthenticated ?? false)
         {
             @if (isUserGuide)
@@ -31,36 +45,81 @@
         }
     </p>
 }
-
-<ul>
-    @foreach (var trip in trips)
+else
+{
+<h1 class="pt-4 text-center"><u>Last trips created</u></h1>
+<section class="row row-cols-1 row-cols-md-3 g-4 pt-4 pb-4">
+    @foreach(var trip in trips)
     {
-        <li>
-            <strong>@trip.Title</strong><br />
-            Mountain: @trip.Mountain<br />
-            Start Date: @trip.StartDate.ToString().Split(' ')[0];
-            <a class="btn btn-primary" asp-controller="Trip" asp-net-action="Details"
-            asp-route-id="@trip.Id">Details @trip.Title</a>
-        </li>
+        <div class="col">
+            <div class="card h-100 position-relative">
+                <div class="row g-0">
+                    <div class="col-md-3">
+                        <img src="/images/homepage/default-user.jpg" alt="User image" class="rounded-circle" style="width: 100px; height: 100px;">
+                        <p class="text-muted text-center">Guide name</p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@trip.Title</h5>
+                            <p class="card-text m-0">From: @trip.StartDate.ToString().Split(' ')[0]</p>
+                                @if (trip.ReturnDate != trip.StartDate) 
+                                {
+                                    <p class="card-text m-0">To: @trip.ReturnDate.ToString()!.Split(' ')[0]</p>
+                                }  
+                                <p class="card-text m-0">Mountain: @trip.Mountain<p>
+                            <div class="button-wrapper position-absolute  m-3 p-2 bottom-0 end-0">
+                                <a class="btn btn-primary me-2" asp-controller="Trip" asp-net-action="Details"
+                                   asp-route-id="@trip.Id">Details</a>                              
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
-</ul>
-
-<div class="mb-5"></div>
-
-<div class="row">
-    <div class="col-12 text-center">
-        <button class="btn btn-primary" id="statistics_btn">Show Statistics</button>
+</section>
+<section clas="statistics">
+    <div class="row mt-3 mb-5">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary" id="statistics_btn">Show Statistics</button>
+        </div>
     </div>
-</div>
 
-<div class="mt-4 p-5 bg-light d-none" id="statistics_box">
-    <div class="row">
-        <h2 class="col-md-6 text-center" id="total_trips"></h2>
-        <h2 class="col-md-6 text-center" id="total_available_trips"></h2>
+    <div class="mt-4 p-5 bg-light d-none" id="statistics_box">
+        <div class="row">
+            <h2 class="col-md-6 text-center" id="total_trips"></h2>
+            <h2 class="col-md-6 text-center" id="total_available_trips"></h2>
+        </div>
     </div>
-</div>
+</section>
+}
+<section class="about">
+    <div class="about-content">
+        <h2>About TrailVentures</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam commodo semper augue, nec luctus erat euismod ac. Donec a facilisis elit.</p>
+    </div>
+</section>
+
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    <section class="contact mb-5">
+        <!--Later will implement it to hold a partial contact us sumbit form?-->
+        <h2 class="mb-4">Have a question?</h2>
+        <div class="contact-form">
+            <h2>Contact Us</h2>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+}
+
 
 @section Scripts
 {    
     <script>statistics();</script>
-}
+    }

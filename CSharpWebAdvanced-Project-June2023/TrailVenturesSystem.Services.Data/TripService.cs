@@ -377,20 +377,21 @@
 
         }
 
-        public async Task<IEnumerable<IndexViewModel>> LastFiveTripsAsync()
+        public async Task<IEnumerable<IndexViewModel>> LastSixAsync()
         {
-            //display the 5 latest PLANNED trips
+            //display the 6 latest PLANNED trips
             IEnumerable<IndexViewModel> lastfiveTrips = await this.dbContext
                 .Trips
                 .Where(t=>t.IsActive)
                 .OrderByDescending(t => t.StartDate)
-                .Take(5)
+                .Take(6)
                 .Select(t => new IndexViewModel()
                 {
                     Id = t.Id.ToString(),
                     Title = t.Title,
                     //Mountain = t.Mountain,
-                    StartDate = t.StartDate.ToString()
+                    StartDate = t.StartDate,
+                    ReturnDate=t.ReturnDate
                 })
                 .ToArrayAsync();    //always async when we retrieve from the database
 

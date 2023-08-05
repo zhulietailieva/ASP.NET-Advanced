@@ -11,6 +11,8 @@
 
         public string Mountain { get; set; } = null!;
 
-        public string StartDate { get; set; } = null!;
+        public DateTime StartDate { get; set; } 
+
+        public DateTime? ReturnDate { get; set; }
     }
 }

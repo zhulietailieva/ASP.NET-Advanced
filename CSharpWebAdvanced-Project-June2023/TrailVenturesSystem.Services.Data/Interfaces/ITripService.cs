@@ -7,7 +7,7 @@
 
     public interface ITripService
     {
-        Task<IEnumerable<IndexViewModel>> LastFiveTripsAsync();
+        Task<IEnumerable<IndexViewModel>> LastSixAsync();
 
         Task<string> CreateAndReturnIdAsync(TripFormModel formModel,string guideId);
 

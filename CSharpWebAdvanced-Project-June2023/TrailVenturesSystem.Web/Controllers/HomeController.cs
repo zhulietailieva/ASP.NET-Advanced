@@ -17,14 +17,9 @@
         public async Task<IActionResult> Index()
         {
             IEnumerable<IndexViewModel> viewModel =
-                await this.tripService.LastFiveTripsAsync();
+                await this.tripService.LastSixAsync();
 
             return View(viewModel);
-        }
-
-        public IActionResult Sample()
-        {
-            return View("SamplePage");
         }
 
 

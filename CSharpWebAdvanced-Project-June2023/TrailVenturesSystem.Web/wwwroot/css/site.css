@@ -16,3 +16,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+//my fixes
+.btn-primary {
+    border: none;
+    background-color: #009092;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+
+
+
