@@ -1,0 +1,40 @@
+﻿body {
+background-image: url('/images/homepage/background-image-details.jpg');
+background-size: cover;
+width:100%;
+height:100%;
+background-repeat: no-repeat; 
+overflow:auto;
+}
+
+.main-content {
+    padding:10px;
+    background-color: #fafafa;
+    border-radius:8px;
+
+}
+
+.btn-primary {
+    border: none;
+    background-color: #009092;
+}
+.form-check-input:checked{
+ background-color: #009092;
+}
+.description-content{
+    overflow:auto;
+}
+h2 {
+    color: #003e3f;
+}
+
+h3 {
+    color: #00b9bc;
+}
+
+h4 {
+    color: #00b9bc;
+}
+
+h5 {
+}

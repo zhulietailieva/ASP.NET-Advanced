@@ -2,11 +2,16 @@
 @{
     ViewData["Title"] = "Edit Trip";
 }
+<head>
+    <link rel="stylesheet" href="~/css/FormsStyle.css">
+</head>
+<div class="main-content">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
 
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr/>
+    <partial name="_TripFormPartial" model="@Model" />
 
-<partial name="_TripFormPartial" model="@Model" />
+</div>
 
 @section Scripts
 {

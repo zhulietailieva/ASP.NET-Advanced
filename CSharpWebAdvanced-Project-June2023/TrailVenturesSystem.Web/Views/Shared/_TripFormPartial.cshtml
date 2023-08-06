@@ -4,21 +4,31 @@
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form method="post">
-            <div class="form-group">
+            <div class="form-group pb-4">
                 <label asp-for="Title"></label>
                 <input asp-for="Title" class="form-control" placeholder="Interesting name for your trip">
                 <span asp-validation-for="Title" class="small text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MountainId"></label>
-                <select asp-for="MountainId" class="form-control" id="mountains_select">
-                    @foreach (var mountain in Model.Mountains)
-                    {
-                        <option value="@mountain.Id">@mountain.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="MountainId" class="small text-danger"></span>
+
+            <div style="display:flex; justify-content:space-between;">
+                <div class="form-group col-5">
+                    <label asp-for="MountainId"></label>
+                    <select asp-for="MountainId" class="form-control" id="mountains_select">
+                        @foreach (var mountain in Model.Mountains)
+                        {
+                            <option value="@mountain.Id">@mountain.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="MountainId" class="small text-danger"></span>
+                </div>
+                <div class="form-group col-5">
+                    <label asp-for="GroupMaxSize"></label>
+                    <input asp-for="GroupMaxSize" class="form-control"
+                           placeholder="10">
+                    <span asp-validation-for="GroupMaxSize" class="small text-danger"></span>
+                </div>
             </div>
+           
            <!-- <script>
                 $('#mountains_select').on('change', function (e) {
                     //console.log($('#mountains_select').val());
@@ -26,15 +36,78 @@
                   
                 })               
             </script>-->
-            <div class="form-group">
-                <label asp-for="StartDate"></label>
-                <input asp-for="StartDate" class="form-control">
-                <span asp-validation-for="StartDate" class="small text-danger"></span>
+            <div style="display:flex; justify-content:space-between;">
+                <div class="form-group col-5">
+                    <label asp-for="StartDate"></label>
+                    <input asp-for="StartDate" class="form-control">
+                    <span asp-validation-for="StartDate" class="small text-danger"></span>
+                </div>
+
+                <!--Multiple days checkbox-->
+
+                <div class="text-center col-6 pt-3">
+                    <label asp-for="IsMoreThanOneDay" class="mt-3 form-label">
+                        <input class="form-check-input" id="more_than_one_day" type="checkbox" asp-for="IsMoreThanOneDay" />
+                        @Html.DisplayNameFor(m => m.IsMoreThanOneDay)
+                    </label>
+                </div>
+
             </div>
             
-            <div class="form-group">
+
+            <!--Additional fields-->
+
+            <div id="additonal-info" style="display:flex;justify-content:space-between">
+                <div class="form-group col-5">
+                    <label asp-for="ReturnDate"></label>
+                    <input asp-for="ReturnDate" class="form-control" id="additional_info">
+                    <span asp-validation-for="ReturnDate" class="small text-danger"></span>
+                </div>
+
+                <!--HUT-->
+                <div class="form-group col-5">
+                    <label asp-for="HutId"></label>
+                    <select asp-for="HutId" class="form-control" id="huts_select">
+                        @foreach (var hut in Model.Huts)
+                        {
+                            <option value="@hut.Id" mountValue="@hut.MountainId">@hut.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="HutId" class="small text-danger"></span>
+                </div>
+                <!--The following script contains the logic for displaying huts based on the chosen mountain select option.-->
+                <script>
+                    var selectedMountainId = $('#mountains_select').val();
+                    //remove all the other huts except for the ones that are for the default selection (Rila)
+                    $('#huts_select option').each(function () {
+                        if ($(this).attr("mountValue") != selectedMountainId) {
+                            $(this).hide();
+                        }
+                    });
+                    //set select to the first option that is visible
+                    $('#huts_select').val('');
+
+                    $('#mountains_select').on('change', function (e) {
+                        //when the value is changed we should add all the options and remove only the ones which mountainId doesn't match
+                        selectedMountainId = $('#mountains_select').val();
+                        $('#huts_select option').each(function () {
+                            $(this).show();
+
+                        });
+
+                        $('#huts_select option').each(function () {
+                            if ($(this).attr("mountValue") != selectedMountainId) {
+                                $(this).hide();
+                            }
+                        });
+                        $('#huts_select').val('');
+                    })
+                </script>
+            </div>
+            
+            <div class="form-group description-content">
                 <label asp-for="Description"></label>
-                <textarea asp-for="Description" rows="4" class="form-control"
+                <textarea asp-for="Description" rows="7" class="form-control"
                           placeholder="Describe meeting point, trip duration, what to pack and other important info..."></textarea>
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
@@ -45,71 +118,9 @@
                 <input asp-for="PricePerPerson" class="form-control">
                 <span asp-validation-for="PricePerPerson" class="small text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="GroupMaxSize"></label>
-                <input asp-for="GroupMaxSize" class="form-control"
-                       placeholder="10">
-                <span asp-validation-for="GroupMaxSize" class="small text-danger"></span>
-            </div>
-            <!--Multiple days checkbox-->
-
-            <div class="text-center">
-                <label asp-for="IsMoreThanOneDay" class="mt-3 form-label">
-                    <input class="form-check-input" id="more_than_one_day" type="checkbox" asp-for="IsMoreThanOneDay" />
-                    @Html.DisplayNameFor(m => m.IsMoreThanOneDay)
-                </label>
-            </div>
+           
             
-
-            <!--Additional fields-->
-
-            <div id="additonal-info">
-                <div class="form-group">
-                    <label asp-for="ReturnDate"></label>
-                    <input asp-for="ReturnDate" class="form-control" id="additional_info">
-                    <span asp-validation-for="ReturnDate" class="small text-danger"></span>
-                </div>
-
-                <!--HUT-->
-                <div class="form-group">
-                    <label asp-for="HutId"></label>
-                    <select asp-for="HutId" class="form-control" id="huts_select">
-                        @foreach (var hut in Model.Huts)
-                        {                           
-                           <option value="@hut.Id" mountValue="@hut.MountainId">@hut.Name</option>                                                      
-                        }
-                    </select>
-                    <span asp-validation-for="HutId" class="small text-danger"></span>
-                </div>
-                <!--The following script contains the logic for displaying huts based on the chosen mountain select option.-->
-                <script>                                        
-                    var selectedMountainId = $('#mountains_select').val();
-                    //remove all the other huts except for the ones that are for the default selection (Rila)
-                    $('#huts_select option').each(function () {
-                        if ($(this).attr("mountValue") != selectedMountainId) {
-                            $(this).hide();
-                        }
-                    });
-                    //set select to the first option that is visible
-                    $('#huts_select').val('');
-                    
-                    $('#mountains_select').on('change', function (e) {   
-                        //when the value is changed we should add all the options and remove only the ones which mountainId doesn't match
-                        selectedMountainId = $('#mountains_select').val();
-                            $('#huts_select option').each(function () {                              
-                                $(this).show();
-                                
-                            });
-
-                            $('#huts_select option').each(function () {                                                     
-                                if ($(this).attr("mountValue") != selectedMountainId) {
-                                    $(this).hide();
-                                }
-                            });
-                        $('#huts_select').val('');
-                    })                                      
-                </script>
-            </div>
+          
             <!--The following script contains the logic for showing additional fields when a guide selects to create a trip that will last more than 1 day.-->
             <script>
                 $('#additonal-info').addClass('d-none');

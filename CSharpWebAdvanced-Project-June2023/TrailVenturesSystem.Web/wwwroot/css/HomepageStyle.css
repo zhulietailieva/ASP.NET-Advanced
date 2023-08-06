@@ -6,6 +6,12 @@
     text-align: center;
     padding: 150px 0;
 }
+.discover-heading{
+    color:white;
+}
+h1 {
+    color: #003e3f;
+}
 
 .btn-primary {
     border: none;

@@ -14,6 +14,7 @@
     string userFullName = await UserService.GetFullNameByEmailAsync(this.User.Identity?.Name!);
 }
 
+
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
