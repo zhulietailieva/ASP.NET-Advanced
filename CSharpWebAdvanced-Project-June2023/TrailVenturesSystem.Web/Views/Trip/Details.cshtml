@@ -34,7 +34,7 @@
         <div class="card col-7 border-0">
             <h3 class="text-center mb-3">@Model.Title</h3>
             
-            <h5 ">Start date: <b>@Model.StartDate.DayOfWeek,
+            <h5>Start date: <b>@Model.StartDate.DayOfWeek,
                     @Model.StartDate.Date.ToString().Replace(" 0:00:00","")
                 </b>
             </h5>
@@ -59,10 +59,9 @@
                 @if (this.User.Identity?.IsAuthenticated ?? false)
                 {
                    
-
-                   
                     @if ((isUserGuide && isGuideCreatorOfTheTrip) || this.User.IsAdmin())
-                    {
+                    {    
+                        <script>console.log(button);</script>
                         <a class="btn btn-secondary" asp-controller="Trip" asp-action="Edit"
                             asp-route-id="@Model.Id">Edit</a>
                         <a class="ml-2 btn btn-danger" asp-controller="Trip" asp-action="Delete"
