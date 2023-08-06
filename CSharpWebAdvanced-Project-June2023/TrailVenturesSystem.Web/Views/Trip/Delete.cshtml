@@ -2,30 +2,37 @@
 @{
     ViewData["Title"] = "Delete Trip";
 }
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr />
-<form method="post" asp-action="Delete">
-    <div class="row">
-        <div class="col-md-4">
-            <img class="card-img-top" src="https://scontent.fsof11-1.fna.fbcdn.net/v/t1.6435-9/124100761_2848164892121812_1241214905440040070_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=730e14&_nc_ohc=yJrd2JXzZzgAX86dUmr&_nc_ht=scontent.fsof11-1.fna&oh=00_AfB6oRynlHrc0EgvSqmmtKwTUJQZ1LvEGcTpdSZJf-o5Aw&oe=64F5C7D9"
-                 alt="Trip Image">
-        </div>
-        <div class="col-md-8">
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" disabled="disabled" />
+<head>
+    <link rel="stylesheet" href="~/css/FormsStyle.css">
+</head>
+<div class="main-content">
+   
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+    <div class="container mt-5">
+        <form method="post" asp-action="Delete">
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" disabled="disabled" />
+                </div>
+                <div class="pt-4 pb-4" style="display:flex;justify-content:space-evenly">
+                    <div class="form-group col-4">
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" class="form-control" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-4">
+                        <label asp-for="ReturnDate" class="control-label"></label>
+                        <input asp-for="ReturnDate" class="form-control" disabled="disabled" />
+                    </div>
+                </div>
+                
+                <div class="form-group mt-2 text-center">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" disabled="disabled" />
-            </div>
-            <div class="form-group">
-                <label asp-for="ReturnDate" class="control-label"></label>
-                <input asp-for="ReturnDate" class="form-control" disabled="disabled" />
-            </div>
-            <div class="form-group mt-2">
-                <input type="submit" value="Delete" class="btn btn-danger" />
-            </div>
-        </div>
+        </form>
     </div>
-</form>
+   
+
+</div>

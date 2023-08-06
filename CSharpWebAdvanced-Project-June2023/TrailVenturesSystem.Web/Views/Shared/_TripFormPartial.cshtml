@@ -124,6 +124,14 @@
             <!--The following script contains the logic for showing additional fields when a guide selects to create a trip that will last more than 1 day.-->
             <script>
                 $('#additonal-info').addClass('d-none');
+                //
+                if (($('#more_than_one_day').is(':checked')) == true) {
+
+                    //field is checked so we should display additional fields
+                    $('#additonal-info').removeClass('d-none');
+                }
+
+                //
                 $('#more_than_one_day').on('change', function (e) { 
                     
                    // console.log($('#more_than_one_day').is(':checked')); --->true or false

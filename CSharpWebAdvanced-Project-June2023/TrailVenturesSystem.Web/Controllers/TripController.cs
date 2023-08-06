@@ -222,6 +222,7 @@
                     .GetTripForEditByIdAsync(id);
 
                 formModel.Mountains = await this.mountainService.AllMountainsAsync();
+                formModel.Huts = await this.hutService.AllHutsAync();
 
                 return this.View(formModel);
             }

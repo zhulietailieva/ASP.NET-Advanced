@@ -220,6 +220,7 @@
             trip.PricePerPerson = formModel.PricePerPerson;
             trip.GroupMaxSize = formModel.GroupMaxSize;
             trip.MountainId = formModel.MountainId;
+            trip.HutId = formModel.HutId;
 
             await this.dbContext.SaveChangesAsync();
 
@@ -320,7 +321,9 @@
                 Description = trip.Description,
                 PricePerPerson = trip.PricePerPerson,
                 GroupMaxSize = trip.GroupMaxSize,
-                MountainId = trip.MountainId
+                MountainId = trip.MountainId,
+                IsMoreThanOneDay=trip.StartDate!=trip.ReturnDate,
+                
             };
         }
 
@@ -380,7 +383,7 @@
         public async Task<IEnumerable<IndexViewModel>> LastSixAsync()
         {
             //display the 6 latest PLANNED trips
-            IEnumerable<IndexViewModel> lastfiveTrips = await this.dbContext
+            IEnumerable<IndexViewModel> lastSixTrips = await this.dbContext
                 .Trips
                 .Where(t=>t.IsActive)
                 .OrderByDescending(t => t.StartDate)
@@ -397,7 +400,7 @@
                 })
                 .ToArrayAsync();    //always async when we retrieve from the database
 
-            return lastfiveTrips;
+            return lastSixTrips;
         }
 
         public async Task LeaveTripAsync(string tripId,string userId)

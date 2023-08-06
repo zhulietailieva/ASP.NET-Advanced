@@ -18,6 +18,11 @@ overflow:auto;
     border: none;
     background-color: #009092;
 }
+
+.btn-danger {
+    border: none;
+    background-color: #001515;
+}
 .form-check-input:checked{
  background-color: #009092;
 }
