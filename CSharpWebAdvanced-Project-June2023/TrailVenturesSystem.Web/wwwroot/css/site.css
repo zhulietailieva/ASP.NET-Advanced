@@ -21,6 +21,12 @@ body {
 .btn-primary {
     border: none;
     background-color: #009092;
+    color:white;
+}
+button {
+    border: none;
+    background-color: #009092;
+    color: white;
 }
 
 footer {

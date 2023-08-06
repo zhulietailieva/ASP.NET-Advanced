@@ -11,10 +11,13 @@
     bool isUserPartOfTrip = await TripService.IsUserWithIdPartOfTripByIdAsync(Model.Id, this.User.GetId()!);
    // bool isTripMoreThanOneDay = Model.Hut != null;
 }
-<div class="col-md-4">
-    <div class="card mb-3">
+
+<div class="col-md-4 mb-4">
+    <div class="card mb-3" style="min-block-size:100%;max-block-size:100%;">
+        <div class="card-title text-center mb-4 mt-4 mb-4 p-2"><h3>@Model.Title</h3></div>
+        <hr/>
         <div class="card-body text-center">
-            <h4>@Model.Title</h4>
+          
             <h6>Start Date: <b>@Model.StartDate.Date.ToString().Replace(" 0:00:00","")</b></h6>
             @if (Model.ReturnDate != Model.StartDate)
             {
@@ -25,43 +28,56 @@
                 <b>@($"{Model.PricePerPerson:f2}") BGN</b>
             </h6>
             <h6>(@(Model.NotFull ? "Available places" : "Not Available places"))</h6>
-            <h5>@(Model.CurrentGroupSize)/@(Model.MaxGroupSize)</h5>
+            <h4><b>@(Model.CurrentGroupSize)/@(Model.MaxGroupSize)</b></h4>
             <br />
-            <a asp-controller="Trip" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
 
-            @if (this.User.Identity?.IsAuthenticated ?? false)
-            {
-                @if ((isUserGuide && isGuideCreatorOfTheTrip)||this.User.IsAdmin())
+            <div class="button-wrapper position-absolute  m-3 p-2 bottom-0 end-0" style="display:flex; justify-content:end;gap:5px; ">
+                <div>
+                    <a asp-controller="Trip" asp-action="Details" asp-route-id="@Model.Id"
+                       class="btn btn-primary">Details</a>
+                </div>
+           
+
+                @if (this.User.Identity?.IsAuthenticated ?? false)
                 {
-                    <a asp-controller="Trip" asp-action="Edit" asp-route-id="@Model.Id"
-                    class="btn btn-warning">Edit</a>
-                    <a asp-controller="Trip" asp-action="Delete" asp-route-id="@Model.Id"
-                    class="btn btn-danger">Delete</a>                   
-                }
-                <p></p>
-
-                //if trip is not full -> add functionality to request becoming part of the hike group
-                @if (!isUserGuide||this.User.IsAdmin())
-                {
-                    @if (Model.NotFull && !isUserPartOfTrip)
+                    @if ((isUserGuide && isGuideCreatorOfTheTrip) || this.User.IsAdmin())
                     {
-                        <form class="input-group-sm" asp-controller="Trip"
-                            asp-action="Join" asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Join" />
-                        </form>
+                       <div> <a asp-controller="Trip" asp-action="Edit" asp-route-id="@Model.Id"
+                           class="btn btn-secondary">Edit</a>
+                       </div>
+                        <div><a asp-controller="Trip" asp-action="Delete" asp-route-id="@Model.Id"
+                           class="btn btn-danger">Delete</a>
+                        </div>
                     }
-                    else if (isUserPartOfTrip)
+                    <p></p>
+
+                    //if trip is not full -> add functionality to request becoming part of the hike group
+                    @if (!isUserGuide || this.User.IsAdmin())
                     {
-                        <form asp-controller="Trip" asp-action="Leave"
-                            asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Leave" />
-                         </form>
+                        @if (Model.NotFull && !isUserPartOfTrip)
+                        {
+                            <div>
+                                <form class="input-group" asp-controller="Trip"
+                                      asp-action="Join" asp-route-id="@Model.Id" method="post">
+                                    <input class="btn btn-primary" type="submit" value="Join" />
+                                </form>
+                            </div>
+                        }
+                        else if (isUserPartOfTrip)
+                        {
+                            <div>
+                                <form asp-controller="Trip" asp-action="Leave"
+                                      asp-route-id="@Model.Id" method="post">
+                                    <input class="btn btn-secondary" type="submit" value="Leave" />
+                                </form>
+                            </div>
+                        }
+
                     }
 
                 }
-                                
-            }
+
+            </div>           
         </div>
     </div>
 </div>

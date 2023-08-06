@@ -1,0 +1,34 @@
+﻿body {
+}
+h2 {
+    color: #003e3f;
+}
+h3{
+    color:#003e3f;
+}
+h4 {
+    color: #00b9bc;
+}
+.btn-primary {
+    border: none;
+    background-color: #009092;
+}
+
+.btn-secondary{
+    border: none;
+    //background-color: #00b9bc;
+}
+.btn-danger {
+    border: none;
+    background-color: #001515;
+}
+.btn-success {
+    border: none;
+    background-color: #00a5a7;
+}
+.card {
+    background-color: #f9f9f9;
+}
+.card-body{
+   
+}

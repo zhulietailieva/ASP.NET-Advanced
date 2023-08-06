@@ -389,9 +389,11 @@
                 {
                     Id = t.Id.ToString(),
                     Title = t.Title,
-                    //Mountain = t.Mountain,
+                    MountainId = t.MountainId,
                     StartDate = t.StartDate,
-                    ReturnDate=t.ReturnDate
+                    ReturnDate=t.ReturnDate,
+                    GuideId=t.GuideId.ToString()
+                    
                 })
                 .ToArrayAsync();    //always async when we retrieve from the database
 

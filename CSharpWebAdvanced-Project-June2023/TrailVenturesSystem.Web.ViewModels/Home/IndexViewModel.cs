@@ -9,7 +9,9 @@
 
         public string Title { get; set; } = null!;
 
-        public string Mountain { get; set; } = null!;
+        public int MountainId { get; set; } 
+
+        public string GuideId { get; set; } = null!;
 
         public DateTime StartDate { get; set; } 
 

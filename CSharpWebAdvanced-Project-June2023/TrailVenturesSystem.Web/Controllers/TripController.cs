@@ -547,6 +547,11 @@
             return this.RedirectToAction("Mine", "Trip");
             
         }
+
+        public IActionResult DetailsTest()
+        {
+            return View();
+        }
         private IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administator.";

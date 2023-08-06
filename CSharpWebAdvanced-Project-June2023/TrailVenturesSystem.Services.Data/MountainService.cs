@@ -77,5 +77,14 @@
 
             return viewModel;
         }
+
+        public async Task<string> getNameByIdAsync(int mountainId)
+        {
+            Mountain mountain= await this.dbContext
+                 .Mountains
+                 .FirstAsync(m => m.Id == mountainId);
+
+            return mountain.Name;
+        }
     }
 }

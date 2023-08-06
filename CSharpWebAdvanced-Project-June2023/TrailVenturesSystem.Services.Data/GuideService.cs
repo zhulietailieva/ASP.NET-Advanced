@@ -31,6 +31,20 @@
 
         }
 
+        public async Task<string> GetFullNameByIdAsync(string guideId)
+        {
+            Guide guide = await this.dbContext
+                .Guides
+                .FirstAsync(g => g.Id.ToString() == guideId);
+
+            var currentUser = await this.dbContext
+               .Users
+               .FirstAsync(u => u.Id.ToString() == guide.UserId.ToString());
+
+            return currentUser.FirstName + " " + currentUser.LastName;
+
+        }
+
         public async Task<string?> GetGuideIdByUserIdAsync(string userId)
         {
             Guide? guide = await this.dbContext

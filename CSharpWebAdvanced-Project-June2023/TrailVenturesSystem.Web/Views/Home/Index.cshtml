@@ -4,6 +4,7 @@
 @model IEnumerable<IndexViewModel>
 
 @inject IGuideService GuideService
+@inject IMountainService MountainService
 
 @{
     ViewData["Title"] = "Home Page";
@@ -13,8 +14,6 @@
 }
 <head>    
     <link rel="stylesheet" href="~/css/HomepageStyle.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trail Ventures</title>
 </head>
 
 <section class="hero">
@@ -51,12 +50,16 @@ else
 <section class="row row-cols-1 row-cols-md-3 g-4 pt-4 pb-4">
     @foreach(var trip in trips)
     {
-        <div class="col">
-            <div class="card h-100 position-relative">
+        string fullName =await GuideService.GetFullNameByIdAsync(trip.GuideId);
+            string mountainName = await MountainService.getNameByIdAsync(trip.MountainId);
+            <div class="col">
+                <div class="card h-100 position-relative">
                 <div class="row g-0">
                     <div class="col-md-3">
                         <img src="/images/homepage/default-user.jpg" alt="User image" class="rounded-circle" style="width: 100px; height: 100px;">
-                        <p class="text-muted text-center">Guide name</p>
+                        <p class="text-muted text-center">                          
+                           @fullName
+                        </p>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -66,9 +69,9 @@ else
                                 {
                                     <p class="card-text m-0">To: @trip.ReturnDate.ToString()!.Split(' ')[0]</p>
                                 }  
-                                <p class="card-text m-0">Mountain: @trip.Mountain<p>
-                            <div class="button-wrapper position-absolute  m-3 p-2 bottom-0 end-0">
-                                <a class="btn btn-primary me-2" asp-controller="Trip" asp-net-action="Details"
+                                <p class="card-text m-0">Mountain: <b>@mountainName</b><p>
+                            <div class="button-wrapper position-absolute  mr-3 mb-2 p-0 bottom-0 end-0">
+                                <a class="btn btn-primary me-2" asp-controller="Trip" asp-action="Details"
                                    asp-route-id="@trip.Id">Details</a>                              
                             </div>
                             

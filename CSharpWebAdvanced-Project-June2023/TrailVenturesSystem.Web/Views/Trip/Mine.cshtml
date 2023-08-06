@@ -3,8 +3,12 @@
     ViewData["Title"] = "My Trips";
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/AllTripsStyle.css">
+</head>
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
+
 
 @if(!Model.Any())
 {
@@ -12,6 +16,16 @@
 }
 else
 {
+    @if (Model.Count > 1)
+    {
+        <h3 class="text-center">You have @Model.Count planned trips.</h3>
+    }
+    else
+    {
+        <h3 class="text-center">You have @Model.Count planned trip.</h3>
+    }
+
+
     <div class="row">
         @foreach(TripAllViewModel trip in Model)
         {
