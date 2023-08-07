@@ -1,0 +1,85 @@
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;
+@using TrailVenturesSystem.Web.ViewModels.Hut;
+
+@inject IMountainService MountainService;
+
+@model HutFormModel
+@{
+    ViewData["MountainId"] = ViewContext.RouteData.Values["id"]; // Store the ID in ViewBag
+    int mountainIdValue = Convert.ToInt32(ViewData["MountainId"]);
+
+    string mountainName = await MountainService.GetNameByIdAsync(mountainIdValue);
+
+    ViewData["Title"] = "Register a Hut for "+mountainName;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/FormsStyle.css">
+</head>
+
+<body class="pb-3">
+    <div class="main-content pt-lg-5 pb-2">
+        <h2 class="text-center">@ViewData["Title"]</h2>
+        <hr />
+       
+        <form method="post">
+            <div class="form-group col-4 p-2 offset-4">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+
+            <!--add a hidden field for mountain id-->
+
+            <div hidden>
+                <label asp-for="MountainId"></label>
+                <input asp-for="MountainId" class="form-control" value="@mountainIdValue">
+                <span asp-validation-for="MountainId" class="small text-danger "></span>
+            </div>
+
+            <!--TODO: Add mountain select for design purpose-->
+            
+           <div class="form-group col-4 p-2 offset-4">
+                <label asp-for="Mountains"></label>
+                <select asp-for="Mountains" class="form-control" id="mountains_select" disabled>
+                    @foreach (var mountain in Model.Mountains)
+                    {
+                        if (mountain.Id == mountainIdValue)
+                        {
+                            <option value="@mountain.Id" selected >@mountain.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@mountain.Id">@mountain.Name</option>
+                        }
+                        
+                    }
+                </select>
+                <span asp-validation-for="Mountains" class="small text-danger"></span>
+            </div>
+
+
+            <div class="form-group col-4 p-2 offset-4">
+                <label asp-for="PricePerNight"></label>
+                <input asp-for="PricePerNight" class="form-control">
+                <span asp-validation-for="PricePerNight" class="small text-danger"></span>
+            </div>
+            <div class="form-group col-4 p-2 offset-4">
+                <label asp-for="HostPhoneNumber"></label>
+                <input asp-for="HostPhoneNumber" class="form-control" placeholder="+359888888888">
+                <span asp-validation-for="HostPhoneNumber" class="small text-danger"></span>
+            </div>
+            <div class="form-group col-4 p-2 offset-4">
+                <label asp-for="Altitude"></label>
+                <input asp-for="Altitude" class="form-control">
+                <span asp-validation-for="Altitude" class="small text-danger"></span>
+            </div>
+            <div class="text-center pb-2">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+
+        </form>
+    </div>
+
+</body>
+

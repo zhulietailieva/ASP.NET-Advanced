@@ -19,14 +19,14 @@
                 else
                 {
                     <div class="form-group col-5"><label asp-for="MountainId"></label>
-                    <select asp-for="MountainId" class="form-control" id="mountains_select">
-                        @foreach (var mountain in Model.Mountains)
-                        {
-                            <option value="@mountain.Id">@mountain.Name</option>
-                        }
-                    </select>
-                    <span asp-validation-for="MountainId" class="small text-danger"></span>
-                </div>
+                        <select asp-for="MountainId" class="form-control" id="mountains_select">
+                            @foreach (var mountain in Model.Mountains)
+                            {
+                                <option value="@mountain.Id">@mountain.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="MountainId" class="small text-danger"></span>
+                    </div>
                 }                                      
                 
                 <div class="form-group col-5">

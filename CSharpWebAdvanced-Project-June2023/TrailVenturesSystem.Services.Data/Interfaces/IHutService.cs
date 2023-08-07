@@ -6,6 +6,7 @@
 
     public interface IHutService
     {
+        Task<int> CreateAndReturnIdAsync(HutFormModel formModel);
 
         Task<IEnumerable<TripSelectHutFormModel>> AllHutsAync();
 
@@ -16,5 +17,7 @@
         Task<Hut> GetHutByIdAsync(int hutId);
 
         Task<bool> ExistsByIdAsync(int hutId);
+
+
     }
 }

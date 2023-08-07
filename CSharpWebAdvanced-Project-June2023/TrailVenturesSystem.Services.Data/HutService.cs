@@ -62,6 +62,23 @@
 
         }
 
+        public async Task<int> CreateAndReturnIdAsync(HutFormModel formModel)
+        {
+            Hut hut = new Hut
+            {
+                Name=formModel.Name,
+                HostPhoneNumber=formModel.HostPhoneNumber,
+                PricePerNight=formModel.PricePerNight,
+                Altitude=formModel.Altitude,
+                MountainId=formModel.MountainId
+            };
+
+            await this.dbContext.Huts.AddAsync(hut);
+            await this.dbContext.SaveChangesAsync();
+
+            return hut.Id;
+        }
+
         public async Task<bool> ExistsByIdAsync(int hutId)
         {
             bool result =await this.dbContext

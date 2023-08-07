@@ -51,7 +51,7 @@ else
     @foreach(var trip in trips)
     {
         string fullName =await GuideService.GetFullNameByIdAsync(trip.GuideId);
-            string mountainName = await MountainService.getNameByIdAsync(trip.MountainId);
+            string mountainName = await MountainService.GetNameByIdAsync(trip.MountainId);
             <div class="col">
                 <div class="card h-100 position-relative">
                 <div class="row g-0">

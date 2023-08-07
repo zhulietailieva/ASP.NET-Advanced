@@ -113,13 +113,13 @@
             return viewModel;
         }
 
-        public async Task<string> getNameByIdAsync(int mountainId)
+        public async Task<string> GetNameByIdAsync(int id)
         {
-            Mountain mountain= await this.dbContext
-                 .Mountains
-                 .FirstAsync(m => m.Id == mountainId);
+            Mountain result = await this.dbContext
+                .Mountains
+                .FirstAsync(m => m.Id == id);
 
-            return mountain.Name;
+            return result.Name;
         }
     }
 }

@@ -14,8 +14,9 @@
 
         Task<IEnumerable<string>> AllMountainNamesAsync();
 
+        Task<string> GetNameByIdAsync(int id);
+
         Task<MountainDetailsViewModel> GetDetailsByIdAsync(int id);
 
-        Task<string> getNameByIdAsync(int mountainId);
     }
 }

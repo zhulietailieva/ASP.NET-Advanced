@@ -56,6 +56,13 @@
 
             public const int PhoneNumberMinLength = 7;
             public const int PhoneNumberMaxLength = 15;
+
+            public const string pricePerPersonMinValue = "1";
+            public const string pricePerPersonMaxValue = "200";
+
+            public const int altitudeMinValue = 100;
+            //could possibly register some huts that are not in Bulgaria in the future
+            public const int altitudeMaxValue = 4000;
         }
     }
 }

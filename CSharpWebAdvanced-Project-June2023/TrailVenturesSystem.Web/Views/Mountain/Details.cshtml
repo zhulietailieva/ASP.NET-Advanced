@@ -1,4 +1,4 @@
-﻿@using TrailVenturesSystem.Services.Data.Interfaces;\
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;
 @using TrailVenturesSystem.Web.Infrastructure.Extensions;
 
 @model MountainDetailsViewModel
@@ -46,7 +46,7 @@
     @if (isUserGuide || User.IsAdmin())
     {
          <div class="text-center pt-3">
-            <a asp-controller="Hut" asp-action="Add" class="btn btn-primary btn-lg"
+            <a asp-controller="Hut" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary btn-lg"
                role="button">Register a Hut</a>
         </div>
     }
