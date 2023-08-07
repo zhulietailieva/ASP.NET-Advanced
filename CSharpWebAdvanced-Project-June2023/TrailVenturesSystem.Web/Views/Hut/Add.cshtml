@@ -74,6 +74,10 @@
                 <input asp-for="Altitude" class="form-control">
                 <span asp-validation-for="Altitude" class="small text-danger"></span>
             </div>
+
+            <!--saving the url to pass to controller for redirect after saving-->
+            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
             <div class="text-center pb-2">
                 <input class="btn btn-primary mt-3" type="submit" value="Save" />
             </div>

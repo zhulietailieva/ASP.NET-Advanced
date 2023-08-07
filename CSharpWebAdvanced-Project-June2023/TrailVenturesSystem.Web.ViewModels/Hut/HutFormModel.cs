@@ -33,5 +33,7 @@
         public int MountainId { get; set; }
 
         public IEnumerable<TripSelectMountainFormModel> Mountains { get; set; }
+
+        public string? ReturnUrl { get; set; }
     }
 }

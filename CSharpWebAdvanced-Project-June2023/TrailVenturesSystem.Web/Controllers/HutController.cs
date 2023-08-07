@@ -38,8 +38,10 @@
             {
                 HutFormModel formModel = new HutFormModel()
                 {
-                    Mountains = await this.mountainService.AllMountainsAsync()
-                };
+                    Mountains = await this.mountainService.AllMountainsAsync(),
+                    //testing
+                    ReturnUrl= HttpContext.Request.Headers["Referer"].ToString()
+                };              
 
                 return View(formModel);
             }
@@ -50,7 +52,8 @@
         }
         [HttpPost]
 
-        public async Task<IActionResult> Add(HutFormModel model)
+        //getting the url for later redirect
+        public async Task<IActionResult> Add(HutFormModel model, string returnUrl)
         {
             bool isGuide = await this.guideService.GuideExistsByUserIdAsync(this.User.GetId()!);
 
@@ -77,7 +80,16 @@
                 int hutId = await this.hutService.CreateAndReturnIdAsync(model);
 
                 this.TempData[SuccessMessage] = "Hut was registered successfully!";
-                return this.RedirectToAction("All", "Mountain", new { id = hutId });
+               
+                //redirecting url to the previous page
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                // If the referer URL is not available or invalid, redirect to a default action
+                return RedirectToAction("All", "Mountain");
+
             }
             catch (Exception)
             {
