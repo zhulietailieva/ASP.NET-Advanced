@@ -4,13 +4,28 @@
 @{
     ViewData["Title"] = "All Mountains";
 }
+<head>
+    <link rel="stylesheet" href="~/css/AllMountainsStyle.css" />
+</head>
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr/>
 
-<div class="list-group">
-    @foreach(AllMountainsViewModel mountain in Model)
-    {
-        <a class="list-group-item list-group-item-action" asp-controller="Mountain" asp-action="Details" asp-route-id="@mountain.Id" asp-route-information="@mountain.GetUrlInformation()">@mountain.Name</a>
-    }
+<div class="d-flex justify-content-center">
+    <div class="list-group mountains-list">
+        @foreach(AllMountainsViewModel mountain in Model)
+        {
+            <a class="list-group-item list-group-item-action" asp-controller="Mountain" asp-action="Details" asp-route-id="@mountain.Id" asp-route-information="@mountain.GetUrlInformation()">@mountain.Name</a>
+        }
+    
+    </div>
 </div>
+<!--only admin will be able to add another mountain-->
+@if (this.User.IsAdmin())
+{
+    <div class="d-flex justify-content-center pt-3">   
+    <a asp-controller="Mountain" asp-action="Add" class="btn btn-primary btn-lg"
+       role="button">Add Mountain</a>
+</div>
+}
+

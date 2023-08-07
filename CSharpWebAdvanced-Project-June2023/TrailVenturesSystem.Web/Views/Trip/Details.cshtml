@@ -103,16 +103,16 @@
                     </div>
             @if (isTripMoreThanOneDay)
             {
-                        <div class="card" style="width: 40%;">
-                            <div class="card-body">
-                                <h5 class="card-title"><b>Hut Info</b></h5>
-                                <p class="card-text my-1">Hut Name: @Model.Hut.Name</p>
-                                <p class="card-text my-1">Host number: @Model.Hut.HostPhoneNumber</p>
-                                <p class="card-text my-1">Altitude: @Model.Hut.Altitude</p>
-                                <p class="card-text my-1">Price per night: @($"{Model.Hut.PricePerNight:f2}") BGN</p>
+                <div class="card" style="width: 40%;">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Hut Info</b></h5>
+                        <p class="card-text my-1">Hut Name: @Model.Hut.Name</p>
+                        <p class="card-text my-1">Host number: @Model.Hut.HostPhoneNumber</p>
+                        <p class="card-text my-1">Altitude: @Model.Hut.Altitude</p>
+                        <p class="card-text my-1">Price per night: @($"{Model.Hut.PricePerNight:f2}") BGN</p>
 
-                            </div>
-                        </div>
+                    </div>
+                </div>
             }
 
             </div>

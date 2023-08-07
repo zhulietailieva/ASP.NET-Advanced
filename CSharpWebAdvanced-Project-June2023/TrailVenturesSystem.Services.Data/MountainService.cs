@@ -4,6 +4,7 @@
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Web.ViewModels.Hut;
     using TrailVenturesSystem.Web.ViewModels.Mountain;
 
     public class MountainService : IMountainService
@@ -54,6 +55,20 @@
             return allMountains;  
         }
 
+        public async Task<int> CreateAndReturnIdAsync(MountainFormModel formModel)
+        {
+           
+            Mountain mountain = new Mountain
+            {            
+                Name = formModel.Name
+            };
+
+            await this.dbContext.Mountains.AddAsync(mountain);
+            await this.dbContext.SaveChangesAsync();
+
+            return mountain.Id;
+        }
+
         public async Task<bool> ExistsByIdAsync(int id)
         {
             bool result =await this.dbContext
@@ -67,6 +82,7 @@
         {
             Mountain mountain = await dbContext
                 .Mountains
+                .Include(m=>m.Huts)
                 .FirstAsync(m => m.Id == id);
 
             MountainDetailsViewModel viewModel = new MountainDetailsViewModel()
@@ -74,6 +90,25 @@
                 Id=mountain.Id,
                 Name=mountain.Name
             };
+
+            HashSet<HutInfoOnTripViewModel> hutsDetails = new HashSet<HutInfoOnTripViewModel>();
+
+            if (mountain.Huts.Count != 0)
+            {
+                foreach(Hut hut in mountain.Huts)
+                {
+                    HutInfoOnTripViewModel hutDetails = new HutInfoOnTripViewModel()
+                    {
+                        Name = hut.Name,
+                        HostPhoneNumber = hut.HostPhoneNumber,
+                        Altitude = hut.Altitude,
+                        PricePerNight = hut.PricePerNight
+                    };
+
+                    hutsDetails.Add(hutDetails);
+                }
+            }
+            viewModel.Huts = hutsDetails;
 
             return viewModel;
         }

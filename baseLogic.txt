@@ -70,6 +70,7 @@ Add size groups propertu to trips and update database
 --recaptcha? IMPLEMENT
 
 --color scheme: https://i.pinimg.com/originals/dd/0f/06/dd0f0682d8946f29b95a3e80673378cb.png
+https://colorswall.com/palette/29408
 
 
 

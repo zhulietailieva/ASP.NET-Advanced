@@ -1,0 +1,34 @@
+﻿body {
+}
+
+.mountains-list {
+    background-color: red;
+    max-width: 50%;
+    min-width: 50%;
+}
+.list-group-item {
+    background-color: #fafafa;
+}
+    .list-group-item:hover {
+        background-color: #b3ebf2;
+    }
+.btn-primary {
+    border: none;
+    background-color: #009092;
+}
+.card{
+    background-color:#fafafa;
+    border-radius: 10px;
+    border-width:2.5px;
+}
+h2 {
+    color: #003e3f;
+}
+
+h3 {
+    color: #00b9bc;
+}
+
+h4 {
+    color: #00b9bc;
+}

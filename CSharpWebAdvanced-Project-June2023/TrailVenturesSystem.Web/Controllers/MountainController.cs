@@ -6,7 +6,8 @@
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Web.ViewModels.Mountain;
 
-   
+    using static Common.NotificationMessagesConstants;
+
     [Authorize]
     public class MountainController : Controller
     {
@@ -41,5 +42,70 @@
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            //only admins can add mountains
+
+            if (!User.IsAdmin())
+            {
+                this.TempData[ErrorMessage] = "You must be an administrator in order to add ountains!";
+                return this.RedirectToAction("All", "Mountain");
+            }
+
+            try
+            {
+                MountainFormModel formModel = new MountainFormModel()
+                {
+
+                };
+                return View(formModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> Add(MountainFormModel model)
+        {
+            if (!User.IsAdmin())
+            {
+                this.TempData[ErrorMessage] = "You must be an administrator in order to add ountains!";
+                return this.RedirectToAction("All", "Mountain");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+            try
+            {
+                //create the mountain and insert in db
+                int mountainId = await this.mountainService.CreateAndReturnIdAsync(model);
+
+                this.TempData[SuccessMessage] = "Mountain was added successfully!";
+                return this.RedirectToAction("All", "Mountain");
+
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Error!";
+                this.ModelState.AddModelError(string.Empty,
+                    "Unexpected error occured while trying to add new mountain! Please try again later.");
+                return this.View(model);
+            }
+        }
+        private IActionResult GeneralError()
+        {
+            this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administator.";
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+
     }
 }

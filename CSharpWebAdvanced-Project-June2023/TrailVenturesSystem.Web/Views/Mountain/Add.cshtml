@@ -1,0 +1,37 @@
+﻿@model MountainFormModel
+
+@{
+    ViewData["Title"] = "Add Mountain";
+}
+<head>
+    <link rel="stylesheet" href="~/css/FormsStyle.css">
+</head>
+
+
+<body class="pb-3">
+    <div class="main-content pt-lg-5 pb-2">
+        <h2 class="text-center">@ViewData["Title"]</h2>  
+        <hr />
+        <form method="post"> 
+            <div class="form-group col-4 p-3 offset-4">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="small text-danger"></span>
+        </div>
+  
+            <div class="text-center pb-2">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+
+}

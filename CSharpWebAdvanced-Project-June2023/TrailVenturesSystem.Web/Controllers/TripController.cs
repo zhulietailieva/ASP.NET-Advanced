@@ -62,13 +62,12 @@
                 TripFormModel formModel = new TripFormModel()
                 {
                     Mountains = await this.mountainService.AllMountainsAsync(),
-                    //error here
+                    
                      Huts = await this.hutService.AllHutsAync()
                     
                 };
 
                 return View(formModel);
-
             }
             catch (Exception)
             {
@@ -121,7 +120,7 @@
                 model.Mountains = await this.mountainService.AllMountainsAsync();
                 model.Huts = await this.hutService.AllHutsAync();
 
-                //Will visualize all errors with correct mountains
+                //Will visualize all errors with correct mountains and huts
                 return this.View(model);
             }
             //it is preferable that all operations including inserting in database are in try-catch blocks
@@ -548,11 +547,6 @@
 
             return this.RedirectToAction("Mine", "Trip");
             
-        }
-
-        public IActionResult DetailsTest()
-        {
-            return View();
         }
         private IActionResult GeneralError()
         {

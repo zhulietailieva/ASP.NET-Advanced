@@ -1,14 +1,54 @@
-﻿@model MountainDetailsViewModel
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;\
+@using TrailVenturesSystem.Web.Infrastructure.Extensions;
 
+@model MountainDetailsViewModel
+
+@inject IGuideService GuideService
 @{
     ViewData["Title"] = "Mountain Details";
-}
 
-<h2 class="text-center"@ViewData["Title"]></h2>
+    bool isUserGuide = await GuideService.GuideExistsByUserIdAsync(this.User.GetId()!);
+}
+<head>
+    <link rel="stylesheet" href="~/css/AllMountainsStyle.css" />
+</head>
+
+<h2 class="text-center">@ViewData["Title"]</h2>
 <hr/>
 
-<div class="container-fluid">
-    <div class="row">
-        <p class="col-6">Name: @Model.Name</p>
+<div>
+    <div class="row text-center pb-4">
+        <h1 >Mountain: @Model.Name</h1>
     </div>
+    @if (Model.Huts.Count > 0)
+    {
+        <h3 class="text-center pb-4 pt-4">Registered Huts in @Model.Name Mountain:</h3>
+        <hr/>
+        <div class="d-flex justify-content-evenly pt-4">
+            @foreach(var hut in Model.Huts)
+            {
+                <div class="card" style="width: 30%;">
+                    <div class="card-body">
+                        <div class="card-title p-3"><h4>@hut.Name</h4></div>
+                        <hr/>
+                        <p class="card-text my-1 "><b>Host number:</b> @hut.HostPhoneNumber</p>
+                        <p class="card-text my-1"><b>Altitude: </b>@hut.Altitude</p>
+                        <p class="card-text my-1"><b>Price per night:</b> @($"{hut.PricePerNight:f2}") BGN</p>
+                    </div>
+                </div>
+            }
+            </div>
+    }
+    else
+    {
+        <h1 class="text-center"> There are no registered huts for this mountain!</h1>
+    }
+    @if (isUserGuide || User.IsAdmin())
+    {
+         <div class="text-center pt-3">
+            <a asp-controller="Hut" asp-action="Add" class="btn btn-primary btn-lg"
+               role="button">Register a Hut</a>
+        </div>
+    }
+   
 </div>
