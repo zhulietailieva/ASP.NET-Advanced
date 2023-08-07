@@ -214,13 +214,13 @@
                  .FirstAsync(t => t.Id.ToString() == tripId);
 
             trip.Title = formModel.Title;
-            trip.StartDate = formModel.StartDate;
-            trip.ReturnDate = formModel.ReturnDate;
+            //trip.StartDate = formModel.StartDate;
+            //trip.ReturnDate = formModel.ReturnDate;
             trip.Description = formModel.Description;
             trip.PricePerPerson = formModel.PricePerPerson;
             trip.GroupMaxSize = formModel.GroupMaxSize;
-            trip.MountainId = formModel.MountainId;
-            trip.HutId = formModel.HutId;
+            //trip.MountainId = formModel.MountainId;
+            //trip.HutId = formModel.HutId;
 
             await this.dbContext.SaveChangesAsync();
 
@@ -322,8 +322,8 @@
                 PricePerPerson = trip.PricePerPerson,
                 GroupMaxSize = trip.GroupMaxSize,
                 MountainId = trip.MountainId,
-                IsMoreThanOneDay=trip.StartDate!=trip.ReturnDate,
-                
+                IsMoreThanOneDay = trip.StartDate != trip.ReturnDate,
+                HutId = trip.HutId ?? -1
             };
         }
 

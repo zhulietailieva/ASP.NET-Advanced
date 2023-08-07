@@ -222,7 +222,10 @@
                     .GetTripForEditByIdAsync(id);
 
                 formModel.Mountains = await this.mountainService.AllMountainsAsync();
-                formModel.Huts = await this.hutService.AllHutsAync();
+                formModel.Huts = await this.hutService.AllHutsAync();              
+               
+                ViewBag.disabledFields = true;
+                //ViewBag.isMountainSelectDisabled = true;
 
                 return this.View(formModel);
             }
@@ -232,9 +235,7 @@
 
                 return this.RedirectToAction("Index", "Home");
             }
-
             
-
         }
 
         [HttpPost]

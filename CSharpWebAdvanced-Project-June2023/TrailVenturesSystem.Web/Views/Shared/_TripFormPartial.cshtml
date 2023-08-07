@@ -11,8 +11,14 @@
             </div>
 
             <div style="display:flex; justify-content:space-between;">
-                <div class="form-group col-5">
-                    <label asp-for="MountainId"></label>
+                
+                @if (ViewBag.disabledFields ?? false)
+                {
+                    
+                }
+                else
+                {
+                    <div class="form-group col-5"><label asp-for="MountainId"></label>
                     <select asp-for="MountainId" class="form-control" id="mountains_select">
                         @foreach (var mountain in Model.Mountains)
                         {
@@ -21,6 +27,8 @@
                     </select>
                     <span asp-validation-for="MountainId" class="small text-danger"></span>
                 </div>
+                }                                      
+                
                 <div class="form-group col-5">
                     <label asp-for="GroupMaxSize"></label>
                     <input asp-for="GroupMaxSize" class="form-control"
@@ -36,73 +44,101 @@
                   
                 })               
             </script>-->
-            <div style="display:flex; justify-content:space-between;">
-                <div class="form-group col-5">
-                    <label asp-for="StartDate"></label>
-                    <input asp-for="StartDate" class="form-control">
-                    <span asp-validation-for="StartDate" class="small text-danger"></span>
-                </div>
-
+            <div style="display:flex; justify-content:space-between;">              
+                    @if(ViewBag.disabledFields ?? false)
+                    {
+                        
+                    }
+                    else{
+                    <div class="form-group col-5">
+                        <label asp-for="StartDate"></label>
+                        <input asp-for="StartDate" class="form-control">
+                        <span asp-validation-for="StartDate" class="small text-danger"></span>
+                    </div>
+                    }
+                    
                 <!--Multiple days checkbox-->
 
-                <div class="text-center col-6 pt-3">
-                    <label asp-for="IsMoreThanOneDay" class="mt-3 form-label">
+                
+                    @if(ViewBag.disabledFields ?? false){
+                    }
+                    else{
+                            <div class="text-center col-6 pt-3">
+                            <label asp-for="IsMoreThanOneDay" class="mt-3 form-label">
+
                         <input class="form-check-input" id="more_than_one_day" type="checkbox" asp-for="IsMoreThanOneDay" />
                         @Html.DisplayNameFor(m => m.IsMoreThanOneDay)
-                    </label>
-                </div>
+                        </label>
+                    </div>
+                        
+                    }
+                        
+                    
 
             </div>
             
-
             <!--Additional fields-->
 
             <div id="additonal-info" style="display:flex;justify-content:space-between">
                 <div class="form-group col-5">
                     <label asp-for="ReturnDate"></label>
-                    <input asp-for="ReturnDate" class="form-control" id="additional_info">
-                    <span asp-validation-for="ReturnDate" class="small text-danger"></span>
+                    @if(ViewBag.disabledFields ?? false){
+                        <input asp-for="ReturnDate" class="form-control" disabled id="additional_info">
+                        <span asp-validation-for="ReturnDate" class="small text-danger"></span>
+                    }else{
+                        <input asp-for="ReturnDate" class="form-control" id="additional_info">
+                        <span asp-validation-for="ReturnDate" class="small text-danger"></span>
+                    }
+                    
                 </div>
 
+                <!--all this should be visible when creating a trip but not when editing one.-->               
                 <!--HUT-->
-                <div class="form-group col-5">
+                @if (ViewBag.disabledFields ?? false){  }                             
+                else
+                {
+                    <div class="form-group col-5">
                     <label asp-for="HutId"></label>
-                    <select asp-for="HutId" class="form-control" id="huts_select">
+                        <select asp-for="HutId" class="form-control" id="huts_select">
                         @foreach (var hut in Model.Huts)
-                        {
-                            <option value="@hut.Id" mountValue="@hut.MountainId">@hut.Name</option>
+                        {                        
+                            <option value="@hut.Id" mountValue="@hut.MountainId">@hut.Name</option>                                                      
                         }
                     </select>
                     <span asp-validation-for="HutId" class="small text-danger"></span>
-                </div>
-                <!--The following script contains the logic for displaying huts based on the chosen mountain select option.-->
-                <script>
-                    var selectedMountainId = $('#mountains_select').val();
-                    //remove all the other huts except for the ones that are for the default selection (Rila)
-                    $('#huts_select option').each(function () {
-                        if ($(this).attr("mountValue") != selectedMountainId) {
-                            $(this).hide();
-                        }
-                    });
-                    //set select to the first option that is visible
-                    $('#huts_select').val('');
-
-                    $('#mountains_select').on('change', function (e) {
-                        //when the value is changed we should add all the options and remove only the ones which mountainId doesn't match
-                        selectedMountainId = $('#mountains_select').val();
-                        $('#huts_select option').each(function () {
-                            $(this).show();
-
-                        });
-
+                    </div>
+                    <!--The following script contains the logic for displaying huts based on the chosen mountain select option.-->
+                    <script>
+                        var selectedMountainId = $('#mountains_select').val();
+                        //remove all the other huts except for the ones that are for the default selection (Rila)
                         $('#huts_select option').each(function () {
                             if ($(this).attr("mountValue") != selectedMountainId) {
                                 $(this).hide();
                             }
                         });
+                        //set select to the first option that is visible
                         $('#huts_select').val('');
-                    })
-                </script>
+
+                        $('#mountains_select').on('change', function (e) {
+                            //when the value is changed we should add all the options and remove only the ones which mountainId doesn't match
+                            selectedMountainId = $('#mountains_select').val();
+                            $('#huts_select option').each(function () {
+                                $(this).show();
+
+                            });
+
+                            $('#huts_select option').each(function () {
+                                if ($(this).attr("mountValue") != selectedMountainId) {
+                                    $(this).hide();
+                                }
+                            });
+                            $('#huts_select').val('');
+                        })
+                    </script>
+                }
+                
+                                      
+                
             </div>
             
             <div class="form-group description-content">
