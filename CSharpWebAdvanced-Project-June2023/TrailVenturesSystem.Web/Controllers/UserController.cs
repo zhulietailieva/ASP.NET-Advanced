@@ -1,9 +1,12 @@
 ﻿namespace TrailVenturesSystem.Web.Controllers
 {
     using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using TrailVenturesSystem.Data.Models;
+    using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Web.ViewModels.User;
 
     using static Common.NotificationMessagesConstants;
@@ -12,14 +15,18 @@
         //for login
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        //for refistration
+        //for registration
         private readonly UserManager<ApplicationUser> userManager;
 
+        private readonly IUserService userService;
+
         public UserController(SignInManager<ApplicationUser> signInManager,
-                                UserManager<ApplicationUser> userManager)
+                                UserManager<ApplicationUser> userManager,
+                                IUserService userService)
         {
             this.signInManager = signInManager;
-            this.userManager = userManager;          
+            this.userManager = userManager;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -81,7 +88,6 @@
 
         [HttpPost]
 
-
         //we use async Task<> where there are async operations
         public async Task<IActionResult> Login(LoginFormModel model)
         {
@@ -101,6 +107,16 @@
             }
 
             return this.Redirect(model.ReturnUrl ?? "/Home/Index");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            string userId = this.User.GetId()!;
+
+            ProfileViewModel viewModel = await this.userService.GetUserDataForProfileAsync(userId);
+
+            return View(viewModel);
         }
     }
 }

@@ -1,0 +1,48 @@
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;
+@using TrailVenturesSystem.Web.Infrastructure.Extensions;
+@model ProfileViewModel
+
+@inject IGuideService GuideService
+@{
+    bool isGuide = await this.GuideService.GuideExistsByUserIdAsync(this.User.GetId()!);
+}
+<head>
+    <link rel="stylesheet" href="~/css/ProfileStyle.css" />
+</head>
+
+<!--background image section -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="d-flex justify-content-center">
+            <img src="~/images/homepage/default-user.jpg" alt="Profile Picture" class="rounded-circle"
+            style="max-width:20%;max-height:20%;">
+        </div>
+        <h1 class="discover-heading">@(Model.FirstName)'s profile</h1>
+    </div>
+</section>
+
+<div class="d-flex justify-content-between">
+    <!--main info-->
+    <div class="col-4">
+        <h1 class="pt-4">@Model.FirstName @Model.LastName</h1>
+        <hr />
+        <h5>Email: @Model.Email</h5>
+        @if (isGuide)
+        {
+            <h6 class="pt-4">Mobile Phone: @Model.PhoneNumber</h6>
+            <h6 class="pt-2">Years of experience: @Model.YearsOfExperience</h6>
+        }
+
+        <a asp-controller="User" asp-action="Edit" class="btn btn-primary mt-5"
+           role="button">Edit profile</a>
+
+        <a asp-controller="User" asp-action="Delete" class="btn btn-danger mt-5"
+           role="button">Delete profile</a>
+    </div>
+    <!--additional info-->
+    <div class="col-4">
+        <h2 class="pt-4">Additional info:</h2>
+        <hr />
+    </div>
+</div>
+

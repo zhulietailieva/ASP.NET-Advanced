@@ -5,13 +5,16 @@
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
+    using TrailVenturesSystem.Web.ViewModels.User;
 
     public class UserService : IUserService
     {
         private readonly TrailVenturesDbContext dbContext;
-        public UserService(TrailVenturesDbContext dbContext)
+        private readonly IGuideService guideService;
+        public UserService(TrailVenturesDbContext dbContext, IGuideService guideService)
         {
             this.dbContext = dbContext;
+            this.guideService = guideService;
         }
         public async Task<string> GetFullNameByEmailAsync(string email)
         {
@@ -25,6 +28,34 @@
             }
 
             return $"{user.FirstName} {user.LastName}";
+        }
+
+        public async Task<ProfileViewModel> GetUserDataForProfileAsync(string userId)
+        {
+            var user = await dbContext.Users
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            ProfileViewModel result = new ProfileViewModel
+            {
+                Id=user.Id.ToString(),
+                Email = user.UserName.ToString(),
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+
+            //check if user is guide to add addition info
+            Guide? guide = await this.dbContext
+                .Guides
+                .FirstOrDefaultAsync(g => g.UserId.ToString() == userId);
+
+            if (guide != null)
+            {
+                result.GuideId = guide.Id.ToString();
+                result.PhoneNumber = guide.PhoneNumber;
+                result.YearsOfExperience = guide.YearsOfExperience;
+            }
+
+            return result;
         }
     }
 }
