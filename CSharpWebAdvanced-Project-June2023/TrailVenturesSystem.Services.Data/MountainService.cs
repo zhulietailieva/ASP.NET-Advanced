@@ -10,9 +10,11 @@
     public class MountainService : IMountainService
     {
         private readonly TrailVenturesDbContext dbContext;
-        public MountainService(TrailVenturesDbContext dbContext)
+        private readonly IHutService hutService;
+        public MountainService(TrailVenturesDbContext dbContext, IHutService hutService)
         {
             this.dbContext = dbContext;
+            this.hutService = hutService;
         }
 
         public async Task<IEnumerable<string>> AllMountainNamesAsync()
@@ -81,7 +83,7 @@
         public async Task<MountainDetailsViewModel> GetDetailsByIdAsync(int id)
         {
             Mountain mountain = await dbContext
-                .Mountains
+                .Mountains//SELECT ONLY ACTIVE HUTS
                 .Include(m=>m.Huts)
                 .FirstAsync(m => m.Id == id);
 
@@ -90,23 +92,28 @@
                 Id=mountain.Id,
                 Name=mountain.Name
             };
-
+            
             HashSet<HutInfoOnTripViewModel> hutsDetails = new HashSet<HutInfoOnTripViewModel>();
 
             if (mountain.Huts.Count != 0)
             {
                 foreach(Hut hut in mountain.Huts)
                 {
-                    HutInfoOnTripViewModel hutDetails = new HutInfoOnTripViewModel()
+                    //only add to list if hut is active
+                    if (hut.IsActive)
                     {
-                        Id=hut.Id,
-                        Name = hut.Name,
-                        HostPhoneNumber = hut.HostPhoneNumber,
-                        Altitude = hut.Altitude,
-                        PricePerNight = hut.PricePerNight
-                    };
+                        HutInfoOnTripViewModel hutDetails = new HutInfoOnTripViewModel()
+                        {
+                            Id=hut.Id,
+                            Name = hut.Name,
+                            HostPhoneNumber = hut.HostPhoneNumber,
+                            Altitude = hut.Altitude,
+                            PricePerNight = hut.PricePerNight
+                        };
 
-                    hutsDetails.Add(hutDetails);
+                        hutsDetails.Add(hutDetails);
+                    }
+                    
                 }
             }
             viewModel.Huts = hutsDetails;

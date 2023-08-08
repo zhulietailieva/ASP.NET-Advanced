@@ -10,5 +10,6 @@
         public int Altitude { get; set; }
 
         public decimal PricePerNight { get; set; }
+
     }
 }

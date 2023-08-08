@@ -1,0 +1,43 @@
+﻿@using TrailVenturesSystem.Services.Data.Interfaces;
+@using TrailVenturesSystem.Web.ViewModels.Hut;
+
+@inject IMountainService MountainService;
+
+@model HutPreDeleteViewModel
+@{
+    ViewData["Title"] = "Delete hut ";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/FormsStyle.css">
+</head>
+
+<body class="pb-3">
+    <div class="main-content pt-lg-5 pb-2">
+        <h2 class="text-center">@ViewData["Title"] <u>@Model.Name</u></h2>
+        <hr />
+
+        <form method="post" asp-action="Delete">
+            <div class="form-group col-2 p-2 offset-5">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" disabled>
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+            <div class="form-group col-2 p-2 offset-5">
+                <label asp-for="Altitude"></label>
+                <input asp-for="Altitude" class="form-control" disabled>
+                <span asp-validation-for="Altitude" class="small text-danger"></span>
+            </div>
+
+            <!--saving the url to pass to controller for redirect after saving-->
+            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
+            <div class="text-center pb-2">
+                <input class="btn btn-danger mt-3" type="submit" value="Delete" />
+            </div>
+
+        </form>
+    </div>
+
+</body>
+

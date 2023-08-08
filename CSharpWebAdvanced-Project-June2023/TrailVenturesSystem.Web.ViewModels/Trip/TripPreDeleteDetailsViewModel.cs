@@ -14,6 +14,5 @@
         [Display(Name = "Return date")]
         public DateTime ReturnDate { get; set; }
 
-        //public int MyProperty { get; set; }
     }
 }

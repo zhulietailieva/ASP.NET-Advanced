@@ -27,6 +27,7 @@
         <div class="d-flex justify-content-evenly pt-4">
             @foreach(var hut in Model.Huts)
             {
+                
                 <div class="card" style="width: 30%;">
                     <div class="card-body">
                         <div class="card-title p-3"><h4>@hut.Name</h4></div>
@@ -42,14 +43,14 @@
                             {
                                 <div>
                                     <a asp-controller="Hut" asp-action="Edit" asp-route-id="@hut.Id"
-                                       class="btn btn-secondary ">Edit</a>
+                                       class="btn btn-secondary" style="border:none;">Edit</a>
                                 </div>
                             }
                             @if (User.IsAdmin())
                             {
                                 <div>
                                     <a asp-controller="Hut" asp-action="Delete" asp-route-id="@hut.Id"
-                                       class="btn btn-danger" style="border: none; background-color: #001515;padding:7.5px;"> Delete</a>
+                                       class="btn btn-danger"> Delete</a>
                                 </div>  
                             }                           
 

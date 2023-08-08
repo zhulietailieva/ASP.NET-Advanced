@@ -17,6 +17,7 @@
         {
             this.dbContext = dbContext;
         }
+
         public async Task<IEnumerable<TripSelectHutFormModel>> AllHutsAync()
         {
             IEnumerable<TripSelectHutFormModel> allHuts = await this.dbContext
@@ -59,7 +60,6 @@
                 .ToArrayAsync();
 
             return allNames;
-
         }
 
         public async Task<int> CreateAndReturnIdAsync(HutFormModel formModel)
@@ -77,6 +77,19 @@
             await this.dbContext.SaveChangesAsync();
 
             return hut.Id;
+        }
+
+        public async Task DeleteHutByIdAsync(int hutId)
+        {
+            Hut hutToDelete = await this.dbContext
+                 .Huts
+                 .Where(h => h.IsActive)
+                 .FirstAsync(h => h.Id == hutId);
+
+            //implementing soft delete
+            hutToDelete.IsActive = false;
+
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task EditHutByIdAndFormModelAsync(int hutId, HutFormModel formModel)
@@ -128,5 +141,19 @@
                 MountainId=hut.MountainId
             };
         }
+
+        public async Task<HutPreDeleteViewModel> GetTripForDeleteByIdAsync(int hutId)
+        {
+            Hut hut = await this.dbContext
+                .Huts
+                .FirstAsync(h => h.Id == hutId);
+
+            return new HutPreDeleteViewModel{
+                Id=hutId,
+                Name=hut.Name,
+                Altitude=hut.Altitude
+            };
+        }
+
     }
 }

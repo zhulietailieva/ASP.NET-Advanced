@@ -5,11 +5,6 @@
 
 @model HutFormModel
 @{
-    ViewData["MountainId"] = ViewContext.RouteData.Values["id"]; // Store the ID in ViewBag
-    int mountainIdValue = Convert.ToInt32(ViewData["MountainId"]);
-
-    string mountainName = await MountainService.GetNameByIdAsync(mountainIdValue);
-
     ViewData["Title"] = "Edit hut ";
 }
 

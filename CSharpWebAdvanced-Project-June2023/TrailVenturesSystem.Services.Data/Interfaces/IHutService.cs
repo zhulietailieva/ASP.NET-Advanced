@@ -22,6 +22,8 @@
 
         Task EditHutByIdAndFormModelAsync(int hutId, HutFormModel formModel);
 
+        Task<HutPreDeleteViewModel> GetTripForDeleteByIdAsync(int hutId);
 
+        Task DeleteHutByIdAsync(int hutId);
     }
 }

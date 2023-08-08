@@ -131,8 +131,8 @@
             {
                 HutFormModel formModel = await this.hutService
                     .GetHutForEditByIdAsync(id);
+
                 formModel.ReturnUrl = HttpContext.Request.Headers["Referer"].ToString();
-                //not sure
                 //formModel.Mountains = await this.mountainService.AllMountainsAsync();
 
                 return this.View(formModel);
@@ -197,6 +197,88 @@
                 return this.View(model);
             }
             
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            //delete logic: only administrator will be able to delete huts
+            bool hutExists = await this.hutService.ExistsByIdAsync(id);
+
+            if (!hutExists)
+            {
+                this.TempData[ErrorMessage] = "Hut with the provided id does not exist! ";
+
+                return this.RedirectToAction("All", "Mountain");
+            }
+
+            //check if user is admin
+
+            if ( !this.User.IsAdmin())
+            {
+                this.TempData[ErrorMessage] = "You must be the administrator in order to delete huts!";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+            try
+            {
+                HutPreDeleteViewModel viewModel =
+                    await this.hutService.GetTripForDeleteByIdAsync(id);
+                
+                //return url to go back to if hut is deleted successfully
+                viewModel.ReturnUrl = HttpContext.Request.Headers["Referer"].ToString();
+
+                return this.View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(HutPreDeleteViewModel viewModel, string returnUrl)
+        {
+            //hutid is 0??
+            bool hutExists = await this.hutService.ExistsByIdAsync(viewModel.Id);
+
+            if (!hutExists)
+            {
+                this.TempData[ErrorMessage] = "Hut with the provided id does not exist!"+ viewModel.Id;
+
+                return this.RedirectToAction("All", "Mountain");
+            }
+
+            //check if user is admin
+
+            if (!this.User.IsAdmin())
+            {
+                this.TempData[ErrorMessage] = "You must be the administrator in order to delete huts!";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                await this.hutService
+                    .DeleteHutByIdAsync(viewModel.Id);
+
+                this.TempData[SuccessMessage] = "Hut was successfully deleted!";
+
+                //redirecting url to the previous page
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                // If the referer URL is not available or invalid, redirect to a default action
+                return RedirectToAction("All", "Mountain");
+
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
         private IActionResult GeneralError()
         {
