@@ -99,6 +99,7 @@
                 {
                     HutInfoOnTripViewModel hutDetails = new HutInfoOnTripViewModel()
                     {
+                        Id=hut.Id,
                         Name = hut.Name,
                         HostPhoneNumber = hut.HostPhoneNumber,
                         Altitude = hut.Altitude,

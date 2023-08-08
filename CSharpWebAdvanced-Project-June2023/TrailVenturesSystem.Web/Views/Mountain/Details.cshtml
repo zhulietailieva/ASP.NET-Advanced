@@ -34,6 +34,27 @@
                         <p class="card-text my-1 "><b>Host number:</b> @hut.HostPhoneNumber</p>
                         <p class="card-text my-1"><b>Altitude: </b>@hut.Altitude</p>
                         <p class="card-text my-1"><b>Price per night:</b> @($"{hut.PricePerNight:f2}") BGN</p>
+
+                        <!--edit button will be visible for guides and admin-->
+                        <!--delete button will be visible for admin only-->
+                        <div class="d-flex justify-content-end">
+                            @if (isUserGuide)
+                            {
+                                <div>
+                                    <a asp-controller="Hut" asp-action="Edit" asp-route-id="@hut.Id"
+                                       class="btn btn-secondary ">Edit</a>
+                                </div>
+                            }
+                            @if (User.IsAdmin())
+                            {
+                                <div>
+                                    <a asp-controller="Hut" asp-action="Delete" asp-route-id="@hut.Id"
+                                       class="btn btn-danger" style="border: none; background-color: #001515;padding:7.5px;"> Delete</a>
+                                </div>  
+                            }                           
+
+                        </div>
+                        
                     </div>
                 </div>
             }

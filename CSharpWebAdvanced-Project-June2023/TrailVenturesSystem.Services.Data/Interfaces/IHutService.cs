@@ -18,6 +18,10 @@
 
         Task<bool> ExistsByIdAsync(int hutId);
 
+        Task<HutFormModel> GetHutForEditByIdAsync(int hutId);
+
+        Task EditHutByIdAndFormModelAsync(int hutId, HutFormModel formModel);
+
 
     }
 }

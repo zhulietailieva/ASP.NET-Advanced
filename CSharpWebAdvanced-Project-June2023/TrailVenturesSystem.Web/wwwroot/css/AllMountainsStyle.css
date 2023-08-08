@@ -16,6 +16,10 @@
     border: none;
     background-color: #009092;
 }
+.btn-danger {
+    border: none;
+    background-color: #001515;
+}
 .card{
     background-color:#fafafa;
     border-radius: 10px;

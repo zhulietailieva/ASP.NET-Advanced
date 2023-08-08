@@ -79,6 +79,21 @@
             return hut.Id;
         }
 
+        public async Task EditHutByIdAndFormModelAsync(int hutId, HutFormModel formModel)
+        {
+            Hut hut = await this.dbContext
+                .Huts
+                .Where(h => h.IsActive)
+                .FirstAsync(h => h.Id == hutId);
+
+            hut.Name = formModel.Name;
+            hut.PricePerNight = formModel.PricePerNight;
+            hut.HostPhoneNumber = formModel.HostPhoneNumber;
+            hut.Altitude = formModel.Altitude;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<bool> ExistsByIdAsync(int hutId)
         {
             bool result =await this.dbContext
@@ -94,6 +109,24 @@
                 .Huts.FirstAsync(h => h.Id == hutId);
 
             return result;
+        }
+
+        public async Task<HutFormModel> GetHutForEditByIdAsync(int hutId)
+        {
+            Hut hut = await this.dbContext
+                .Huts
+                .Include(h => h.Mountain)
+                .Where(h => h.IsActive)
+                .FirstAsync(h => h.Id == hutId);
+
+            return new HutFormModel
+            {
+                Name=hut.Name,
+                HostPhoneNumber=hut.HostPhoneNumber,
+                PricePerNight=hut.PricePerNight,
+                Altitude=hut.Altitude,
+                MountainId=hut.MountainId
+            };
         }
     }
 }

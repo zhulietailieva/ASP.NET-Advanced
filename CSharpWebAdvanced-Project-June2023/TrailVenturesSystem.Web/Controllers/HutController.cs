@@ -99,6 +99,105 @@
                 return this.View(model);
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            bool hutExists = await this.hutService.ExistsByIdAsync(id);
+
+            if (!hutExists)
+            {
+                this.TempData[ErrorMessage] = "Hut with the provided id does not exist! ";
+
+                return this.RedirectToAction("All", "Mountain");
+            }
+
+            //check if user is guide
+
+            bool isUserGuide = await this.guideService
+                .GuideExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isUserGuide && !this.User.IsAdmin())
+            {
+                this.TempData[ErrorMessage] = "You must become a guide in order to edit hut info!";
+
+                return this.RedirectToAction("Become", "Guide");
+            }
+
+            //guides can edit all huts logic:
+            //guide could have gone to a hut more recently and disovered that the price per night for the hut that he has not initially
+            //created has increased. He would want to edit the hut's info to be up to date even though he has not created it in the first place
+
+            try
+            {
+                HutFormModel formModel = await this.hutService
+                    .GetHutForEditByIdAsync(id);
+                formModel.ReturnUrl = HttpContext.Request.Headers["Referer"].ToString();
+                //not sure
+                //formModel.Mountains = await this.mountainService.AllMountainsAsync();
+
+                return this.View(formModel);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administator.";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, HutFormModel model, string returnUrl)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            bool hutExists = await this.hutService
+                .ExistsByIdAsync(id);
+
+            if (!hutExists)
+            {
+                this.TempData[ErrorMessage] = "Hut with the provided id does not exist! ";
+
+                return this.RedirectToAction("All", "Mountain");
+            }
+            //check if user is guide again
+
+            bool isUserGuide = await this.guideService
+                .GuideExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isUserGuide && !this.User.IsAdmin())
+            {
+                this.TempData[ErrorMessage] = "You must become a guide in order to edit hut info!";
+
+                return this.RedirectToAction("Become", "Guide");
+            }
+
+            try
+            {
+                await this.hutService.EditHutByIdAndFormModelAsync(id, model);
+
+                this.TempData[SuccessMessage] = "Hut was edited successfully!";
+
+                //redirecting url to the previous page
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                // If the referer URL is not available or invalid, redirect to a default action
+                return RedirectToAction("All", "Mountain");
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to update the hut! Please try again later or contact administrator.");
+                this.TempData[ErrorMessage] = "Error";
+                //model.Mountains = await this.mountainService.AllMountainsAsync();
+
+                return this.View(model);
+            }
+            
+        }
         private IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administator.";
