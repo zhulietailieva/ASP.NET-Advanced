@@ -118,5 +118,43 @@
 
             return View(viewModel);
         }
+        //AJAX loading
+        public IActionResult AdditionalInfoPartial()
+        {
+            return PartialView("_AdditionalInfoPartial");
+            
+        }
+        
+       /* [HttpGet]
+        public async Task<IActionResult> SaveAdditionalInfo()
+        {
+            return this.Ok();
+        }
+       */
+        
+        [HttpPost]
+        public async  Task<IActionResult> SaveAdditionalInfo([FromBody] ProfileDetailsFormModel model)
+        {
+
+            if(model == null)
+            {
+                return this.BadRequest();
+            }
+
+            string info = model.Info;
+
+            // Save the additional information to the database or other storage
+            try
+            {               
+                await this.userService.AddPersonalInfoAsync(this.User.GetId(), info);
+                TempData[SuccessMessage] = "Successfully updated profile info!";
+                return this.RedirectToAction("Profile", "User");
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = "Error while updation profile info! Please try again!";
+                return this.RedirectToAction("Profile","User");
+            }
+        }
     }
 }

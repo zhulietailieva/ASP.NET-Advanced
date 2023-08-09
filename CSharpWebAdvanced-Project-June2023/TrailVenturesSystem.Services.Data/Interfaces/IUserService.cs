@@ -7,5 +7,7 @@
         Task<string> GetFullNameByEmailAsync(string email);
 
         Task<ProfileViewModel> GetUserDataForProfileAsync(string userId);
+
+        Task AddPersonalInfoAsync(string userId, string personalInfo);
     }
 }

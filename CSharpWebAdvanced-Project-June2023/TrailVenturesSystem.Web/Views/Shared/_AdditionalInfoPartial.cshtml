@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Antiforgery
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model ProfileDetailsFormModel
+
+<form method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group row-cols-4 col-10">
+        <label asp-for="Info"></label>
+        <textarea asp-for="Info" class="form-control" id="text-info"></textarea>
+        <span asp-validation-for="Info" class="small text-danger"></span>
+    </div>
+
+    <div class="text-center" >
+        <input class="btn btn-primary m-3" id="btn-submit-info" type="submit" value="Save" />
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            var tokenValue = $('input[name="__RequestVerificationToken"]').val();
+        
+            $("#btn-submit-info").on("click", function (event) {
+                //event.preventDefault();
+                var text = $("#text-info").val();
+                var dataObject={
+                    info:text
+                };
+                //console.log('Result: '+JSON.stringify(result));//works
+                
+                //ajax call
+
+                $.ajax({
+                    url: "/User/SaveAdditionalInfo",
+                    type: "POST",
+                    data: JSON.stringify(dataObject),
+                    contentType: "application/json",
+                    headers: { "RequestVerificationToken": tokenValue },
+                    success: function (response) {
+                        console.log('success');
+                        location.reload();
+                    },
+                    error: function (request, status, error) {
+                        console.log('error');
+                        alert(request.responseText);
+                    }
+                });
+
+            })
+
+            
+        });
+    </script>
+
+</form>

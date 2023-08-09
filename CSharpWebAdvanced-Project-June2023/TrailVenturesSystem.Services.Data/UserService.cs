@@ -16,6 +16,18 @@
             this.dbContext = dbContext;
             this.guideService = guideService;
         }
+
+        public async Task AddPersonalInfoAsync(string userId,string personalInfo)
+        {
+            var user = await this.dbContext
+                .Users
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            user.PersonalInfo = personalInfo;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<string> GetFullNameByEmailAsync(string email)
         {
             ApplicationUser? user =await this.dbContext
@@ -42,7 +54,11 @@
                 FirstName = user.FirstName,
                 LastName = user.LastName
             };
-
+            //check if any personal info
+            if (user.PersonalInfo != null)
+            {
+                result.PersonalInformation = user.PersonalInfo;
+            }
             //check if user is guide to add addition info
             Guide? guide = await this.dbContext
                 .Guides

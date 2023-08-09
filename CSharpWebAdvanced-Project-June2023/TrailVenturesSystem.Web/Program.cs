@@ -49,7 +49,12 @@ namespace TrailVenturesSystem.Web
             //how we would normally register our service
             //builder.Services.AddScoped<ITripService,TripService>();
 
-
+            //test for AJAX bad request call
+            /*builder.Services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);*/
+            
             //with this method all added services are registered automatically
             builder.Services.AddApplicationServices(typeof(ITripService));
 
@@ -65,7 +70,8 @@ namespace TrailVenturesSystem.Web
                 .AddMvcOptions(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                    //commenting out because of the ajax testing that i want to try
+                   // options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
 
 

@@ -5,7 +5,7 @@
     public class ProfileViewModel
     {
         [Required]
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         [Required]
         public string Email { get; set; } = null!;
@@ -15,6 +15,8 @@
 
         [Required]
         public string LastName { get; set; } = null!;
+
+        public string? PersonalInformation { get; set; }
 
         public string? GuideId { get; set; }
 
