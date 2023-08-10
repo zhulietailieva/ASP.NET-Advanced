@@ -4,15 +4,19 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using System.Reflection;
+    using TrailVenturesSystem.Data.Configurations;
     using TrailVenturesSystem.Data.Models;
 
     //:IdentityDbContext<user,role,key>
     public class TrailVenturesDbContext : IdentityDbContext<ApplicationUser,IdentityRole<Guid>,Guid>
     {
-        public TrailVenturesDbContext(DbContextOptions<TrailVenturesDbContext> options)
+
+        private readonly bool seedDb;
+
+        public TrailVenturesDbContext(DbContextOptions<TrailVenturesDbContext> options,bool seedDb=true)
             : base(options)
         {
-
+            this.seedDb = seedDb; 
         }
 
         public DbSet<Trip> Trips { get; set; } = null!;
@@ -27,10 +31,18 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            Assembly configAssembly = Assembly.GetAssembly(typeof(TrailVenturesDbContext)) ??
+            /*Assembly configAssembly = Assembly.GetAssembly(typeof(TrailVenturesDbContext)) ??
                                       Assembly.GetExecutingAssembly();
             builder.ApplyConfigurationsFromAssembly(configAssembly);
+            */
+            builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
+            builder.ApplyConfiguration(new TripEntityConfiguration());
 
+            if (this.seedDb)
+            {
+                builder.ApplyConfiguration(new MountainEntityConfiguration());
+                builder.ApplyConfiguration(new SeedTripsEntityConfiguration());
+            }
             base.OnModelCreating(builder);
         }
     }

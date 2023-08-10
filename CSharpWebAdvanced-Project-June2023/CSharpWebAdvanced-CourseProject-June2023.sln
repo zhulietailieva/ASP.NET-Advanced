@@ -27,7 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrailVenturesSystem.Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrailVenturesSystem.WebApi", "TrailVenturesSystem.WebApi\TrailVenturesSystem.WebApi.csproj", "{D5D37BA2-C1BA-475D-99C2-23DC4A2FFA9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrailVenturesSystem.Services.Mapping", "TrailVenturesSystem.Services.Mapping\TrailVenturesSystem.Services.Mapping.csproj", "{AEE29C0D-44DB-456F-8FCF-20EA3DC4884D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrailVenturesSystem.Services.Mapping", "TrailVenturesSystem.Services.Mapping\TrailVenturesSystem.Services.Mapping.csproj", "{AEE29C0D-44DB-456F-8FCF-20EA3DC4884D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{924EFE60-0051-4CEE-AFD0-04541F4A1504}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrailVenturesSystem.Services.Tests", "TrailVenturesSystem.Services.Tests\TrailVenturesSystem.Services.Tests.csproj", "{9D251B9C-3D3A-43E7-8460-9D17A2E85CCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +79,10 @@ Global
 		{AEE29C0D-44DB-456F-8FCF-20EA3DC4884D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEE29C0D-44DB-456F-8FCF-20EA3DC4884D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEE29C0D-44DB-456F-8FCF-20EA3DC4884D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D251B9C-3D3A-43E7-8460-9D17A2E85CCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D251B9C-3D3A-43E7-8460-9D17A2E85CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D251B9C-3D3A-43E7-8460-9D17A2E85CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D251B9C-3D3A-43E7-8460-9D17A2E85CCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +97,7 @@ Global
 		{CF4C5345-2B84-44CC-AF84-A9E67E3DB13D} = {033C779D-C0A9-423C-88EF-888357BE5ED9}
 		{D5D37BA2-C1BA-475D-99C2-23DC4A2FFA9F} = {C4DC1081-7C99-47C3-AF6D-FAE6F112F30B}
 		{AEE29C0D-44DB-456F-8FCF-20EA3DC4884D} = {033C779D-C0A9-423C-88EF-888357BE5ED9}
+		{9D251B9C-3D3A-43E7-8460-9D17A2E85CCE} = {924EFE60-0051-4CEE-AFD0-04541F4A1504}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32229440-A661-45EA-A32A-B6E2239B54B7}
