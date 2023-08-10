@@ -61,5 +61,82 @@ namespace TrailVenturesSystem.Services.Tests
 
             Assert.IsFalse(result);
         }
+
+        [Test]
+        public async Task GuideExistsByPhoneNumberShouldReturnTrueWhenExists()
+        {
+            string existingGuideUserNumber = GuideGuide.PhoneNumber;
+
+            bool result = await this.guideService.GuideExistsByPhoneNumberAsync(existingGuideUserNumber);
+
+            Assert.IsTrue(result);
+        }
+        [Test]
+        public async Task GuideExistsByPhoneNumberShouldReturnFalseWhenNoyExist()
+        {
+            string existingGuideUserNumber = HikersUsers[0].PhoneNumber;
+
+            bool result = await this.guideService.GuideExistsByPhoneNumberAsync(existingGuideUserNumber);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task GetFullNameByUserIdShoulReturnCorrectValue()
+        {
+            string guideId = GuideGuide.Id.ToString();
+            string expectedName = GuideUser.FirstName + " " + GuideUser.LastName;
+
+            string result = await this.guideService.GetFullNameByIdAsync(guideId);
+
+            Assert.That(result, Is.EqualTo(expectedName));
+        }
+
+        [Test]
+        public async Task GetGuideUserIdByPhoneNumberShouldReturnCorrectValue()
+        {
+            string phoneNumber = GuideGuide.PhoneNumber;
+
+            string expectedGuideUserId = await this.guideService
+                .GetGuideUserIdByPhoneNumberAsync(phoneNumber);
+
+            Assert.That(expectedGuideUserId,Is.EqualTo(GuideGuide.UserId.ToString()));
+        }
+
+        [Test]
+        public async Task HasTripsByUserIdShouldBeFalseWhenNoTrips()
+        {
+            bool hasTrips = await this.guideService
+                .HasTripsByUserIdAsync(GuideGuide.UserId.ToString());
+
+            Assert.IsFalse(hasTrips);
+        }
+
+        [Test]
+        public async Task HasTripsByUserIdShouldBeTrueWhenTripsExist()
+        {
+            Guide guideResult = GuideGuideWithTrips;
+            bool hasTrips = await this.guideService
+                .HasTripsByUserIdAsync(HikersUsers[0].Id.ToString());
+            Assert.IsTrue(hasTrips);
+        }
+
+        [Test]
+        public async Task HasTripWithExistingIdReturnCorrectValue()
+        {
+            bool result=await this.guideService
+                .HasTripWithIdAsync(GuideGuideWithTrips.UserId.ToString(), RegisteredTrip.Id.ToString());
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task HasTripWithNotExistingGuideShouldReturnCorrectValue()
+        {
+            bool result = await this.guideService
+                .HasTripWithIdAsync(GuideGuide.UserId.ToString(), RegisteredTrip.Id.ToString());
+
+            Assert.IsFalse(result);
+        }
     }
 }
