@@ -13,5 +13,9 @@
         public const string AdminAreaName = "Admin";
         public const string AdminRoleName = "Administator";
         public const string DevelopmentAdminEmail = "admin@trailventures.bg";
+
+        public const string UsersCacheKey = "UsersCache";
+        public const string TripsCacheKey = "TripsCache";
+        public const int UsersCacheDurationMinutes = 5;
     }
 }

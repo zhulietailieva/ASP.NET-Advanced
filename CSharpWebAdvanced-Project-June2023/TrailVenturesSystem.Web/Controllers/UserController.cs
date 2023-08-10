@@ -5,11 +5,13 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Web.ViewModels.User;
 
+    using static Common.GeneralApplicationConstants;
     using static Common.NotificationMessagesConstants;
     public class UserController : Controller
     {
@@ -19,19 +21,23 @@
         //for registration
         private readonly UserManager<ApplicationUser> userManager;
 
+        private readonly IMemoryCache memoryCache;
+
         private readonly IUserService userService;
         private readonly IGuideService guideService;
 
         public UserController(SignInManager<ApplicationUser> signInManager,
                                 UserManager<ApplicationUser> userManager,
-                                IUserService userService,
-                                IGuideService guideService)
+                                IUserService userService,IGuideService guideService, 
+                                IMemoryCache memoryCache)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
 
             this.userService = userService;
             this.guideService = guideService;
+
+            this.memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -74,9 +80,10 @@
 
                 return View(model);
             }
-                await this.signInManager.SignInAsync(user, false);
+            await this.signInManager.SignInAsync(user, false);
+            this.memoryCache.Remove(UsersCacheKey);
 
-                return this.RedirectToAction("Index","Home");            
+            return this.RedirectToAction("Index","Home");            
         }
 
         [HttpGet]

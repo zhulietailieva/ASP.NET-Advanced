@@ -60,6 +60,8 @@ namespace TrailVenturesSystem.Web
 
             builder.Services.AddRecaptchaService();
 
+            builder.Services.AddMemoryCache();
+
             //redirect to custom implemented login page
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
