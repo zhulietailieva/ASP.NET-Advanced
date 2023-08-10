@@ -9,12 +9,10 @@
         public static Guide GuideGuide;
         public static List<ApplicationUser> HikersUsers;
         
-       public static ApplicationUser GuideUserWithTrips;
-       public static Guide GuideGuideWithTrips;
+        public static ApplicationUser GuideUserWithTrips;
+        public static Guide GuideGuideWithTrips;
 
         public static Trip RegisteredTrip;
-
-
 
         public static void SeedDatabase(TrailVenturesDbContext dbContext)
         {
@@ -30,6 +28,7 @@
                 Guide=GuideGuideWithTrips,
                 IsActive = true
             };
+
 
             GuideUser = new ApplicationUser()
             {
@@ -106,8 +105,8 @@
             dbContext.Users.Add(HikersUsers[0]);
             dbContext.Guides.Add(GuideGuide);
 
-           dbContext.Guides.Add(GuideGuideWithTrips);
-           dbContext.Users.Add(GuideUserWithTrips);
+            dbContext.Guides.Add(GuideGuideWithTrips);
+            dbContext.Users.Add(GuideUserWithTrips);
             dbContext.Trips.Add(RegisteredTrip);
 
             dbContext.SaveChanges();
