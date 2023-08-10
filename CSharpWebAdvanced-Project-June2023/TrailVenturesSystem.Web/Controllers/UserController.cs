@@ -1,5 +1,6 @@
 ﻿namespace TrailVenturesSystem.Web.Controllers
 {
+    using Griesoft.AspNetCore.ReCaptcha;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -42,7 +43,9 @@
         }
 
         [HttpPost]
-
+        [ValidateRecaptcha(Action=nameof(Register),
+            ValidationFailedAction =ValidationFailedAction.ContinueRequest)]
+           
         public async Task<IActionResult> Register(RegisterFormModel model)
         {
             if (!ModelState.IsValid)

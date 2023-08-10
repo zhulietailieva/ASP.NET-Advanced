@@ -40,7 +40,10 @@
                     <label asp-for="LastName"></label>
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
-                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mb-4 mt-4">Register</button>
+
+                <recaptcha-v3 form-id="registerForm" action="submit"
+                    class="w-100 btn btn-lg btn-primary mb-4 mt-4">Register</recaptcha-v3>
+                @*<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mb-4 mt-4">Register</button>*@
             </form>
         </div>
     </div>

@@ -58,6 +58,8 @@ namespace TrailVenturesSystem.Web
             //with this method all added services are registered automatically
             builder.Services.AddApplicationServices(typeof(ITripService));
 
+            builder.Services.AddRecaptchaService();
+
             //redirect to custom implemented login page
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
