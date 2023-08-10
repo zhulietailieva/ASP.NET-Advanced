@@ -5,6 +5,7 @@
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.ViewModels.Home;
 
+    using static Common.GeneralApplicationConstants;
     public class HomeController : Controller
     {
         private readonly ITripService tripService;
@@ -16,6 +17,11 @@
 
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole(AdminRoleName))
+            {                                                               //route parameters
+                return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
+
             IEnumerable<IndexViewModel> viewModel =
                 await this.tripService.LastSixAsync();
 

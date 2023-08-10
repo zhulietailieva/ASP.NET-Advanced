@@ -64,6 +64,7 @@ namespace TrailVenturesSystem.Web
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LoginPath = "/User/Login";
+                cfg.AccessDeniedPath = "/Home/Error/401";
             });
 
             //instert my custom model binder provider before the one that comes out of the box
@@ -113,10 +114,14 @@ namespace TrailVenturesSystem.Web
             app.UseEndpoints(config =>
             {
                 config.MapControllerRoute(
+                    name: "areas",
+                    pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                config.MapControllerRoute(
                     name: "ProtectingUrlRoute",
                     pattern: "/{controller}/{action}/{id}/{information}",
                     defaults: new {Controller="Mountain",Action="Details"});
-
+             
                 config.MapDefaultControllerRoute();
                 config.MapRazorPages();
             });
