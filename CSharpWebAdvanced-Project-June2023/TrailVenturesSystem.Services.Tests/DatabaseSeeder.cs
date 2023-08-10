@@ -5,6 +5,9 @@
 
     public static class DatabaseSeeder
     {
+        public static Mountain mount1;
+        public static Mountain mount2;
+
         public static ApplicationUser GuideUser;
         public static Guide GuideGuide;
         public static List<ApplicationUser> HikersUsers;
@@ -19,6 +22,9 @@
 
         public static void SeedDatabase(TrailVenturesDbContext dbContext)
         {
+            mount1=new Mountain(){Name="Vitosha" };
+            mount2 = new Mountain() { Name = "Rila" };
+
             RegisteredTrip = new Trip()
             {
                 Title = "Botev's Quest: Conquering the Summit of Stara Planina",
@@ -159,6 +165,10 @@
             dbContext.Trips.Add(TripToDelete);
             dbContext.Guides.Add(GuideWithDeletedTrip);
             dbContext.Users.Add(GuideUserWithDeletedTrip);
+
+            dbContext.Mountains.Add(mount1);
+            dbContext.Mountains.Add(mount2);
+
 
             dbContext.SaveChanges();
 

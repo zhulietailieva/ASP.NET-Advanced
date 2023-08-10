@@ -10,11 +10,10 @@
     public class MountainService : IMountainService
     {
         private readonly TrailVenturesDbContext dbContext;
-        private readonly IHutService hutService;
-        public MountainService(TrailVenturesDbContext dbContext, IHutService hutService)
+        
+        public MountainService(TrailVenturesDbContext dbContext)
         {
-            this.dbContext = dbContext;
-            this.hutService = hutService;
+            this.dbContext = dbContext;           
         }
 
         public async Task<IEnumerable<string>> AllMountainNamesAsync()
