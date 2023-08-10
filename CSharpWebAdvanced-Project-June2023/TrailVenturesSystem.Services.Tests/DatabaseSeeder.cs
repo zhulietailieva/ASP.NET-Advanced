@@ -13,6 +13,9 @@
         public static Guide GuideGuideWithTrips;
 
         public static Trip RegisteredTrip;
+        public static Trip TripToDelete;
+        public static Guide GuideWithDeletedTrip;
+        public static ApplicationUser GuideUserWithDeletedTrip;
 
         public static void SeedDatabase(TrailVenturesDbContext dbContext)
         {
@@ -27,6 +30,47 @@
                 PricePerPerson = 10.00M,
                 Guide=GuideGuideWithTrips,
                 IsActive = true
+            };
+
+
+            TripToDelete = new Trip()
+            {
+                Title = "Musala's Quest: Some more information",
+                MountainId = 5,
+                StartDate = new DateTime(2023, 6, 30),
+                ReturnDate = new DateTime(2023, 6, 30),
+                Description = "TEST description TEST description TEST description TEST description TEST description TEST description ",
+                GroupMaxSize = 1,
+                PricePerPerson = 5.00M,
+                Guide = GuideGuideWithTrips,
+                IsActive = true,
+                Hikers=new List<ApplicationUser>()
+            };
+
+            GuideUserWithDeletedTrip = new ApplicationUser()
+            {
+                UserName = "testGuide@guides.com",
+                NormalizedUserName = "TESTGUIDE@GUIDES.COM",
+                Email = "testGuide@guides.com",
+                NormalizedEmail = "TESTGUIDE@GUIDES.COM",
+                EmailConfirmed = true,
+                PasswordHash = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+                ConcurrencyStamp = "4af4038f-ff21-46fc-bf94-1f21a46e8233",
+                SecurityStamp = "4e88e8f6-7f14-4785-9fe5-42f4f255a930",
+                TwoFactorEnabled = false,
+                FirstName = "Test",
+                LastName = "Testov"
+            };
+
+            GuideWithDeletedTrip = new Guide()
+            {
+                PhoneNumber = "+359888866777",
+                User = GuideUserWithDeletedTrip,
+                YearsOfExperience = 4,
+                CreatedTrips = new List<Trip>()
+                {
+                    TripToDelete
+                }
             };
 
 
@@ -93,6 +137,8 @@
                 }
             };
 
+            TripToDelete.Hikers = HikersUsers;
+
             GuideGuide = new Guide()
             {
                 PhoneNumber = "+359888888888",
@@ -107,7 +153,12 @@
 
             dbContext.Guides.Add(GuideGuideWithTrips);
             dbContext.Users.Add(GuideUserWithTrips);
+
             dbContext.Trips.Add(RegisteredTrip);
+
+            dbContext.Trips.Add(TripToDelete);
+            dbContext.Guides.Add(GuideWithDeletedTrip);
+            dbContext.Users.Add(GuideUserWithDeletedTrip);
 
             dbContext.SaveChanges();
 
