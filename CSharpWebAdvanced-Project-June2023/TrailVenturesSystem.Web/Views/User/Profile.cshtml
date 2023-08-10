@@ -29,16 +29,14 @@
         <hr />
         <h5>Email: @Model.Email</h5>
         @if (isGuide)
-        {
-            <h6 class="pt-4">Mobile Phone: @Model.PhoneNumber</h6>
-            <h6 class="pt-2">Years of experience: @Model.YearsOfExperience</h6>
+        {          
+            <h6 class="pt-2">Years of hiking experience: @Model.YearsOfExperience</h6>
+            <h6 class="pt-3">Phone number: @Model.PhoneNumber</h6>
+            
         }
 
-        <a asp-controller="User" asp-action="Edit" class="btn btn-primary  btn-lg mt-5"
-           role="button">Edit profile</a>
-
-        <a asp-controller="User" asp-action="Delete" class="btn btn-danger btn-lg mt-5"
-           role="button">Delete profile</a>
+       
+        
     </div>
     <!--additional info-->
     <div class="col-4">
@@ -46,8 +44,8 @@
         <hr />
         @if (Model.PersonalInformation != null)
         {
-            <p style="color:#009092;font-size:18px;">@Model.PersonalInformation</p>
-            <button id="addAdditionalInfo" class="btn btn-secondary btn-lg mt-2">Change Profile Bio</button>
+            <p style="color:#009092;font-size:20px;">@Model.PersonalInformation</p>
+            <button id="addAdditionalInfo" class="btn btn-secondary btn mt-2">Update Profile bio</button>
             <div id="additionalInfoContainer">
                 @Html.AntiForgeryToken()
                 <!-- Partial view will be loaded here -->
@@ -56,25 +54,29 @@
         else
         {
             <p>No additional info to display.</p>
-            <button id="addAdditionalInfo" class="btn btn-secondary btn-lg mt-2">Add Profile Bio</button>
+            <button id="addAdditionalInfo" class="btn btn-secondary btn-lg mt-2">Add Profile bio</button>
             <div id="additionalInfoContainer">
+                @Html.AntiForgeryToken()
             <!-- Partial view will be loaded here -->
             </div>
         }
         
     </div>
 </div>
+<a asp-controller="User" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn mt-5 offset-6"
+   role="button">Delete profile</a>
 <div class="pt-5"></div>
 
 @section Scripts{
    <script>
         $(document).ready(function () {
-            $("#addAdditionalInfo").on("click", function (event) {
-                console.log('here');
+            $("#addAdditionalInfo").on("click", function (event) {             
                 event.preventDefault();
                 $("#additionalInfoContainer").load("/User/AdditionalInfoPartial");
                 $("#additionalInfoForm").show();
             });
+
+           
         });        
      </script>
 }

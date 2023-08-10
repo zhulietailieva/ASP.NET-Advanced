@@ -59,6 +59,15 @@
             return guide.Id.ToString();
         }
 
+        public async Task<string> GetGuideUserIdByPhoneNumberAsync(string phoneNumber)
+        {
+            Guide guide = await this.dbContext
+                .Guides
+                .FirstAsync(g => g.PhoneNumber == phoneNumber);
+
+            return guide.UserId.ToString();
+        }
+
         public async Task<bool> GuideExistsByPhoneNumberAsync(string phoneNumber)
         {
             bool result = await dbContext

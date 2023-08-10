@@ -10,11 +10,10 @@
     public class UserService : IUserService
     {
         private readonly TrailVenturesDbContext dbContext;
-        private readonly IGuideService guideService;
-        public UserService(TrailVenturesDbContext dbContext, IGuideService guideService)
+       
+        public UserService(TrailVenturesDbContext dbContext )
         {
-            this.dbContext = dbContext;
-            this.guideService = guideService;
+            this.dbContext = dbContext;           
         }
 
         public async Task AddPersonalInfoAsync(string userId,string personalInfo)
@@ -27,6 +26,7 @@
 
             await this.dbContext.SaveChangesAsync();
         }
+
 
         public async Task<string> GetFullNameByEmailAsync(string email)
         {
@@ -73,5 +73,7 @@
 
             return result;
         }
+
+       
     }
 }

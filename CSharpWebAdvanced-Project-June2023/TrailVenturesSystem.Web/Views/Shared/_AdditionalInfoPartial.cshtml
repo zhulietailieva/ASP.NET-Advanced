@@ -5,9 +5,9 @@
 
 <form method="post">
     @Html.AntiForgeryToken()
-    <div class="form-group row-cols-4 col-10">
+    <div class="form-group row-cols-2 col-10 mt-4">
         <label asp-for="Info"></label>
-        <textarea asp-for="Info" class="form-control" id="text-info"></textarea>
+        <textarea asp-for="Info" class="form-control" id="text-info" placeholder="Tell us about yourself..."></textarea>
         <span asp-validation-for="Info" class="small text-danger"></span>
     </div>
 

@@ -14,6 +14,8 @@
 
         Task<string?> GetGuideIdByUserIdAsync(string userId);
 
+        Task<string> GetGuideUserIdByPhoneNumberAsync(string phoneNumber);
+
         Task<bool> HasTripWithIdAsync(string? userId,string tripId);
 
         Task<string> GetFullNameByIdAsync(string guideId);

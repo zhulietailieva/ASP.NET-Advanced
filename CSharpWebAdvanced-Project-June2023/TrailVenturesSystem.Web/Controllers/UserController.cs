@@ -19,14 +19,18 @@
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IUserService userService;
+        private readonly IGuideService guideService;
 
         public UserController(SignInManager<ApplicationUser> signInManager,
                                 UserManager<ApplicationUser> userManager,
-                                IUserService userService)
+                                IUserService userService,
+                                IGuideService guideService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+
             this.userService = userService;
+            this.guideService = guideService;
         }
 
         [HttpGet]
@@ -125,13 +129,6 @@
             
         }
         
-       /* [HttpGet]
-        public async Task<IActionResult> SaveAdditionalInfo()
-        {
-            return this.Ok();
-        }
-       */
-        
         [HttpPost]
         public async  Task<IActionResult> SaveAdditionalInfo([FromBody] ProfileDetailsFormModel model)
         {
@@ -156,5 +153,6 @@
                 return this.RedirectToAction("Profile","User");
             }
         }
+
     }
 }

@@ -9,5 +9,6 @@
         Task<ProfileViewModel> GetUserDataForProfileAsync(string userId);
 
         Task AddPersonalInfoAsync(string userId, string personalInfo);
-    }
+
+        }
 }
