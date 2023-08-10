@@ -61,6 +61,7 @@ namespace TrailVenturesSystem.Web
             builder.Services.AddRecaptchaService();
 
             builder.Services.AddMemoryCache();
+            builder.Services.AddResponseCaching();
 
             //redirect to custom implemented login page
             builder.Services.ConfigureApplicationCookie(cfg =>
@@ -102,6 +103,8 @@ namespace TrailVenturesSystem.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseResponseCaching();
 
             app.UseAuthentication();
             app.UseAuthorization();
