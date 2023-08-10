@@ -8,6 +8,7 @@
     using TrailVenturesSystem.Web.ViewModels.Trip;
 
     using static Common.NotificationMessagesConstants;
+    using static Common.GeneralApplicationConstants;
 
     [Authorize]
     public class TripController : Controller
@@ -412,6 +413,11 @@
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
+            if (this.User.IsInRole(AdminRoleName))
+            {
+                return this.RedirectToAction("Mine", "Trip", new { Area = AdminAreaName });
+            }
+
             List<TripAllViewModel> myTrips =
                 new List<TripAllViewModel>();
 

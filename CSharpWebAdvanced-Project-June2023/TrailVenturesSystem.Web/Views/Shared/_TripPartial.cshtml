@@ -33,7 +33,7 @@
 
             <div class="button-wrapper position-absolute  m-3 p-2 bottom-0 end-0" style="display:flex; justify-content:end;gap:5px; ">
                 <div>
-                    <a asp-controller="Trip" asp-action="Details" asp-route-id="@Model.Id"
+                    <a asp-area="" asp-controller="Trip" asp-action="Details" asp-route-id="@Model.Id"
                        class="btn btn-primary">Details</a>
                 </div>
            
@@ -42,10 +42,12 @@
                 {
                     @if ((isUserGuide && isGuideCreatorOfTheTrip) || this.User.IsAdmin())
                     {
-                       <div> <a asp-controller="Trip" asp-action="Edit" asp-route-id="@Model.Id"
+                        <div>
+                            <a asp-area="" asp-controller="Trip" asp-action="Edit" asp-route-id="@Model.Id"
                            class="btn btn-secondary">Edit</a>
                        </div>
-                        <div><a asp-controller="Trip" asp-action="Delete" asp-route-id="@Model.Id"
+                        <div>
+                            <a asp-area="" asp-controller="Trip" asp-action="Delete" asp-route-id="@Model.Id"
                            class="btn btn-danger">Delete</a>
                         </div>
                     }
@@ -57,7 +59,7 @@
                         @if (Model.NotFull && !isUserPartOfTrip)
                         {
                             <div>
-                                <form class="input-group" asp-controller="Trip"
+                                <form class="input-group" asp-controller="Trip" asp-area=""
                                       asp-action="Join" asp-route-id="@Model.Id" method="post">
                                     <input class="btn btn-primary" type="submit" value="Join" />
                                 </form>
@@ -66,7 +68,7 @@
                         else if (isUserPartOfTrip)
                         {
                             <div>
-                                <form asp-controller="Trip" asp-action="Leave"
+                                <form asp-controller="Trip" asp-action="Leave" asp-area=""
                                       asp-route-id="@Model.Id" method="post">
                                     <input class="btn btn-secondary" type="submit" value="Leave" />
                                 </form>
