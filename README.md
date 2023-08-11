@@ -28,6 +28,7 @@ It is designed for people to create or sign up for trips. You register as a user
 - **Toatstr**
 - **NUnit**
 - **Swagger**
+- **ReCaptcha**
 
 ## Architecture
 ![363859055_1771958426596871_4643915147751044916_n](https://github.com/zhulietailieva/ASP.NET-Advanced/assets/91086964/273e5692-5e14-4d25-baed-6b180d1ec9b6)
