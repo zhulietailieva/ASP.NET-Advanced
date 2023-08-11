@@ -43,6 +43,7 @@ Databas has admin:
 Configure both these project as startup project to enable statistics on Index page:
 ![startup_projects](https://github.com/zhulietailieva/ASP.NET-Advanced/assets/91086964/abd7e1ce-14db-43b1-a682-b822460aff1d)
 
+*if "Update-Database" fails, please delete Migrations folder and then run Add-Migration Initial and then then run Update-Database
 ## Features
 
 ## APIs and External Integrations
