@@ -161,7 +161,7 @@
             }
             catch (Exception)
             {
-                TempData[ErrorMessage] = "Error while updation profile info! Please try again!";
+                TempData[ErrorMessage] = "Error while updating profile info! Please try again!";
                 return this.RedirectToAction("Profile","User");
             }
         }
