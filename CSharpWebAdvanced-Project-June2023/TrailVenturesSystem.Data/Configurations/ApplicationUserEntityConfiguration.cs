@@ -16,7 +16,7 @@
                 .Property(u => u.LastName)
                 .HasDefaultValue("Testov");
 
-            builder.HasData(GenerateUsers());
+            //builder.HasData(GenerateUsers());
         }
 
         private ApplicationUser[] GenerateUsers()

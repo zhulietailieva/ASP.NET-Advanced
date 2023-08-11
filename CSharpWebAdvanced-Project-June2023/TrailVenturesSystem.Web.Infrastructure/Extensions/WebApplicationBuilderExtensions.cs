@@ -65,6 +65,20 @@
             RoleManager<IdentityRole<Guid>> roleManager =
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
+            ApplicationUser user = new ApplicationUser()
+            {
+                UserName = "admin@trailventures.bg",
+                NormalizedUserName = "ADMIN@TRAILVENTURES.BG",
+                Email = "admin@trailventures.bg",
+                NormalizedEmail = "ADMIN@TRAILVENTURES.BG",
+                EmailConfirmed = true,
+                TwoFactorEnabled = false,
+                FirstName = "Admin",
+                LastName = "Admin"
+            };
+
+            var result = userManager.CreateAsync(user, "123456").Result;
+
             Task.Run(async () =>
             {
                 if (await roleManager.RoleExistsAsync(AdminRoleName))
