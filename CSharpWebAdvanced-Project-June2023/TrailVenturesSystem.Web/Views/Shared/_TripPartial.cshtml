@@ -19,7 +19,7 @@
         <div class="card-body text-center">
           
             <h6>Start Date: <b>@Model.StartDate.Date.ToString().Replace(" 0:00:00","")</b></h6>
-            @if (Model.ReturnDate != Model.StartDate)
+            @if (Model.ReturnDate > Model.StartDate)
             {
                 <h6>Return Date: <b>@Model.ReturnDate.Date.ToString().Replace(" 0:00:00","")</b></h6>
             }

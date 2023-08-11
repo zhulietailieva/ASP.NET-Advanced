@@ -4,7 +4,8 @@
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
-<h4>My Added Trips</h4>
+<h4 class="text-center">My Added Trips</h4>
+<hr />
 @if (!Model.AddedTrips.Any())
 {
     <h2 class="text-center">You have no added trips yet!</h2>
@@ -15,7 +16,8 @@
         @await Html.PartialAsync("~/Views/Shared/_TripPartial.cshtml", trip)
     }
 </div>
-<h4>Joined Trips</h4>
+<h4 class="text-center">Joined Trips</h4>
+<hr />
 @if (!Model.JoinedTrips.Any())
 {
     <h2 class="text-center">You have no joined trips yet!</h2>
