@@ -104,23 +104,6 @@ else
     </div>
 </section>
 
-@if (User.Identity?.IsAuthenticated ?? false)
-{
-    <section class="contact mb-5">
-        <!--Later will implement it to hold a partial contact us sumbit form?-->
-        <h2 class="mb-4">Have a question?</h2>
-        <div class="contact-form">
-            <h2>Contact Us</h2>
-            <form action="#" method="post">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-    </section>
-}
-
 
 @section Scripts
 {    
