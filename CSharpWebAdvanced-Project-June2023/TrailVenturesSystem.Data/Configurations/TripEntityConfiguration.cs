@@ -1,13 +1,9 @@
 ﻿namespace TrailVenturesSystem.Data.Configurations
-{
-   
+{ 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Microsoft.Extensions.Configuration;
     using TrailVenturesSystem.Data.Models;
-    /// <summary>
-    /// configuring the fluent API for Trip
-    /// </summary>
+ 
     public class TripEntityConfiguration : IEntityTypeConfiguration<Trip>
     {
         public void Configure(EntityTypeBuilder<Trip> builder)
@@ -41,9 +37,8 @@
                 .WithMany(h => h.Trips)
                 .HasForeignKey(t => t.HutId)
                 .OnDelete(DeleteBehavior.Restrict);
-        }
-       
 
-        
+        }
+               
     }
 }

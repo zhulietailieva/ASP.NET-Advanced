@@ -39,7 +39,6 @@
             queryModel.Trips = serviceModel.Trips;
             queryModel.TotalTrips = serviceModel.TotalTripsCount;
             queryModel.Mountains = await this.mountainService.AllMountainNamesAsync();
-            //queryModel.Huts = await this.hutService.AllHutsNamesAsync();
 
 
             return this.View(queryModel);
@@ -48,7 +47,6 @@
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            //validation if user is guide -> only guides can add trips
 
             bool isGuide = await this.guideService.GuideExistsByUserIdAsync(this.User.GetId()!);
 
@@ -88,16 +86,13 @@
                 return this.RedirectToAction("Become", "Guide");
             }
 
-            //user can change the category through inspector and submit faulty data
             bool mountainExists = await this.mountainService.ExistsByIdAsync(model.MountainId);
 
             if (!mountainExists) 
             {
-                //Adding model error to ModelState automatically makes ModelState invalid
                 this.ModelState.AddModelError(nameof(model.MountainId), "You selected a mountain that does not exist!");
             }
 
-            //user can change the category through inspector and submit faulty data for hut
             if (model.IsMoreThanOneDay)
             {
                 bool hutExists = await this.hutService.ExistsByIdAsync(model.HutId);
@@ -107,10 +102,6 @@
                 }
             }
             
-
-            //validate that start date and return date are not in the past -- done through a custom Validation attribute
-
-            //validate if end date is after start date
             if (model.StartDate > model.ReturnDate && model.ReturnDate > DateTime.Today)
             {
                 this.ModelState.AddModelError(nameof(model.ReturnDate), "Return date cannot be before or the same as start date");
@@ -121,13 +112,10 @@
                 model.Mountains = await this.mountainService.AllMountainsAsync();
                 model.Huts = await this.hutService.AllHutsAync();
 
-                //Will visualize all errors with correct mountains and huts
                 return this.View(model);
             }
-            //it is preferable that all operations including inserting in database are in try-catch blocks
             try
             {
-                //! after the GetId() method means result cannot be null
                 string? guideId =await this.guideService
                     .GetGuideIdByUserIdAsync(this.User.GetId()!);
 
@@ -189,9 +177,6 @@
                 return this.RedirectToAction("All", "Trip");
             }
 
-            //should also check if user is guide
-            
-
             bool isUserGuide =await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
 
@@ -202,7 +187,6 @@
                 return this.RedirectToAction("Become", "Guide");
             }
 
-            //guide should only be able to edit their own trips
 
             string? guideId = await this.guideService
                 .GetGuideIdByUserIdAsync(this.User.GetId()!);
@@ -225,7 +209,6 @@
                 formModel.Huts = await this.hutService.AllHutsAync();              
                
                 ViewBag.disabledFields = true;
-                //ViewBag.isMountainSelectDisabled = true;
 
                 return this.View(formModel);
             }
@@ -256,9 +239,6 @@
                 return this.RedirectToAction("All", "Trip");
             }
 
-            //should also check if user is guide
-
-
             bool isUserGuide = await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
 
@@ -268,8 +248,6 @@
 
                 return this.RedirectToAction("Become", "Guide");
             }
-
-            //guide should only be able to edit their own trips
 
             string? guideId = await this.guideService
                 .GetGuideIdByUserIdAsync(this.User.GetId()!);
@@ -314,9 +292,6 @@
                 return this.RedirectToAction("All", "Trip");
             }
 
-            //should also check if user is guide
-
-
             bool isUserGuide = await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
 
@@ -326,8 +301,6 @@
 
                 return this.RedirectToAction("Become", "Guide");
             }
-
-            //guide should only be able to edit their own trips
 
             string? guideId = await this.guideService
                 .GetGuideIdByUserIdAsync(this.User.GetId()!);
@@ -368,9 +341,6 @@
                 return this.RedirectToAction("All", "Trip");
             }
 
-            //should also check if user is guide
-
-
             bool isUserGuide = await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
 
@@ -380,8 +350,6 @@
 
                 return this.RedirectToAction("Become", "Guide");
             }
-
-            //guide should only be able to edit their own trips
 
             string? guideId = await this.guideService
                 .GetGuideIdByUserIdAsync(this.User.GetId()!);
@@ -430,10 +398,10 @@
                 {
                     string? guideId =
                         await this.guideService.GetGuideIdByUserIdAsync(userId);
-                    //added houses as a guide
+                   
                     myTrips.AddRange(await this.tripService.AllByGuideIdAsync(guideId!));
 
-                    //rented houses as a user
+       
                     myTrips.AddRange(await this.tripService.AllByUserIdAsync(userId));
 
                     myTrips = myTrips.DistinctBy(t => t.Id).ToList();
@@ -441,7 +409,7 @@
                 }
                 else if (isGuide)
                 {
-                    //if user is guide => show all of their created trips
+                   
                     string? guideId =
                         await this.guideService.GetGuideIdByUserIdAsync(userId);
 
@@ -449,7 +417,7 @@
                 }
                 else
                 {
-                    //if user is not a guide => show al of their enrolled trips
+                    
                     myTrips.AddRange(await this.tripService.AllByUserIdAsync(userId));
                 }
 
@@ -466,8 +434,7 @@
         [HttpPost]
         public async Task<IActionResult> Join(string id)
         {
-            //does this trup exist?
-
+            
             bool tripExists = await this.tripService.ExistsByIdAsync(id);
 
             if (!tripExists)
@@ -490,8 +457,7 @@
 
             if (isUserGuide && !this.User.IsAdmin())
             {
-                //guide cannot join other trips (maybe change functionality later?)
-
+                
                 this.TempData[ErrorMessage] = "Guides cannot join trips! Please register as a user.";
 
                 return this.RedirectToAction("Index","Home");
@@ -515,8 +481,7 @@
 
         public async Task<IActionResult> Leave(string id)
         {
-            //does this trip exist?
-
+            
             bool tripExists = await this.tripService.ExistsByIdAsync(id);
 
             if (!tripExists)
@@ -526,8 +491,7 @@
                 return this.RedirectToAction("All", "Trip");
             }
 
-            //might not work
-
+            
             bool hasCurrentUserJoinedTrip = 
                 await this.tripService.IsUserWithIdPartOfTripByIdAsync(id, this.User.GetId()!);
            

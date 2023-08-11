@@ -16,11 +16,6 @@
         [MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        /*[Required]
-        [MaxLength(MountainMaxLength)]
-        public string Mountain { get; set; } = null!;
-        */
-
         [Required]
         public DateTime StartDate { get; set; }
 

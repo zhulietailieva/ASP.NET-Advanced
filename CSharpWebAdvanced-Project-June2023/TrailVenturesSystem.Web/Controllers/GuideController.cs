@@ -49,13 +49,11 @@
             bool isPhoneNumberTaken = await this.guideService.GuideExistsByPhoneNumberAsync(model.PhoneNumber);
             if (isPhoneNumberTaken)
             {
-                //where to add the error, key and error message
                 this.ModelState.AddModelError(nameof(model.PhoneNumber), "Guide with provided phone number already exists!");
             }
 
             if (!this.ModelState.IsValid)
             {
-                //return the same view with displayed errors
                 return this.View(model);
             }
 

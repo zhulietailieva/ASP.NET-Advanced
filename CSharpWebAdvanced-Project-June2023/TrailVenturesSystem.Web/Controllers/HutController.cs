@@ -66,7 +66,6 @@
 
             if (!mountainExists)
             {
-                //Adding model error to ModelState automatically makes ModelState invalid
                 this.ModelState.AddModelError(nameof(model.MountainId), "You selected a mountain that does not exist!");
             }
 
@@ -81,13 +80,11 @@
 
                 this.TempData[SuccessMessage] = "Hut was registered successfully!";
                
-                //redirecting url to the previous page
                 if (!string.IsNullOrEmpty(returnUrl))
                 {
                     return Redirect(returnUrl);
                 }
 
-                // If the referer URL is not available or invalid, redirect to a default action
                 return RedirectToAction("All", "Mountain");
 
             }
@@ -111,7 +108,6 @@
                 return this.RedirectToAction("All", "Mountain");
             }
 
-            //check if user is guide
 
             bool isUserGuide = await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
@@ -123,9 +119,6 @@
                 return this.RedirectToAction("Become", "Guide");
             }
 
-            //guides can edit all huts logic:
-            //guide could have gone to a hut more recently and disovered that the price per night for the hut that he has not initially
-            //created has increased. He would want to edit the hut's info to be up to date even though he has not created it in the first place
 
             try
             {
@@ -133,7 +126,6 @@
                     .GetHutForEditByIdAsync(id);
 
                 formModel.ReturnUrl = HttpContext.Request.Headers["Referer"].ToString();
-                //formModel.Mountains = await this.mountainService.AllMountainsAsync();
 
                 return this.View(formModel);
             }
@@ -161,7 +153,6 @@
 
                 return this.RedirectToAction("All", "Mountain");
             }
-            //check if user is guide again
 
             bool isUserGuide = await this.guideService
                 .GuideExistsByUserIdAsync(this.User.GetId()!);
@@ -179,20 +170,17 @@
 
                 this.TempData[SuccessMessage] = "Hut was edited successfully!";
 
-                //redirecting url to the previous page
                 if (!string.IsNullOrEmpty(returnUrl))
                 {
                     return Redirect(returnUrl);
                 }
 
-                // If the referer URL is not available or invalid, redirect to a default action
                 return RedirectToAction("All", "Mountain");
             }
             catch (Exception)
             {
                 this.ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to update the hut! Please try again later or contact administrator.");
                 this.TempData[ErrorMessage] = "Error";
-                //model.Mountains = await this.mountainService.AllMountainsAsync();
 
                 return this.View(model);
             }
@@ -202,7 +190,6 @@
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            //delete logic: only administrator will be able to delete huts
             bool hutExists = await this.hutService.ExistsByIdAsync(id);
 
             if (!hutExists)
@@ -211,8 +198,6 @@
 
                 return this.RedirectToAction("All", "Mountain");
             }
-
-            //check if user is admin
 
             if ( !this.User.IsAdmin())
             {
@@ -225,7 +210,6 @@
                 HutPreDeleteViewModel viewModel =
                     await this.hutService.GetTripForDeleteByIdAsync(id);
                 
-                //return url to go back to if hut is deleted successfully
                 viewModel.ReturnUrl = HttpContext.Request.Headers["Referer"].ToString();
 
                 return this.View(viewModel);
@@ -239,7 +223,6 @@
         [HttpPost]
         public async Task<IActionResult> Delete(HutPreDeleteViewModel viewModel, string returnUrl)
         {
-            //hutid is 0??
             bool hutExists = await this.hutService.ExistsByIdAsync(viewModel.Id);
 
             if (!hutExists)
@@ -249,7 +232,6 @@
                 return this.RedirectToAction("All", "Mountain");
             }
 
-            //check if user is admin
 
             if (!this.User.IsAdmin())
             {
@@ -265,13 +247,11 @@
 
                 this.TempData[SuccessMessage] = "Hut was successfully deleted!";
 
-                //redirecting url to the previous page
                 if (!string.IsNullOrEmpty(returnUrl))
                 {
                     return Redirect(returnUrl);
                 }
 
-                // If the referer URL is not available or invalid, redirect to a default action
                 return RedirectToAction("All", "Mountain");
 
             }

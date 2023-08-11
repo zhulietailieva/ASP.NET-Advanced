@@ -25,7 +25,6 @@
                 UserId = Guid.Parse(userId),
 
             };
-
             await this.dbContext.Guides.AddAsync(newGuide);
             await this.dbContext.SaveChangesAsync();
 
@@ -42,7 +41,6 @@
                .FirstAsync(u => u.Id.ToString() == guide.UserId.ToString());
 
             return currentUser.FirstName + " " + currentUser.LastName;
-
         }
 
         public async Task<string?> GetGuideIdByUserIdAsync(string userId)
@@ -110,8 +108,6 @@
             {
                 return false;
             }
-
-            //check again if we populate Created trips somewhere?
 
             tripId = tripId.ToLower();
             return guide.CreatedTrips.Any(t => t.Id.ToString() == tripId);

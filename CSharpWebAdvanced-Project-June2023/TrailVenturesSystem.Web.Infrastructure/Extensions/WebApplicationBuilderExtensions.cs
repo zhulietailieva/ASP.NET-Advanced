@@ -8,7 +8,6 @@
 
     using static Common.GeneralApplicationConstants;
 
-    //not all extension methods are void
     public static class WebApplicationBuilderExtensions
     {
         /// <summary>
@@ -66,7 +65,6 @@
             RoleManager<IdentityRole<Guid>> roleManager =
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
-            //async method
             Task.Run(async () =>
             {
                 if (await roleManager.RoleExistsAsync(AdminRoleName))
@@ -82,8 +80,7 @@
                 ApplicationUser adminUser =await userManager.FindByEmailAsync(email);
 
                 await userManager.AddToRoleAsync(adminUser, AdminRoleName);
-            })  //those methods ensure that the asynchronous task method is finished executing
-                .GetAwaiter()
+            }).GetAwaiter()
                 .GetResult();
 
             return app;

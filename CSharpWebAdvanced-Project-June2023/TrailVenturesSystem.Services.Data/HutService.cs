@@ -7,7 +7,6 @@
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.ViewModels.Hut;
-    using TrailVenturesSystem.Web.ViewModels.Mountain;
 
     public class HutService : IHutService
     {
@@ -86,7 +85,6 @@
                  .Where(h => h.IsActive)
                  .FirstAsync(h => h.Id == hutId);
 
-            //implementing soft delete
             hutToDelete.IsActive = false;
 
             await this.dbContext.SaveChangesAsync();

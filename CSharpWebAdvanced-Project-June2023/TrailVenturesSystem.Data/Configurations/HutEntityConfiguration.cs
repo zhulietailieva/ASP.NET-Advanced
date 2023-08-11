@@ -3,7 +3,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using TrailVenturesSystem.Data.Models;
-
     public class HutEntityConfiguration : IEntityTypeConfiguration<Hut>
     {
         public void Configure(EntityTypeBuilder<Hut> builder)

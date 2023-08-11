@@ -82,7 +82,7 @@
         public async Task<MountainDetailsViewModel> GetDetailsByIdAsync(int id)
         {
             Mountain mountain = await dbContext
-                .Mountains//SELECT ONLY ACTIVE HUTS
+                .Mountains
                 .Include(m=>m.Huts)
                 .FirstAsync(m => m.Id == id);
 

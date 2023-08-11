@@ -46,8 +46,6 @@
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            //only admins can add mountains
-
             if (!User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must be an administrator in order to add ountains!";
@@ -84,7 +82,6 @@
             }
             try
             {
-                //create the mountain and insert in db
                 int mountainId = await this.mountainService.CreateAndReturnIdAsync(model);
 
                 this.TempData[SuccessMessage] = "Mountain was added successfully!";

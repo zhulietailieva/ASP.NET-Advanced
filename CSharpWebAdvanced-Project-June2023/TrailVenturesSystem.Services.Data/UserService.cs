@@ -6,7 +6,6 @@
     using TrailVenturesSystem.Data;
     using TrailVenturesSystem.Data.Models;
     using TrailVenturesSystem.Services.Data.Interfaces;
-    //using TrailVenturesSystem.Services.Mapping;
     using TrailVenturesSystem.Web.ViewModels.User;
 
     public class UserService : IUserService
@@ -57,16 +56,7 @@
             }
 
             return allUsers;
-           /* IEnumerable<UserViewModel> guides = await this.dbContext
-                .Guides
-                .Include(g => g.User)
-                .To<UserViewModel>()
-                .ToArrayAsync();
-            allUsers.AddRange(guides);*/
         }
-
-     
-
         public async Task<string> GetFullNameByEmailAsync(string email)
         {
             ApplicationUser? user =await this.dbContext
@@ -107,12 +97,10 @@
                 FirstName = user.FirstName,
                 LastName = user.LastName
             };
-            //check if any personal info
             if (user.PersonalInfo != null)
             {
                 result.PersonalInformation = user.PersonalInfo;
             }
-            //check if user is guide to add addition info
             Guide? guide = await this.dbContext
                 .Guides
                 .FirstOrDefaultAsync(g => g.UserId.ToString() == userId);
@@ -126,10 +114,6 @@
 
             return result;
         }
-
         
-
-
-
     }
 }

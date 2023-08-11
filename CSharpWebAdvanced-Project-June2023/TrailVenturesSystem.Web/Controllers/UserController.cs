@@ -2,13 +2,11 @@
 {
     using Griesoft.AspNetCore.ReCaptcha;
     using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
     using TrailVenturesSystem.Data.Models;
-    using TrailVenturesSystem.Services.Data;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Web.ViewModels.User;
@@ -17,10 +15,8 @@
     using static Common.NotificationMessagesConstants;
     public class UserController : Controller
     {
-        //for login
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        //for registration
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IMemoryCache memoryCache;
@@ -44,7 +40,6 @@
 
         [HttpGet]
 
-        //IActionResult (no Task) because there are no async operations
         public IActionResult Register()
         {
             return View();
@@ -91,7 +86,6 @@
         [HttpGet]
         public async Task<IActionResult> Login(string? returnUrl = null)
         {
-            //ensures clear log in process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             LoginFormModel model = new LoginFormModel()
@@ -104,7 +98,6 @@
 
         [HttpPost]
 
-        //we use async Task<> where there are async operations
         public async Task<IActionResult> Login(LoginFormModel model)
         {
             if (!ModelState.IsValid)
@@ -134,7 +127,6 @@
 
             return View(viewModel);
         }
-        //AJAX loading
         public IActionResult AdditionalInfoPartial()
         {
             return PartialView("_AdditionalInfoPartial");
@@ -152,7 +144,6 @@
 
             string info = model.Info;
 
-            // Save the additional information to the database or other storage
             try
             {               
                 await this.userService.AddPersonalInfoAsync(this.User.GetId(), info);

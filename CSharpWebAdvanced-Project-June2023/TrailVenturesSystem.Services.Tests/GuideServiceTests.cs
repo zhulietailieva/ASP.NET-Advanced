@@ -40,7 +40,6 @@ namespace TrailVenturesSystem.Services.Tests
        
         }
 
-
         [Test]
         public async Task GuideExistsByUserIdAsyncShouldReturnTrueWhenExists()
         {

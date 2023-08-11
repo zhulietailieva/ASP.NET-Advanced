@@ -4,7 +4,6 @@
 
     public class ProfileDetailsFormModel
     {
-        //other validation??
         [Required]
         [Display(Name ="New Profile bio")]
         public string Info { get; set; } = null!;

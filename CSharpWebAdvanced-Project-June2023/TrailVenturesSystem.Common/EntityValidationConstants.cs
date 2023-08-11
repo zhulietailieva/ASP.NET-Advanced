@@ -7,9 +7,6 @@
             public const int TitleMinLength = 10;
             public const int TitleMaxLength = 100;
 
-            //public const int MountainMinLength = 5;
-            //public const int MountainMaxLength = 30;
-
             public const int DescriptionMinLength = 50;
             public const int DescriptionMaxLength = 8000;
 
@@ -61,7 +58,6 @@
             public const string pricePerPersonMaxValue = "200";
 
             public const int altitudeMinValue = 100;
-            //could possibly register some huts that are not in Bulgaria in the future
             public const int altitudeMaxValue = 4000;
         }
     }

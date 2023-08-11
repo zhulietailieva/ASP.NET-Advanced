@@ -35,8 +35,6 @@
         [Display(Name = "Return Date")]
         public DateTime ReturnDate { get; set; } = DateTime.UtcNow.Date;
 
-        //public DateOnly TestDate { get; set; }
-
         [Required]
         [StringLength(DescriptionMaxLength,MinimumLength =DescriptionMinLength)]
         public string Description { get; set; } = null!;
@@ -51,18 +49,14 @@
         [Range(GroupMinSizePeople,GroupsMaxSizePeople)]
         public int GroupMaxSize { get; set; }
         
-        //selected mountain by user
         [Display(Name = "Mountain")]
         public int MountainId { get; set; }
 
         public IEnumerable<TripSelectMountainFormModel> Mountains { get; set; }
 
-        //hut info
         [Display(Name = "Hut")]
         public int HutId { get; set; }
         public IEnumerable<TripSelectHutFormModel> Huts { get; set; }
-
-        //multiple days
 
         [Display(Name = "Is your trip more than one day long?")]
         public bool IsMoreThanOneDay { get; set; } = false;
@@ -70,7 +64,6 @@
   
         public void CreateMappings(IProfileExpression configuration)
         {
-            //custom configuration for mapper to ignore GuideId
             configuration.CreateMap<TripFormModel, Trip>()
                 .ForMember(d => d.GuideId, opt => opt.Ignore());
         }

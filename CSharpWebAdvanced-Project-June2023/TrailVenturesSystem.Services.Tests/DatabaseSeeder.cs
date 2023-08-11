@@ -8,6 +8,10 @@
         public static Mountain mount1;
         public static Mountain mount2;
 
+
+        public static Hut hut1;
+        public static Hut hut2;
+
         public static ApplicationUser GuideUser;
         public static Guide GuideGuide;
         public static List<ApplicationUser> HikersUsers;
@@ -20,8 +24,6 @@
         public static Guide GuideWithDeletedTrip;
         public static ApplicationUser GuideUserWithDeletedTrip;
 
-        public static Hut hut1;
-        public static Hut hut2;
 
         public static void SeedDatabase(TrailVenturesDbContext dbContext)
         {

@@ -1,6 +1,5 @@
 ﻿namespace TrailVenturesSystem.Services.Data
 {
-    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -9,7 +8,6 @@
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Services.Data.Models.Statistics;
     using TrailVenturesSystem.Services.Data.Models.Trip;
-    using TrailVenturesSystem.Services.Mapping;
     using TrailVenturesSystem.Web.ViewModels.Guide;
     using Web.ViewModels.Hut;
     using TrailVenturesSystem.Web.ViewModels.Home;
@@ -18,12 +16,9 @@
 
     public class TripService : ITripService
     {
-        //we are now in a service, so we can use the DbContext
-        //Services communicate with the database
-
+        
         private readonly TrailVenturesDbContext dbContext;
         
-
         public TripService(TrailVenturesDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -50,7 +45,6 @@
                                 EF.Functions.Like(t.Description, wildCard));
             }
 
-            //sorting
             tripsQuery = queryModel.TripSorting switch
             {
                 TripSorting.Newest => tripsQuery
@@ -69,7 +63,6 @@
                     .ThenByDescending(t => t.CreatedOn)
             };
 
-            //pagination
             IEnumerable<TripAllViewModel> allTrips =await tripsQuery
                 .Where(t=>t.IsActive)
                 .Skip((queryModel.CurrentPage - 1) * queryModel.TripsPerPage)
@@ -84,7 +77,7 @@
                     NotFull = t.Hikers.Count < t.GroupMaxSize,
                     CurrentGroupSize=t.Hikers.Count,
                     MaxGroupSize=t.GroupMaxSize
-                }).ToArrayAsync(); //this is where the query is materialized
+                }).ToArrayAsync(); 
 
             int totalTrips = tripsQuery.Count();
 
@@ -94,7 +87,6 @@
                 Trips = allTrips
             };
         }
-
         public async Task<IEnumerable<TripAllViewModel>> AllByGuideIdAsync(string guideId)
         {
             IEnumerable<TripAllViewModel> allGuideTrips = await this.dbContext
@@ -138,15 +130,12 @@
 
         public async Task<string> CreateAndReturnIdAsync(TripFormModel formModel,string guideId)
         {
-            //no need for validation in the service
             
             Trip newTrip = new Trip
             {
                 Title = formModel.Title,
                 StartDate = formModel.StartDate,
-                //ReturnDate = formModel.ReturnDate,
                 Description = formModel.Description,
-                //PricePerPerson = formModel.PricePerPerson,
                 GroupMaxSize = formModel.GroupMaxSize,
                 MountainId = formModel.MountainId,
                 GuideId = Guid.Parse(guideId)
@@ -156,9 +145,7 @@
             {
                 newTrip.ReturnDate = formModel.ReturnDate;
                 newTrip.HutId = formModel.HutId;
-                //TODO: Set the price of the trip with the stay count multiplied by the price per night for the hut for a person
-                //+ selected price by the guide
-
+               
                 int nightsStay = (int)(formModel.ReturnDate - formModel.StartDate).TotalDays;
 
                 Hut selectedHut = await this.dbContext
@@ -169,22 +156,9 @@
             }
             else
             {
-                //trip is only one day so start and return date are the same
                 newTrip.ReturnDate = formModel.StartDate;
                 newTrip.PricePerPerson = formModel.PricePerPerson;
             }
-            
-
-            //using AutoMapper instead of the above shown method of creating a trip
-            //need to fix so automapper points to the start date when setting a return date if field more than one day is not checked
-            //comment it out -->fix later
-            /*
-            Trip newTrip = AutoMapperConfig.MapperInstance.Map<Trip>(formModel);
-            newTrip.GuideId = Guid.Parse(guideId);
-
-            */
-            //if the form model has property more than one day checked -> add a hut it to the trip and a return date,
-            //otherwise the return date is the same as thr start date
 
             await this.dbContext.Trips.AddAsync(newTrip);
             await this.dbContext.SaveChangesAsync();
@@ -198,9 +172,6 @@
                 .Trips
                 .Where(t => t.IsActive)
                 .FirstAsync(t => t.Id.ToString() == tripId);
-
-            //soft delete
-
             tripToDelete.IsActive = false;
 
             await this.dbContext.SaveChangesAsync();
@@ -214,13 +185,9 @@
                  .FirstAsync(t => t.Id.ToString() == tripId);
 
             trip.Title = formModel.Title;
-            //trip.StartDate = formModel.StartDate;
-            //trip.ReturnDate = formModel.ReturnDate;
             trip.Description = formModel.Description;
             trip.PricePerPerson = formModel.PricePerPerson;
             trip.GroupMaxSize = formModel.GroupMaxSize;
-            //trip.MountainId = formModel.MountainId;
-            //trip.HutId = formModel.HutId;
 
             await this.dbContext.SaveChangesAsync();
 
@@ -238,7 +205,6 @@
 
         public async Task<TripDetailsViewModel> GetDetailsByIdAsync(string tripId)
         {
-            //hut could be null?
             Trip trip = await this.dbContext
                 .Trips
                 .Include(t=>t.Mountain)
@@ -359,8 +325,6 @@
 
         public async Task JoinTripAsync(string tripId, string userId)
         {
-            //Services rely on the fact that controllers check if trip, user, guide etc with given ids exist!
-
             ApplicationUser userToJoin = await this.dbContext
                 .Users
                 .FirstAsync(u => u.Id.ToString() == userId);
@@ -369,12 +333,7 @@
                 .Trips
                 .FirstAsync(t => t.Id.ToString() == tripId);
 
-            //add the current user to the lists of hikers for the current trip
-                
-
             trip.Hikers.Add(userToJoin);
-
-            //should i add to the User ApplicationUserTripTable???
 
             await this.dbContext.SaveChangesAsync();           
 
@@ -382,7 +341,6 @@
 
         public async Task<IEnumerable<IndexViewModel>> LastSixAsync()
         {
-            //display the 6 latest PLANNED trips
             IEnumerable<IndexViewModel> lastSixTrips = await this.dbContext
                 .Trips
                 .Where(t=>t.IsActive)
@@ -398,7 +356,7 @@
                     GuideId=t.GuideId.ToString()
                     
                 })
-                .ToArrayAsync();    //always async when we retrieve from the database
+                .ToArrayAsync();    
 
             return lastSixTrips;
         }
@@ -417,9 +375,7 @@
             trip.Hikers.Remove(userToLeave);
 
             userToLeave.EnrolledTrips.Remove(trip);
-
             
-
             await this.dbContext.SaveChangesAsync();
 
         }

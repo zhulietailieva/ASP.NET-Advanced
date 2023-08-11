@@ -3,8 +3,6 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.User;
-
-    //contains all the properties that we want user to provide for registration
     public class RegisterFormModel
     {
 

@@ -4,7 +4,6 @@
     using System.Globalization;
     using System.Threading.Tasks;
 
-    //How to create a model binder:
     public class DecimalModelBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext? bindingContext)
@@ -30,7 +29,6 @@
                     formDecValue = formDecValue.Replace(".",
                         CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
 
-                    //We use Convert when we are not working with the console
                     parsedValue = Convert.ToDecimal(formDecValue);
                     binderSucceeded = true;
                 }

@@ -1,10 +1,6 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using TrailVenturesSystem.Data;
 namespace TrailVenturesSystem.Web
 {
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using System.Reflection;
     using TrailVenturesSystem.Data;
@@ -21,14 +17,12 @@ namespace TrailVenturesSystem.Web
         public static void Main(string[] args)
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
           
             string  connectionString = 
                 builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             
             builder.Services.AddDbContext<TrailVenturesDbContext>(options =>
-                options.UseSqlServer(connectionString));
-            
+                options.UseSqlServer(connectionString));           
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
@@ -42,20 +36,9 @@ namespace TrailVenturesSystem.Web
                             builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
                 options.Password.RequiredLength =
                             builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
-            })  
-                .AddRoles<IdentityRole<Guid>>()
+            }).AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<TrailVenturesDbContext>();
 
-            //how we would normally register our service
-            //builder.Services.AddScoped<ITripService,TripService>();
-
-            //test for AJAX bad request call
-            /*builder.Services.AddMvc(options =>
-            {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);*/
-            
-            //with this method all added services are registered automatically
             builder.Services.AddApplicationServices(typeof(ITripService));
 
             builder.Services.AddRecaptchaService();
@@ -70,7 +53,6 @@ namespace TrailVenturesSystem.Web
                 cfg.AccessDeniedPath = "/Home/Error/401";
             });
 
-            //instert my custom model binder provider before the one that comes out of the box
             builder.Services
                 .AddControllersWithViews()
                 .AddMvcOptions(options =>
@@ -111,11 +93,9 @@ namespace TrailVenturesSystem.Web
 
             if (app.Environment.IsDevelopment())
             {
-                //seed admin
                 app.SeedAdministrator(DevelopmentAdminEmail);
             }
           
-            //Endopoints order: from at least catching routes to most catching routes
             app.UseEndpoints(config =>
             {
                 config.MapControllerRoute(

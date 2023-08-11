@@ -10,9 +10,6 @@
 
         public string Description { get; set; } = null!;
 
-        
-        //public DateTime ReturnDate  { get; set; }
-
         public GuideInfoOnTripViewModel Guide { get; set; } = null!;
 
         public HutInfoOnTripViewModel? Hut { get; set; }
