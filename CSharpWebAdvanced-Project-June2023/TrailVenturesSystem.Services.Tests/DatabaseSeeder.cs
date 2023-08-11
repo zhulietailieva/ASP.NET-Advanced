@@ -20,9 +20,32 @@
         public static Guide GuideWithDeletedTrip;
         public static ApplicationUser GuideUserWithDeletedTrip;
 
+        public static Hut hut1;
+        public static Hut hut2;
+
         public static void SeedDatabase(TrailVenturesDbContext dbContext)
         {
-            mount1=new Mountain(){Name="Vitosha" };
+            hut1 = new Hut()
+            {
+                Name="Hut1",
+                IsActive=true,
+                HostPhoneNumber="+359878787878",
+                PricePerNight=10.00M,
+                Altitude=1000,
+                MountainId=1
+            };
+
+            hut2 = new Hut()
+            {
+                Name = "Hut2",
+                IsActive = true,
+                HostPhoneNumber = "+359878786666",
+                PricePerNight = 12.00M,
+                Altitude = 1200,
+                MountainId = 1
+            };
+
+            mount1 =new Mountain(){Name="Vitosha" };
             mount2 = new Mountain() { Name = "Rila" };
 
             RegisteredTrip = new Trip()
@@ -169,6 +192,8 @@
             dbContext.Mountains.Add(mount1);
             dbContext.Mountains.Add(mount2);
 
+            dbContext.Huts.Add(hut1);
+            dbContext.Huts.Add(hut2);
 
             dbContext.SaveChanges();
 
