@@ -2,11 +2,13 @@
 {
     using Griesoft.AspNetCore.ReCaptcha;
     using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
     using TrailVenturesSystem.Data.Models;
+    using TrailVenturesSystem.Services.Data;
     using TrailVenturesSystem.Services.Data.Interfaces;
     using TrailVenturesSystem.Web.Infrastructure.Extensions;
     using TrailVenturesSystem.Web.ViewModels.User;

@@ -65,6 +65,8 @@
             allUsers.AddRange(guides);*/
         }
 
+     
+
         public async Task<string> GetFullNameByEmailAsync(string email)
         {
             ApplicationUser? user =await this.dbContext
@@ -125,6 +127,9 @@
             return result;
         }
 
-       
+        
+
+
+
     }
 }
