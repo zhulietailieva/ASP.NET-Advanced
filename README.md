@@ -50,5 +50,4 @@ Configure both these project as startup project to enable statistics on Index pa
 Integration with swagger API for statistics on Index page
 
 ## License
-
-Specify the license under which your project is released.
+MIT licence
