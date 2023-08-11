@@ -23,6 +23,7 @@ It is designed for people to create or sign up for trips. You register as a user
 - **ASP.NET Core Areas**
 - **Entity Framework Core**
 - **ASP.NET Identity**
+- **MSSQL**
 - **Bootstrap**
 - **Razor ViewEngine**
 - **Toatstr**
