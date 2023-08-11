@@ -36,9 +36,8 @@ It is designed for people to create or sign up for trips. You register as a user
 ## Database Design
 ![database_diagram](https://github.com/zhulietailieva/ASP.NET-Advanced/assets/91086964/aeede285-c4e8-4cbd-8963-71b0ef75c047)
 
-Databas has two seeded users:
+Databas has admin:
 - admin@trailventures.bg    password:123456 - admin 
-- peshoGuide@guides.com     password:123456
 
 ## Setup
 Configure both these project as startup project to enable statistics on Index page:
