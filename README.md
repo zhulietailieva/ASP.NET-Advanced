@@ -46,6 +46,7 @@ Configure both these project as startup project to enable statistics on Index pa
 
 *if "Update-Database" fails, please delete Migrations folder and then run Add-Migration Initial and then then run Update-Database
 ## Features
+Creation of Trips, Huts and registration of Mountains
 
 ## APIs and External Integrations
 
